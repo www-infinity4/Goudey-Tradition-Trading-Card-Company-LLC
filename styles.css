@@ -95,6 +95,19 @@ body {
   font-size: .75rem;
 }
 .series { font-size: .72rem; color: #c5cad8; letter-spacing: .08em; }
+.art-wrap {
+  margin: 0 0 .65rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #2d3446;
+  background: #060911;
+}
+.art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
 .player {
   margin: 0;
   font-size: 1.35rem;

@@ -7,7 +7,8 @@ const cards = [
     blurb: 'Durable, reliable and dominant. Anchors the rotation with command and a deep pitch arsenal.',
     baseValue: 325.0,
     clicks: 0,
-    badge: 'HP-1'
+    badge: 'HP-1',
+    image: './card-museum-screenshot.png'
   },
   {
     id: 'jackie-robinson',
@@ -17,7 +18,8 @@ const cards = [
     blurb: 'Legendary icon and foundational piece of baseball history.',
     baseValue: 5100.0,
     clicks: 0,
-    badge: 'GT-42'
+    badge: 'GT-42',
+    image: './card-museum-screenshot.png'
   },
   {
     id: 'walter-payton',
@@ -27,7 +29,8 @@ const cards = [
     blurb: 'Hall of Fame power and consistency; collector favorite.',
     baseValue: 1250.0,
     clicks: 0,
-    badge: 'FB-34'
+    badge: 'FB-34',
+    image: './card-museum-screenshot.png'
   },
   {
     id: 'michael-jordan',
@@ -37,7 +40,8 @@ const cards = [
     blurb: 'Museum-tier grail card profile from the greatest era.',
     baseValue: 7800.0,
     clicks: 0,
-    badge: 'BK-23'
+    badge: 'BK-23',
+    image: './card-museum-screenshot.png'
   },
   {
     id: 'shohei-ohtani',
@@ -47,7 +51,8 @@ const cards = [
     blurb: 'Modern unicorn card with elite market momentum.',
     baseValue: 2400.0,
     clicks: 0,
-    badge: 'GT-17'
+    badge: 'GT-17',
+    image: './card-museum-screenshot.png'
   },
   {
     id: 'jerry-rice',
@@ -57,7 +62,8 @@ const cards = [
     blurb: 'Historic production and sustained collector demand.',
     baseValue: 1700.0,
     clicks: 0,
-    badge: 'FB-80'
+    badge: 'FB-80',
+    image: './card-museum-screenshot.png'
   }
 ];
 
@@ -89,6 +95,9 @@ function renderCards() {
     const node = tpl.content.firstElementChild.cloneNode(true);
     node.dataset.id = card.id;
     node.querySelector('.badge').textContent = card.badge;
+    const art = node.querySelector('.art');
+    art.src = card.image;
+    art.alt = `${card.player} trading card image`;
     node.querySelector('.player').textContent = card.player;
     node.querySelector('.meta').textContent = card.teamPos;
     node.querySelector('.blurb').textContent = card.blurb;
