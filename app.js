@@ -63,7 +63,7 @@ const cards = [
 
 const byId = new Map(cards.map((c) => [c.id, c]));
 const PRICE_INCREMENT_PER_CLICK = 0.5;
-const DEFAULT_CARD_IMAGE_PATH = './card-museum-screenshot.png';
+const FALLBACK_CARD_IMAGE = './card-museum-screenshot.png';
 
 const cardsEl = document.getElementById('cards');
 const filterEl = document.getElementById('sportFilter');
@@ -91,7 +91,7 @@ function renderCards() {
     node.dataset.id = card.id;
     node.querySelector('.badge').textContent = card.badge;
     const art = node.querySelector('.art');
-    art.src = card.image || DEFAULT_CARD_IMAGE_PATH;
+    art.src = card.image || FALLBACK_CARD_IMAGE;
     art.alt = `${card.player} trading card image`;
     node.querySelector('.player').textContent = card.player;
     node.querySelector('.meta').textContent = card.teamPos;
