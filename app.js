@@ -62,7 +62,7 @@ const cards = [
 ];
 
 const byId = new Map(cards.map((c) => [c.id, c]));
-const priceStep = 0.5;
+const PRICE_INCREMENT_PER_CLICK = 0.5;
 
 const cardsEl = document.getElementById('cards');
 const filterEl = document.getElementById('sportFilter');
@@ -75,7 +75,7 @@ function money(n) {
 }
 
 function currentValue(card) {
-  return card.baseValue + card.clicks * priceStep;
+  return card.baseValue + card.clicks * PRICE_INCREMENT_PER_CLICK;
 }
 
 function renderCards() {
