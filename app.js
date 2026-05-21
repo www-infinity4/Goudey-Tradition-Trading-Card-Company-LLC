@@ -657,7 +657,7 @@ function loadClicks() {
         card.clicks = saved[card.id];
       }
     });
-  } catch (e) { /* ignore parse errors */ }
+  } catch (e) { console.warn('cardClicks: failed to load from localStorage', e); }
 }
 
 function saveClicks() {
