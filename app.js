@@ -417,11 +417,254 @@ const cards = [
     clicks: 0,
     badge: 'AL-GPU2',
     image: 'ChatGPT Image May 19, 2026, 09_12_34 PM.png'
+  },
+  // ── May 20–21 additions ─────────────────────────────────────────────────
+  {
+    id: 'ken-griffey-pioneer',
+    sport: 'Baseball',
+    player: 'Ken Griffey Jr. / Hank Aaron',
+    baseValue: 3500.0,
+    clicks: 0,
+    badge: 'PIO-1',
+    image: 'ChatGPT Image May 20, 2026, 08_11_18 PM.png'
+  },
+  {
+    id: 'ken-griffey-pioneer-b',
+    sport: 'Baseball',
+    player: 'Ken Griffey Jr. / Hank Aaron',
+    baseValue: 3500.0,
+    clicks: 0,
+    badge: 'PIO-1B',
+    image: 'ChatGPT Image May 20, 2026, 08_12_46 PM.png'
+  },
+  {
+    id: 'ken-griffey-photographer',
+    sport: 'Baseball',
+    player: 'Ken Griffey Jr.',
+    baseValue: 2000.0,
+    clicks: 0,
+    badge: 'RC-89',
+    image: 'ChatGPT Image May 20, 2026, 09_46_49 PM.png'
+  },
+  {
+    id: 'design-may20-0957a',
+    sport: 'Baseball',
+    player: 'Goudey Tradition',
+    baseValue: 150.0,
+    clicks: 0,
+    badge: 'SP-7',
+    image: 'ChatGPT Image May 20, 2026, 09_57_03 PM.png'
+  },
+  {
+    id: 'design-may20-0957b',
+    sport: 'Baseball',
+    player: 'Goudey Tradition',
+    baseValue: 150.0,
+    clicks: 0,
+    badge: 'SP-7B',
+    image: 'ChatGPT Image May 20, 2026, 09_57_04 PM.png'
+  },
+  {
+    id: 'design-may20-1022',
+    sport: 'Baseball',
+    player: 'Goudey Tradition',
+    baseValue: 150.0,
+    clicks: 0,
+    badge: 'SP-8',
+    image: 'ChatGPT Image May 20, 2026, 10_22_56 PM.png'
+  },
+  {
+    id: 'chris-sale-donruss',
+    sport: 'Baseball',
+    player: 'Chris Sale',
+    baseValue: 375.0,
+    clicks: 0,
+    badge: 'HP-6',
+    image: 'ChatGPT Image May 20, 2026, 10_27_08 PM.png'
+  },
+  {
+    id: 'ozzie-albies',
+    sport: 'Baseball',
+    player: 'Ozzie Albies',
+    baseValue: 325.0,
+    clicks: 0,
+    badge: 'OA-1',
+    image: 'ChatGPT Image May 20, 2026, 10_48_10 PM.png'
+  },
+  {
+    id: 'ozzie-albies-phc4',
+    sport: 'Baseball',
+    player: 'Ozzie Albies',
+    baseValue: 550.0,
+    clicks: 0,
+    badge: 'PHC-4',
+    image: 'ChatGPT Image May 20, 2026, 10_57_25 PM.png'
+  },
+  {
+    id: 'ozzie-albies-phc3',
+    sport: 'Baseball',
+    player: 'Ozzie Albies',
+    baseValue: 700.0,
+    clicks: 0,
+    badge: 'PHC-3',
+    image: 'ChatGPT Image May 20, 2026, 11_18_01 PM.png'
+  },
+  {
+    id: 'ozzie-albies-phc1',
+    sport: 'Baseball',
+    player: 'Ozzie Albies',
+    baseValue: 750.0,
+    clicks: 0,
+    badge: 'PHC-1',
+    image: 'ChatGPT Image May 20, 2026, 11_30_29 PM.png'
+  },
+  {
+    id: 'ronald-acuna-goudey',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr.',
+    baseValue: 900.0,
+    clicks: 0,
+    badge: 'PHC-2',
+    image: 'ChatGPT Image May 21, 2026, 12_37_53 AM.png'
+  },
+  {
+    id: 'ronald-acuna-phc2b',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr.',
+    baseValue: 850.0,
+    clicks: 0,
+    badge: 'PHC-2B',
+    image: 'ChatGPT Image May 21, 2026, 12_38_14 AM.png'
+  },
+  {
+    id: 'ronald-acuna-phc2c',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr.',
+    baseValue: 900.0,
+    clicks: 0,
+    badge: 'PHC-2C',
+    image: 'ChatGPT Image May 21, 2026, 12_38_41 AM.png'
+  },
+  {
+    id: 'ronald-acuna-landscape',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr.',
+    baseValue: 800.0,
+    clicks: 0,
+    badge: 'PHC-2D',
+    image: 'ChatGPT Image May 21, 2026, 01_35_51 AM.png'
+  },
+  {
+    id: 'acuna-ramirez-duo',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr. / Agustín Ramírez',
+    baseValue: 1200.0,
+    clicks: 0,
+    badge: 'DUO-2',
+    image: 'ChatGPT Image May 21, 2026, 01_44_08 AM.png'
+  },
+  {
+    id: 'ronald-acuna-phc2e',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr.',
+    baseValue: 750.0,
+    clicks: 0,
+    badge: 'PHC-2E',
+    image: 'ChatGPT Image May 21, 2026, 01_47_25 AM.png'
+  },
+  {
+    id: 'ronald-acuna-stats',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr.',
+    baseValue: 850.0,
+    clicks: 0,
+    badge: 'RC-AC',
+    image: 'ChatGPT Image May 21, 2026, 01_54_27 AM.png'
+  },
+  {
+    id: 'ronald-acuna-classic',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr.',
+    baseValue: 750.0,
+    clicks: 0,
+    badge: 'AC-1',
+    image: 'ChatGPT Image May 21, 2026, 01_56_23 AM.png'
+  },
+  {
+    id: 'ronald-acuna-basic',
+    sport: 'Baseball',
+    player: 'Ronald Acuña Jr.',
+    baseValue: 700.0,
+    clicks: 0,
+    badge: 'AC-1B',
+    image: 'ChatGPT Image May 21, 2026, 01_59_07 AM.png'
+  },
+  {
+    id: 'paul-skenes',
+    sport: 'Baseball',
+    player: 'Paul Skenes',
+    baseValue: 650.0,
+    clicks: 0,
+    badge: 'PS-1',
+    image: 'ChatGPT Image May 21, 2026, 02_11_15 AM.png'
+  },
+  {
+    id: 'paul-skenes-b',
+    sport: 'Baseball',
+    player: 'Paul Skenes',
+    baseValue: 600.0,
+    clicks: 0,
+    badge: 'PS-1B',
+    image: 'ChatGPT Image May 21, 2026, 02_13_18 AM.png'
+  },
+  {
+    id: 'paul-skenes-c',
+    sport: 'Baseball',
+    player: 'Paul Skenes',
+    baseValue: 600.0,
+    clicks: 0,
+    badge: 'PS-1C',
+    image: 'ChatGPT Image May 21, 2026, 02_23_03 AM.png'
+  },
+  {
+    id: 'paul-skenes-d',
+    sport: 'Baseball',
+    player: 'Paul Skenes',
+    baseValue: 550.0,
+    clicks: 0,
+    badge: 'PS-1D',
+    image: 'ChatGPT Image May 21, 2026, 02_34_03 AM.png'
+  },
+  {
+    id: 'paul-skenes-e',
+    sport: 'Baseball',
+    player: 'Paul Skenes',
+    baseValue: 550.0,
+    clicks: 0,
+    badge: 'PS-1E',
+    image: 'ChatGPT Image May 21, 2026, 02_36_23 AM.png'
   }
 ];
 
 const byId = new Map(cards.map((c) => [c.id, c]));
 const PRICE_INCREMENT_PER_CLICK = 0.5;
+
+function loadClicks() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('cardClicks') || '{}');
+    cards.forEach((card) => {
+      if (typeof saved[card.id] === 'number') {
+        card.clicks = saved[card.id];
+      }
+    });
+  } catch (e) { console.warn('cardClicks: failed to load from localStorage', e); }
+}
+
+function saveClicks() {
+  const data = {};
+  cards.forEach((card) => { data[card.id] = card.clicks; });
+  localStorage.setItem('cardClicks', JSON.stringify(data));
+}
 
 const cardsEl = document.getElementById('cards');
 const filterEl = document.getElementById('sportFilter');
@@ -458,6 +701,7 @@ function renderCards() {
     const activate = () => {
       const current = byId.get(card.id);
       current.clicks += 1;
+      saveClicks();
       renderCards();
       renderStats();
     };
@@ -485,5 +729,6 @@ function renderStats() {
 
 filterEl.addEventListener('change', renderCards);
 
+loadClicks();
 renderCards();
 renderStats();
