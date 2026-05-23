@@ -753,7 +753,6 @@ const aiDetailsBtnEl = document.getElementById('aiDetailsBtn');
 const uploadSportInputEl = document.getElementById('uploadSportInput');
 const uploadTemplateInputEl = document.getElementById('uploadTemplateInput');
 const showLoginPasswordEl = document.getElementById('showLoginPassword');
-const adminQuickSignInBtn = document.getElementById('adminQuickSignInBtn');
 const quickLinkButtons = Array.from(document.querySelectorAll('.quick-link-btn'));
 const bulkImportFormEl = document.getElementById('bulkImportForm');
 const bulkImportFilesInputEl = document.getElementById('bulkImportFilesInput');
@@ -1564,7 +1563,7 @@ signupForm.addEventListener('submit', async (e) => {
     return;
   }
   if (password.length < 6) {
-    authMessageEl.textContent = 'Use a stronger password with at least 6 characters.';
+    authMessageEl.textContent = 'Password must be at least 6 characters.';
     return;
   }
   if (users.some((u) => u.usernameKey === usernameKey)) {
@@ -1687,12 +1686,6 @@ quickLinkButtons.forEach((btn) => {
 
 showLoginPasswordEl.addEventListener('change', () => {
   document.getElementById('loginPassword').type = showLoginPasswordEl.checked ? 'text' : 'password';
-});
-
-adminQuickSignInBtn.addEventListener('click', () => {
-  document.getElementById('loginUsername').value = ADMIN_USERNAME;
-  document.getElementById('loginPassword').value = ADMIN_PASSWORD;
-  authMessageEl.textContent = 'Admin credentials filled. Click Sign In.';
 });
 
 aiDetailsBtnEl.addEventListener('click', () => {
