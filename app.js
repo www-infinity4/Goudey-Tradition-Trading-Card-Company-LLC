@@ -725,6 +725,7 @@ const statUnlockedEl = document.getElementById('statUnlocked');
 const statPlatformEl = document.getElementById('statPlatform');
 const signupForm = document.getElementById('signupForm');
 const loginForm = document.getElementById('loginForm');
+const loginPasswordEl = document.getElementById('loginPassword');
 const authMessageEl = document.getElementById('authMessage');
 const currentUserPanel = document.getElementById('currentUserPanel');
 const currentUserTextEl = document.getElementById('currentUserText');
@@ -1562,8 +1563,8 @@ signupForm.addEventListener('submit', async (e) => {
     authMessageEl.textContent = 'Signup requires username, password, and PayPal email.';
     return;
   }
-  if (password.length < 6) {
-    authMessageEl.textContent = 'Password must be at least 6 characters.';
+  if (password.length < 8) {
+    authMessageEl.textContent = 'Password must be at least 8 characters.';
     return;
   }
   if (users.some((u) => u.usernameKey === usernameKey)) {
@@ -1587,14 +1588,14 @@ signupForm.addEventListener('submit', async (e) => {
   authMessageEl.textContent = 'Account created. You can sign in immediately.';
   signupForm.reset();
   showLoginPasswordEl.checked = false;
-  document.getElementById('loginPassword').type = 'password';
+  loginPasswordEl.type = 'password';
   renderAll();
 });
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const username = document.getElementById('loginUsername').value.trim();
-  const password = document.getElementById('loginPassword').value.trim();
+  const password = loginPasswordEl.value.trim();
   const usernameKey = normalizeUsername(username);
   const candidateUsers = users.filter((u) => u.usernameKey === usernameKey);
   let user = null;
@@ -1612,7 +1613,7 @@ loginForm.addEventListener('submit', async (e) => {
   authMessageEl.textContent = `Signed in as ${user.username}.`;
   loginForm.reset();
   showLoginPasswordEl.checked = false;
-  document.getElementById('loginPassword').type = 'password';
+  loginPasswordEl.type = 'password';
   closeMenu();
   renderAll();
 });
@@ -1685,7 +1686,7 @@ quickLinkButtons.forEach((btn) => {
 });
 
 showLoginPasswordEl.addEventListener('change', () => {
-  document.getElementById('loginPassword').type = showLoginPasswordEl.checked ? 'text' : 'password';
+  loginPasswordEl.type = showLoginPasswordEl.checked ? 'text' : 'password';
 });
 
 aiDetailsBtnEl.addEventListener('click', () => {
