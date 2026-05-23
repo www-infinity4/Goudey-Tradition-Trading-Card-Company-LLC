@@ -697,8 +697,7 @@ const STORAGE_KEYS = {
   uploads: 'tradeUploads',
   wallet: 'tradeWallet',
   preferences: 'tradePreferences',
-  cardMeta: 'tradeCardMeta',
-  openaiKey: 'tradeOpenAiApiKey'
+  cardMeta: 'tradeCardMeta'
 };
 
 function loadJson(key, fallback) {
@@ -912,7 +911,7 @@ async function callOpenAiForCardDraft(apiKey, prompt, player, sport, templateKey
   const template = CARD_TEMPLATES[normalizeTemplateKey(templateKey)];
   const payload = {
     model: 'gpt-4.1-mini',
-    input: [
+    messages: [
       {
         role: 'system',
         content: `You generate trading card copy. Respond with exactly two lines: TITLE: ... and DESCRIPTION: ... Use ${template.label} style.`
@@ -923,7 +922,7 @@ async function callOpenAiForCardDraft(apiKey, prompt, player, sport, templateKey
       }
     ]
   };
-  const res = await fetch('https://api.openai.com/v1/responses', {
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -935,7 +934,7 @@ async function callOpenAiForCardDraft(apiKey, prompt, player, sport, templateKey
     throw new Error(`OpenAI request failed (${res.status}).`);
   }
   const data = await res.json();
-  const raw = (data?.output_text || '').trim();
+  const raw = String(data?.choices?.[0]?.message?.content || '').trim();
   const titleMatch = raw.match(/TITLE:\s*(.+)/i);
   const descriptionMatch = raw.match(/DESCRIPTION:\s*([\s\S]+)/i);
   return {
@@ -1806,9 +1805,6 @@ aiGenerateBtnEl.addEventListener('click', async () => {
   uploadTemplateInputEl.value = templateKey;
   uploadSportInputEl.value = sport;
   authMessageEl.textContent = 'AI draft applied to the upload form.';
-  if (apiKey) {
-    localStorage.setItem(STORAGE_KEYS.openaiKey, apiKey);
-  }
 });
 
 async function bootstrap() {
@@ -1817,7 +1813,6 @@ async function bootstrap() {
   ensureCardState();
   ensureCardMetadata();
   if (!ledger.platformPaypal) ledger.platformPaypal = DEFAULT_PLATFORM_PAYPAL;
-  openaiApiKeyInputEl.value = localStorage.getItem(STORAGE_KEYS.openaiKey) || '';
   viewScopeEl.value = preferences.viewScope || 'all';
   showLockedToggleEl.checked = preferences.showLocked !== false;
   hideNamesToggleEl.checked = Boolean(preferences.hideNames);
