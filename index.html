@@ -37,16 +37,16 @@
       <div class="auth-wrap">
         <form id="signupForm" class="auth-form">
           <h3>Sign Up</h3>
-          <input id="signupUsername" type="text" placeholder="Username" required />
-          <input id="signupPassword" type="password" placeholder="Password" required />
-          <input id="signupPaypal" type="email" placeholder="PayPal Email" required />
+          <input id="signupUsername" type="text" placeholder="Username" autocomplete="username" required />
+          <input id="signupPassword" type="password" placeholder="Password" autocomplete="new-password" required />
+          <input id="signupPaypal" type="email" placeholder="PayPal Email" autocomplete="email" required />
           <button class="btn primary" type="submit">Create Account</button>
         </form>
 
         <form id="loginForm" class="auth-form">
           <h3>Sign In</h3>
-          <input id="loginUsername" type="text" placeholder="Username" required />
-          <input id="loginPassword" type="password" placeholder="Password" required />
+          <input id="loginUsername" type="text" placeholder="Username" autocomplete="username" required />
+          <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" required />
           <button class="btn" type="submit">Sign In</button>
         </form>
         <p id="authMessage" class="note"></p>
@@ -73,10 +73,12 @@
       <section id="adminPanel" class="admin-block" hidden>
         <h3>Admin Panel</h3>
         <p id="adminTotals" class="note"></p>
+        <div class="admin-paypal">
+          <input id="adminPaypalInput" type="email" placeholder="Platform PayPal email" />
+          <button id="saveAdminPaypalBtn" class="btn" type="button">Save PayPal Destination</button>
+        </div>
         <div id="adminUsers"></div>
       </section>
-
-      <p class="note">Admin login is fixed as requested: username Kris, password Kris.</p>
     </aside>
   </main>
 

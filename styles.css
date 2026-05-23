@@ -260,6 +260,19 @@ body {
   font-size: .82rem;
   color: #cbd3e6;
 }
+.admin-paypal {
+  display: grid;
+  gap: .4rem;
+  margin-bottom: .6rem;
+}
+.admin-paypal input {
+  width: 100%;
+  background: #0a0d14;
+  color: var(--text);
+  border: 1px solid #2d3345;
+  border-radius: 8px;
+  padding: .45rem .55rem;
+}
 .lock-banner {
   margin-bottom: .5rem;
   font-size: .78rem;

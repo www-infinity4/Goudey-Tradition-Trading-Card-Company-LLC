@@ -652,7 +652,7 @@ const PLATFORM_FEE_CENTS = 10;
 const SELLER_PAYOUT_CENTS = 40;
 const ADMIN_USERNAME = 'Kris';
 const ADMIN_PASSWORD = 'Kris';
-const ADMIN_PAYPAL = 'watsonkris611@gmail.com';
+const DEFAULT_PLATFORM_PAYPAL = 'watsonkris611@gmail.com';
 
 const STORAGE_KEYS = {
   users: 'tradeUsers',
@@ -693,6 +693,8 @@ const logoutBtn = document.getElementById('logoutBtn');
 const adminPanel = document.getElementById('adminPanel');
 const adminUsersEl = document.getElementById('adminUsers');
 const adminTotalsEl = document.getElementById('adminTotals');
+const adminPaypalInput = document.getElementById('adminPaypalInput');
+const saveAdminPaypalBtn = document.getElementById('saveAdminPaypalBtn');
 const tradePanel = document.getElementById('tradePanel');
 const tradeRequestsEl = document.getElementById('tradeRequests');
 
@@ -700,10 +702,28 @@ const users = loadJson(STORAGE_KEYS.users, []);
 const cardState = loadJson(STORAGE_KEYS.cardState, {});
 const unlocks = loadJson(STORAGE_KEYS.unlocks, {});
 const trades = loadJson(STORAGE_KEYS.trades, []);
-const ledger = loadJson(STORAGE_KEYS.ledger, { platformCents: 0 });
+const ledger = loadJson(STORAGE_KEYS.ledger, { platformCents: 0, platformPaypal: DEFAULT_PLATFORM_PAYPAL });
 
 function centsToMoney(cents) {
   return (cents / 100).toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
+}
+
+function uniqueId(prefix) {
+  if (globalThis.crypto?.randomUUID) return `${prefix}-${globalThis.crypto.randomUUID()}`;
+  const bytes = new Uint8Array(16);
+  globalThis.crypto.getRandomValues(bytes);
+  const token = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+  return `${prefix}-${token}`;
+}
+
+function normalizeUsername(username) {
+  return username.trim().toLowerCase();
+}
+
+async function hashPassword(password) {
+  const data = new TextEncoder().encode(password);
+  const digest = await globalThis.crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 function saveAll() {
@@ -714,21 +734,37 @@ function saveAll() {
   saveJson(STORAGE_KEYS.ledger, ledger);
 }
 
-function ensureAdmin() {
-  const admin = users.find((u) => u.username === ADMIN_USERNAME);
+async function ensureUsers() {
+  for (const user of users) {
+    user.usernameKey = normalizeUsername(user.username || '');
+    if (!user.passwordHash && typeof user.password === 'string') {
+      user.passwordHash = await hashPassword(user.password);
+      delete user.password;
+    }
+    user.balanceCents = typeof user.balanceCents === 'number' ? user.balanceCents : 0;
+    user.paypalEmail = user.paypalEmail || '';
+    user.verified = Boolean(user.verified);
+    user.isAdmin = Boolean(user.isAdmin);
+  }
+
+  const admin = users.find((u) => u.usernameKey === normalizeUsername(ADMIN_USERNAME));
+  const adminHash = await hashPassword(ADMIN_PASSWORD);
   if (admin) {
-    admin.password = ADMIN_PASSWORD;
+    admin.passwordHash = adminHash;
+    delete admin.password;
     admin.isAdmin = true;
     admin.verified = true;
-    admin.paypalEmail = ADMIN_PAYPAL;
-    admin.balanceCents = typeof admin.balanceCents === 'number' ? admin.balanceCents : 0;
+    admin.paypalEmail = admin.paypalEmail || DEFAULT_PLATFORM_PAYPAL;
+    admin.username = ADMIN_USERNAME;
+    admin.usernameKey = normalizeUsername(ADMIN_USERNAME);
     return;
   }
   users.push({
-    id: `u-${Date.now()}-admin`,
+    id: uniqueId('u'),
     username: ADMIN_USERNAME,
-    password: ADMIN_PASSWORD,
-    paypalEmail: ADMIN_PAYPAL,
+    usernameKey: normalizeUsername(ADMIN_USERNAME),
+    passwordHash: adminHash,
+    paypalEmail: DEFAULT_PLATFORM_PAYPAL,
     verified: true,
     isAdmin: true,
     balanceCents: 0
@@ -853,7 +889,7 @@ function requestTrade(requestedCardId, offeredCardId) {
   if (duplicate) return;
 
   trades.push({
-    id: `t-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    id: uniqueId('t'),
     fromUserId: user.id,
     toUserId: requestedState.ownerId,
     requestedCardId,
@@ -1008,7 +1044,8 @@ function renderAuth() {
 function renderAdmin() {
   const user = getCurrentUser();
   if (!user || !user.isAdmin) return;
-  adminTotalsEl.textContent = `Platform PayPal: ${ADMIN_PAYPAL} · Earnings: ${centsToMoney(ledger.platformCents || 0)}`;
+  adminTotalsEl.textContent = `Platform PayPal: ${ledger.platformPaypal || DEFAULT_PLATFORM_PAYPAL} · Earnings: ${centsToMoney(ledger.platformCents || 0)}`;
+  adminPaypalInput.value = ledger.platformPaypal || DEFAULT_PLATFORM_PAYPAL;
   adminUsersEl.innerHTML = '';
 
   users
@@ -1070,23 +1107,26 @@ function renderAll() {
   renderStats();
 }
 
-signupForm.addEventListener('submit', (e) => {
+signupForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const username = document.getElementById('signupUsername').value.trim();
   const password = document.getElementById('signupPassword').value.trim();
   const paypalEmail = document.getElementById('signupPaypal').value.trim();
+  const usernameKey = normalizeUsername(username);
   if (!username || !password || !paypalEmail) {
     authMessageEl.textContent = 'Signup requires username, password, and PayPal email.';
     return;
   }
-  if (users.some((u) => u.username.toLowerCase() === username.toLowerCase())) {
+  if (users.some((u) => u.usernameKey === usernameKey)) {
     authMessageEl.textContent = 'Username already exists.';
     return;
   }
+  const passwordHash = await hashPassword(password);
   users.push({
-    id: `u-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    id: uniqueId('u'),
     username,
-    password,
+    usernameKey,
+    passwordHash,
     paypalEmail,
     verified: false,
     isAdmin: false,
@@ -1098,11 +1138,13 @@ signupForm.addEventListener('submit', (e) => {
   renderAll();
 });
 
-loginForm.addEventListener('submit', (e) => {
+loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const username = document.getElementById('loginUsername').value.trim();
   const password = document.getElementById('loginPassword').value.trim();
-  const user = users.find((u) => u.username === username && u.password === password);
+  const passwordHash = await hashPassword(password);
+  const usernameKey = normalizeUsername(username);
+  const user = users.find((u) => u.usernameKey === usernameKey && u.passwordHash === passwordHash);
   if (!user) {
     authMessageEl.textContent = 'Invalid username or password.';
     return;
@@ -1119,9 +1161,30 @@ logoutBtn.addEventListener('click', () => {
   renderAll();
 });
 
+saveAdminPaypalBtn.addEventListener('click', () => {
+  const user = getCurrentUser();
+  if (!user || !user.isAdmin) return;
+  const paypalValue = adminPaypalInput.value.trim();
+  if (!paypalValue) {
+    authMessageEl.textContent = 'Platform PayPal email cannot be empty.';
+    return;
+  }
+  ledger.platformPaypal = paypalValue;
+  saveAll();
+  renderAll();
+});
+
 filterEl.addEventListener('change', renderCards);
 
-ensureAdmin();
-ensureCardState();
-saveAll();
-renderAll();
+async function bootstrap() {
+  await ensureUsers();
+  ensureCardState();
+  if (!ledger.platformPaypal) ledger.platformPaypal = DEFAULT_PLATFORM_PAYPAL;
+  saveAll();
+  renderAll();
+}
+
+bootstrap().catch((e) => {
+  console.error('Failed to initialize app', e);
+  authMessageEl.textContent = 'Failed to initialize application state.';
+});
