@@ -710,10 +710,13 @@ function centsToMoney(cents) {
 
 function uniqueId(prefix) {
   if (globalThis.crypto?.randomUUID) return `${prefix}-${globalThis.crypto.randomUUID()}`;
-  const bytes = new Uint8Array(16);
-  globalThis.crypto.getRandomValues(bytes);
-  const token = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
-  return `${prefix}-${token}`;
+  if (globalThis.crypto?.getRandomValues) {
+    const bytes = new Uint8Array(16);
+    globalThis.crypto.getRandomValues(bytes);
+    const token = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+    return `${prefix}-${token}`;
+  }
+  return `${prefix}-${Date.now()}-${String(Math.floor(Math.random() * 1e9)).padStart(9, '0')}`;
 }
 
 function normalizeUsername(username) {
@@ -721,9 +724,62 @@ function normalizeUsername(username) {
 }
 
 async function hashPassword(password) {
+  if (!globalThis.crypto?.subtle) {
+    return btoa(unescape(encodeURIComponent(password)));
+  }
   const data = new TextEncoder().encode(password);
   const digest = await globalThis.crypto.subtle.digest('SHA-256', data);
   return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function bytesToHex(bytes) {
+  return Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function hexToBytes(hex) {
+  const clean = (hex || '').trim();
+  if (!clean || clean.length % 2 !== 0) return new Uint8Array();
+  const bytes = new Uint8Array(clean.length / 2);
+  for (let i = 0; i < clean.length; i += 2) bytes[i / 2] = parseInt(clean.slice(i, i + 2), 16);
+  return bytes;
+}
+
+async function createPasswordRecord(password, saltHex) {
+  const canUsePBKDF2 = Boolean(globalThis.crypto?.subtle && globalThis.crypto?.getRandomValues);
+  if (canUsePBKDF2) {
+    const saltBytes = saltHex ? hexToBytes(saltHex) : globalThis.crypto.getRandomValues(new Uint8Array(16));
+    const keyMaterial = await globalThis.crypto.subtle.importKey(
+      'raw',
+      new TextEncoder().encode(password),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveBits']
+    );
+    const bits = await globalThis.crypto.subtle.deriveBits(
+      { name: 'PBKDF2', salt: saltBytes, iterations: 120000, hash: 'SHA-256' },
+      keyMaterial,
+      256
+    );
+    return {
+      passwordHash: bytesToHex(new Uint8Array(bits)),
+      passwordSalt: bytesToHex(saltBytes),
+      passwordScheme: 'pbkdf2'
+    };
+  }
+
+  return {
+    passwordHash: await hashPassword(password),
+    passwordSalt: '',
+    passwordScheme: 'sha256-legacy'
+  };
+}
+
+async function verifyPassword(user, password) {
+  if (user.passwordScheme === 'pbkdf2' && user.passwordSalt) {
+    const candidate = await createPasswordRecord(password, user.passwordSalt);
+    return candidate.passwordHash === user.passwordHash;
+  }
+  return user.passwordHash === await hashPassword(password);
 }
 
 function saveAll() {
@@ -738,8 +794,13 @@ async function ensureUsers() {
   for (const user of users) {
     user.usernameKey = normalizeUsername(user.username || '');
     if (!user.passwordHash && typeof user.password === 'string') {
-      user.passwordHash = await hashPassword(user.password);
+      const passwordRecord = await createPasswordRecord(user.password);
+      user.passwordHash = passwordRecord.passwordHash;
+      user.passwordSalt = passwordRecord.passwordSalt;
+      user.passwordScheme = passwordRecord.passwordScheme;
       delete user.password;
+    } else if (user.passwordHash && !user.passwordScheme) {
+      user.passwordScheme = user.passwordSalt ? 'pbkdf2' : 'sha256-legacy';
     }
     user.balanceCents = typeof user.balanceCents === 'number' ? user.balanceCents : 0;
     user.paypalEmail = user.paypalEmail || '';
@@ -748,9 +809,11 @@ async function ensureUsers() {
   }
 
   const admin = users.find((u) => u.usernameKey === normalizeUsername(ADMIN_USERNAME));
-  const adminHash = await hashPassword(ADMIN_PASSWORD);
+  const adminRecord = await createPasswordRecord(ADMIN_PASSWORD);
   if (admin) {
-    admin.passwordHash = adminHash;
+    admin.passwordHash = adminRecord.passwordHash;
+    admin.passwordSalt = adminRecord.passwordSalt;
+    admin.passwordScheme = adminRecord.passwordScheme;
     delete admin.password;
     admin.isAdmin = true;
     admin.verified = true;
@@ -763,7 +826,9 @@ async function ensureUsers() {
     id: uniqueId('u'),
     username: ADMIN_USERNAME,
     usernameKey: normalizeUsername(ADMIN_USERNAME),
-    passwordHash: adminHash,
+    passwordHash: adminRecord.passwordHash,
+    passwordSalt: adminRecord.passwordSalt,
+    passwordScheme: adminRecord.passwordScheme,
     paypalEmail: DEFAULT_PLATFORM_PAYPAL,
     verified: true,
     isAdmin: true,
@@ -1085,7 +1150,7 @@ function renderTrades() {
     const row = document.createElement('div');
     row.className = 'trade-request';
     const text = document.createElement('span');
-    text.textContent = `${userDisplayName(trade.fromUserId)} offers ${offered?.badge || trade.offeredCardId} for your ${requested?.badge || trade.requestedCardId}`;
+    text.textContent = `${userDisplayName(trade.fromUserId)} offers ${offered ? offered.badge : 'an unavailable card'} for your ${requested ? requested.badge : 'unavailable card'}`;
     const accept = document.createElement('button');
     accept.className = 'btn primary';
     accept.textContent = 'Accept';
@@ -1121,12 +1186,14 @@ signupForm.addEventListener('submit', async (e) => {
     authMessageEl.textContent = 'Username already exists.';
     return;
   }
-  const passwordHash = await hashPassword(password);
+  const passwordRecord = await createPasswordRecord(password);
   users.push({
     id: uniqueId('u'),
     username,
     usernameKey,
-    passwordHash,
+    passwordHash: passwordRecord.passwordHash,
+    passwordSalt: passwordRecord.passwordSalt,
+    passwordScheme: passwordRecord.passwordScheme,
     paypalEmail,
     verified: false,
     isAdmin: false,
@@ -1142,9 +1209,15 @@ loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const username = document.getElementById('loginUsername').value.trim();
   const password = document.getElementById('loginPassword').value.trim();
-  const passwordHash = await hashPassword(password);
   const usernameKey = normalizeUsername(username);
-  const user = users.find((u) => u.usernameKey === usernameKey && u.passwordHash === passwordHash);
+  const candidateUsers = users.filter((u) => u.usernameKey === usernameKey);
+  let user = null;
+  for (const candidate of candidateUsers) {
+    if (await verifyPassword(candidate, password)) {
+      user = candidate;
+      break;
+    }
+  }
   if (!user) {
     authMessageEl.textContent = 'Invalid username or password.';
     return;
