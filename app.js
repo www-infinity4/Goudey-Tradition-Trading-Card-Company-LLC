@@ -716,17 +716,15 @@ function uniqueId(prefix) {
     const token = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
     return `${prefix}-${token}`;
   }
-  return `${prefix}-${Date.now()}-${String(Math.floor(Math.random() * 1e9)).padStart(9, '0')}`;
+  throw new Error('Secure random ID generation is required but unavailable in this browser.');
 }
 
 function normalizeUsername(username) {
-  return username.trim().toLowerCase();
+  return username.normalize('NFKC').trim().replace(/\s+/g, ' ').toLowerCase();
 }
 
 async function hashPassword(password) {
-  if (!globalThis.crypto?.subtle) {
-    return btoa(unescape(encodeURIComponent(password)));
-  }
+  if (!globalThis.crypto?.subtle) throw new Error('Secure password hashing is unavailable in this browser.');
   const data = new TextEncoder().encode(password);
   const digest = await globalThis.crypto.subtle.digest('SHA-256', data);
   return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -756,7 +754,7 @@ async function createPasswordRecord(password, saltHex) {
       ['deriveBits']
     );
     const bits = await globalThis.crypto.subtle.deriveBits(
-      { name: 'PBKDF2', salt: saltBytes, iterations: 120000, hash: 'SHA-256' },
+      { name: 'PBKDF2', salt: saltBytes, iterations: 100000, hash: 'SHA-256' },
       keyMaterial,
       256
     );
@@ -767,11 +765,7 @@ async function createPasswordRecord(password, saltHex) {
     };
   }
 
-  return {
-    passwordHash: await hashPassword(password),
-    passwordSalt: '',
-    passwordScheme: 'sha256-legacy'
-  };
+  throw new Error('PBKDF2 support is required for password storage.');
 }
 
 async function verifyPassword(user, password) {
@@ -809,11 +803,13 @@ async function ensureUsers() {
   }
 
   const admin = users.find((u) => u.usernameKey === normalizeUsername(ADMIN_USERNAME));
-  const adminRecord = await createPasswordRecord(ADMIN_PASSWORD);
   if (admin) {
-    admin.passwordHash = adminRecord.passwordHash;
-    admin.passwordSalt = adminRecord.passwordSalt;
-    admin.passwordScheme = adminRecord.passwordScheme;
+    if (!admin.passwordHash || !admin.passwordSalt || !admin.passwordScheme) {
+      const adminRecord = await createPasswordRecord(ADMIN_PASSWORD);
+      admin.passwordHash = adminRecord.passwordHash;
+      admin.passwordSalt = adminRecord.passwordSalt;
+      admin.passwordScheme = adminRecord.passwordScheme;
+    }
     delete admin.password;
     admin.isAdmin = true;
     admin.verified = true;
@@ -822,6 +818,7 @@ async function ensureUsers() {
     admin.usernameKey = normalizeUsername(ADMIN_USERNAME);
     return;
   }
+  const adminRecord = await createPasswordRecord(ADMIN_PASSWORD);
   users.push({
     id: uniqueId('u'),
     username: ADMIN_USERNAME,
