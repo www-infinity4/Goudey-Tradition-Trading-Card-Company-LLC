@@ -986,6 +986,7 @@ function resolveTrade(tradeId, accept) {
 function renderCardActions(node, card, state, user) {
   const actionsEl = node.querySelector('.actions');
   actionsEl.innerHTML = '';
+  const feeLabel = centsToMoney(CARD_FEE_CENTS);
 
   const unlocked = isCardUnlockedFor(card.id, user);
   const isOwner = user && state.ownerId === user.id;
@@ -993,7 +994,7 @@ function renderCardActions(node, card, state, user) {
   if (!unlocked) {
     const btn = document.createElement('button');
     btn.className = 'btn primary';
-    btn.textContent = 'Unlock card ($0.50)';
+    btn.textContent = `Unlock card (${feeLabel})`;
     btn.addEventListener('click', () => unlockCard(card.id));
     actionsEl.appendChild(btn);
     return;
@@ -1004,7 +1005,7 @@ function renderCardActions(node, card, state, user) {
   if (isOwner) {
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'btn';
-    toggleBtn.textContent = state.listedForSale ? 'Remove from Sale' : 'List for Sale ($0.50)';
+    toggleBtn.textContent = state.listedForSale ? 'Remove from Sale' : `List for Sale (${feeLabel})`;
     toggleBtn.addEventListener('click', () => toggleSale(card.id));
     actionsEl.appendChild(toggleBtn);
     return;
@@ -1013,7 +1014,7 @@ function renderCardActions(node, card, state, user) {
   if (state.listedForSale) {
     const buyBtn = document.createElement('button');
     buyBtn.className = 'btn primary';
-    buyBtn.textContent = 'Buy for $0.50';
+    buyBtn.textContent = `Buy for ${feeLabel}`;
     buyBtn.addEventListener('click', () => buyCard(card.id));
     actionsEl.appendChild(buyBtn);
   }
@@ -1057,7 +1058,7 @@ function renderCards() {
     node.querySelector('.player').textContent = card.player;
     node.querySelector('.sport').textContent = card.sport;
     node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
-    node.querySelector('.status').textContent = state.listedForSale ? 'For Sale ($0.50)' : 'Not Listed';
+    node.querySelector('.status').textContent = state.listedForSale ? `For Sale (${centsToMoney(CARD_FEE_CENTS)})` : 'Not Listed';
     node.querySelector('.limit').textContent = state.limit;
     node.querySelector('.price').textContent = centsToMoney(CARD_FEE_CENTS);
 
