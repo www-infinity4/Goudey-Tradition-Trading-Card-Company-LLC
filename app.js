@@ -647,73 +647,332 @@ const cards = [
 ];
 
 const byId = new Map(cards.map((c) => [c.id, c]));
-const PRICE_INCREMENT_PER_CLICK = 0.5;
+const CARD_FEE_CENTS = 50;
+const PLATFORM_FEE_CENTS = 10;
+const SELLER_PAYOUT_CENTS = 40;
+const ADMIN_USERNAME = 'Kris';
+const ADMIN_PASSWORD = 'Kris';
+const ADMIN_PAYPAL = 'watsonkris611@gmail.com';
 
-function loadClicks() {
+const STORAGE_KEYS = {
+  users: 'tradeUsers',
+  currentUserId: 'tradeCurrentUserId',
+  cardState: 'tradeCardState',
+  unlocks: 'tradeUnlocks',
+  trades: 'tradeTrades',
+  ledger: 'tradeLedger'
+};
+
+function loadJson(key, fallback) {
   try {
-    const saved = JSON.parse(localStorage.getItem('cardClicks') || '{}');
-    cards.forEach((card) => {
-      if (typeof saved[card.id] === 'number') {
-        card.clicks = saved[card.id];
-      }
-    });
-  } catch (e) { console.warn('cardClicks: failed to load from localStorage', e); }
+    const value = JSON.parse(localStorage.getItem(key) || 'null');
+    return value === null ? fallback : value;
+  } catch (e) {
+    console.warn(`Failed loading ${key}`, e);
+    return fallback;
+  }
 }
 
-function saveClicks() {
-  const data = {};
-  cards.forEach((card) => { data[card.id] = card.clicks; });
-  localStorage.setItem('cardClicks', JSON.stringify(data));
+function saveJson(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
 }
 
 const cardsEl = document.getElementById('cards');
 const filterEl = document.getElementById('sportFilter');
 const statCardsEl = document.getElementById('statCards');
-const statClicksEl = document.getElementById('statClicks');
-const statValueEl = document.getElementById('statValue');
+const statOwnedEl = document.getElementById('statOwned');
+const statUnlockedEl = document.getElementById('statUnlocked');
+const statPlatformEl = document.getElementById('statPlatform');
+const signupForm = document.getElementById('signupForm');
+const loginForm = document.getElementById('loginForm');
+const authMessageEl = document.getElementById('authMessage');
+const currentUserPanel = document.getElementById('currentUserPanel');
+const currentUserTextEl = document.getElementById('currentUserText');
+const currentUserPayoutEl = document.getElementById('currentUserPayout');
+const logoutBtn = document.getElementById('logoutBtn');
+const adminPanel = document.getElementById('adminPanel');
+const adminUsersEl = document.getElementById('adminUsers');
+const adminTotalsEl = document.getElementById('adminTotals');
+const tradePanel = document.getElementById('tradePanel');
+const tradeRequestsEl = document.getElementById('tradeRequests');
 
-function money(n) {
-  return n.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
+const users = loadJson(STORAGE_KEYS.users, []);
+const cardState = loadJson(STORAGE_KEYS.cardState, {});
+const unlocks = loadJson(STORAGE_KEYS.unlocks, {});
+const trades = loadJson(STORAGE_KEYS.trades, []);
+const ledger = loadJson(STORAGE_KEYS.ledger, { platformCents: 0 });
+
+function centsToMoney(cents) {
+  return (cents / 100).toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
 }
 
-function currentValue(card) {
-  return card.baseValue + card.clicks * PRICE_INCREMENT_PER_CLICK;
+function saveAll() {
+  saveJson(STORAGE_KEYS.users, users);
+  saveJson(STORAGE_KEYS.cardState, cardState);
+  saveJson(STORAGE_KEYS.unlocks, unlocks);
+  saveJson(STORAGE_KEYS.trades, trades);
+  saveJson(STORAGE_KEYS.ledger, ledger);
+}
+
+function ensureAdmin() {
+  const admin = users.find((u) => u.username === ADMIN_USERNAME);
+  if (admin) {
+    admin.password = ADMIN_PASSWORD;
+    admin.isAdmin = true;
+    admin.verified = true;
+    admin.paypalEmail = ADMIN_PAYPAL;
+    admin.balanceCents = typeof admin.balanceCents === 'number' ? admin.balanceCents : 0;
+    return;
+  }
+  users.push({
+    id: `u-${Date.now()}-admin`,
+    username: ADMIN_USERNAME,
+    password: ADMIN_PASSWORD,
+    paypalEmail: ADMIN_PAYPAL,
+    verified: true,
+    isAdmin: true,
+    balanceCents: 0
+  });
+}
+
+function ensureCardState() {
+  cards.forEach((card) => {
+    if (!cardState[card.id]) {
+      cardState[card.id] = { ownerId: null, listedForSale: false, limit: '1/1' };
+    }
+  });
+}
+
+function getCurrentUser() {
+  const userId = localStorage.getItem(STORAGE_KEYS.currentUserId);
+  if (!userId) return null;
+  return users.find((u) => u.id === userId) || null;
+}
+
+function setCurrentUser(user) {
+  if (!user) {
+    localStorage.removeItem(STORAGE_KEYS.currentUserId);
+    return;
+  }
+  localStorage.setItem(STORAGE_KEYS.currentUserId, user.id);
+}
+
+function userDisplayName(userId) {
+  if (!userId) return 'Marketplace';
+  const user = users.find((u) => u.id === userId);
+  return user ? user.username : 'Unknown';
+}
+
+function isCardUnlockedFor(cardId, user) {
+  if (!user) return false;
+  const state = cardState[cardId];
+  if (state?.ownerId === user.id) return true;
+  return Boolean(unlocks[user.id]?.[cardId]);
+}
+
+function requireVerifiedUser(actionLabel) {
+  const user = getCurrentUser();
+  if (!user) {
+    authMessageEl.textContent = `Please sign in to ${actionLabel}.`;
+    return null;
+  }
+  if (!user.verified) {
+    authMessageEl.textContent = 'Your PayPal must be verified by admin before transactions.';
+    return null;
+  }
+  return user;
+}
+
+function creditSale(ownerId, cents) {
+  if (!ownerId || cents <= 0) return;
+  const owner = users.find((u) => u.id === ownerId);
+  if (owner) owner.balanceCents += cents;
+}
+
+function processFee(ownerId) {
+  if (ownerId) {
+    ledger.platformCents += PLATFORM_FEE_CENTS;
+    creditSale(ownerId, SELLER_PAYOUT_CENTS);
+    return;
+  }
+  ledger.platformCents += CARD_FEE_CENTS;
+}
+
+function unlockCard(cardId) {
+  const user = requireVerifiedUser('unlock cards');
+  if (!user) return;
+  if (isCardUnlockedFor(cardId, user)) return;
+  if (!unlocks[user.id]) unlocks[user.id] = {};
+  processFee(cardState[cardId].ownerId);
+  unlocks[user.id][cardId] = true;
+  saveAll();
+  renderAll();
+}
+
+function buyCard(cardId) {
+  const buyer = requireVerifiedUser('buy cards');
+  if (!buyer) return;
+  const state = cardState[cardId];
+  if (!state.listedForSale || state.ownerId === buyer.id) return;
+
+  const sellerId = state.ownerId;
+  processFee(sellerId);
+  state.ownerId = buyer.id;
+  state.listedForSale = false;
+  if (!unlocks[buyer.id]) unlocks[buyer.id] = {};
+  unlocks[buyer.id][cardId] = true;
+  saveAll();
+  renderAll();
+}
+
+function toggleSale(cardId) {
+  const user = requireVerifiedUser('change listings');
+  if (!user) return;
+  const state = cardState[cardId];
+  if (state.ownerId !== user.id) return;
+  state.listedForSale = !state.listedForSale;
+  saveAll();
+  renderAll();
+}
+
+function requestTrade(requestedCardId, offeredCardId) {
+  const user = requireVerifiedUser('request trades');
+  if (!user || !offeredCardId) return;
+  const requestedState = cardState[requestedCardId];
+  const offeredState = cardState[offeredCardId];
+  if (!requestedState.ownerId || requestedState.ownerId === user.id) return;
+  if (offeredState.ownerId !== user.id) return;
+
+  const duplicate = trades.find((t) =>
+    t.status === 'pending' &&
+    t.fromUserId === user.id &&
+    t.toUserId === requestedState.ownerId &&
+    t.requestedCardId === requestedCardId &&
+    t.offeredCardId === offeredCardId
+  );
+  if (duplicate) return;
+
+  trades.push({
+    id: `t-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    fromUserId: user.id,
+    toUserId: requestedState.ownerId,
+    requestedCardId,
+    offeredCardId,
+    status: 'pending'
+  });
+  saveAll();
+  renderAll();
+}
+
+function resolveTrade(tradeId, accept) {
+  const user = requireVerifiedUser('manage trades');
+  if (!user) return;
+  const trade = trades.find((t) => t.id === tradeId && t.status === 'pending');
+  if (!trade || trade.toUserId !== user.id) return;
+
+  if (accept) {
+    const requestedState = cardState[trade.requestedCardId];
+    const offeredState = cardState[trade.offeredCardId];
+    if (requestedState.ownerId === trade.toUserId && offeredState.ownerId === trade.fromUserId) {
+      requestedState.ownerId = trade.fromUserId;
+      offeredState.ownerId = trade.toUserId;
+      requestedState.listedForSale = false;
+      offeredState.listedForSale = false;
+    }
+  }
+  trade.status = accept ? 'accepted' : 'declined';
+  saveAll();
+  renderAll();
+}
+
+function renderCardActions(node, card, state, user) {
+  const actionsEl = node.querySelector('.actions');
+  actionsEl.innerHTML = '';
+
+  const unlocked = isCardUnlockedFor(card.id, user);
+  const isOwner = user && state.ownerId === user.id;
+
+  if (!unlocked) {
+    const btn = document.createElement('button');
+    btn.className = 'btn primary';
+    btn.textContent = 'Unlock card ($0.50)';
+    btn.addEventListener('click', () => unlockCard(card.id));
+    actionsEl.appendChild(btn);
+    return;
+  }
+
+  if (!user) return;
+
+  if (isOwner) {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'btn';
+    toggleBtn.textContent = state.listedForSale ? 'Remove from Sale' : 'List for Sale ($0.50)';
+    toggleBtn.addEventListener('click', () => toggleSale(card.id));
+    actionsEl.appendChild(toggleBtn);
+    return;
+  }
+
+  if (state.listedForSale) {
+    const buyBtn = document.createElement('button');
+    buyBtn.className = 'btn primary';
+    buyBtn.textContent = 'Buy for $0.50';
+    buyBtn.addEventListener('click', () => buyCard(card.id));
+    actionsEl.appendChild(buyBtn);
+  }
+
+  const ownedCards = cards.filter((c) => cardState[c.id]?.ownerId === user.id);
+  if (ownedCards.length > 0 && state.ownerId && state.ownerId !== user.id) {
+    const wrap = document.createElement('div');
+    wrap.className = 'trade-form';
+    const select = document.createElement('select');
+    ownedCards.forEach((owned) => {
+      const option = document.createElement('option');
+      option.value = owned.id;
+      option.textContent = `${owned.badge} · ${owned.player}`;
+      select.appendChild(option);
+    });
+    const tradeBtn = document.createElement('button');
+    tradeBtn.className = 'btn';
+    tradeBtn.textContent = 'Request Trade (Free)';
+    tradeBtn.addEventListener('click', () => requestTrade(card.id, select.value));
+    wrap.appendChild(select);
+    wrap.appendChild(tradeBtn);
+    actionsEl.appendChild(wrap);
+  }
 }
 
 function renderCards() {
   const filter = filterEl.value;
   cardsEl.innerHTML = '';
-
+  const user = getCurrentUser();
   const visible = cards.filter((c) => filter === 'all' || c.sport === filter);
   const tpl = document.getElementById('cardTemplate');
 
   visible.forEach((card) => {
+    const state = cardState[card.id];
+    const unlocked = isCardUnlockedFor(card.id, user);
     const node = tpl.content.firstElementChild.cloneNode(true);
     node.dataset.id = card.id;
     node.querySelector('.card-img').src = card.image;
     node.querySelector('.card-img').alt = card.player;
     node.querySelector('.badge').textContent = card.badge;
     node.querySelector('.player').textContent = card.player;
-    node.querySelector('.base').textContent = money(card.baseValue);
-    node.querySelector('.clicks').textContent = String(card.clicks);
-    node.querySelector('.value').textContent = money(currentValue(card));
+    node.querySelector('.sport').textContent = card.sport;
+    node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
+    node.querySelector('.status').textContent = state.listedForSale ? 'For Sale ($0.50)' : 'Not Listed';
+    node.querySelector('.limit').textContent = state.limit;
+    node.querySelector('.price').textContent = centsToMoney(CARD_FEE_CENTS);
 
-    const activate = () => {
-      const current = byId.get(card.id);
-      current.clicks += 1;
-      saveClicks();
-      renderCards();
-      renderStats();
-    };
+    const lockEl = node.querySelector('.lock-banner');
+    if (unlocked) {
+      lockEl.textContent = 'Visible';
+      node.classList.remove('locked');
+    } else {
+      lockEl.textContent = 'Hidden until fee is paid';
+      node.classList.add('locked');
+    }
 
-    node.addEventListener('click', activate);
-    node.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activate();
-      }
-    });
-
+    renderCardActions(node, card, state, user);
     cardsEl.appendChild(node);
   });
 
@@ -721,14 +980,148 @@ function renderCards() {
 }
 
 function renderStats() {
-  const totalClicks = cards.reduce((sum, c) => sum + c.clicks, 0);
-  const totalValue = cards.reduce((sum, c) => sum + currentValue(c), 0);
-  statClicksEl.textContent = String(totalClicks);
-  statValueEl.textContent = money(totalValue);
+  const user = getCurrentUser();
+  const ownedCount = user ? cards.filter((c) => cardState[c.id]?.ownerId === user.id).length : 0;
+  const unlockedCount = user ? cards.filter((c) => isCardUnlockedFor(c.id, user)).length : 0;
+  statOwnedEl.textContent = String(ownedCount);
+  statUnlockedEl.textContent = String(unlockedCount);
+  statPlatformEl.textContent = centsToMoney(ledger.platformCents || 0);
 }
+
+function renderAuth() {
+  const user = getCurrentUser();
+  if (!user) {
+    currentUserPanel.hidden = true;
+    adminPanel.hidden = true;
+    tradePanel.hidden = true;
+    return;
+  }
+  currentUserPanel.hidden = false;
+  currentUserTextEl.textContent = `${user.username} · ${user.verified ? 'Verified' : 'Pending PayPal Verification'} · PayPal: ${user.paypalEmail || 'N/A'}`;
+  currentUserPayoutEl.textContent = centsToMoney(user.balanceCents || 0);
+  tradePanel.hidden = false;
+  adminPanel.hidden = !user.isAdmin;
+  renderTrades();
+  renderAdmin();
+}
+
+function renderAdmin() {
+  const user = getCurrentUser();
+  if (!user || !user.isAdmin) return;
+  adminTotalsEl.textContent = `Platform PayPal: ${ADMIN_PAYPAL} · Earnings: ${centsToMoney(ledger.platformCents || 0)}`;
+  adminUsersEl.innerHTML = '';
+
+  users
+    .filter((u) => !u.isAdmin)
+    .forEach((u) => {
+      const row = document.createElement('div');
+      row.className = 'admin-user';
+      const text = document.createElement('span');
+      text.textContent = `${u.username} · ${u.paypalEmail || 'No PayPal'} · ${u.verified ? 'Verified' : 'Unverified'}`;
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.textContent = u.verified ? 'Mark Unverified' : 'Mark Verified';
+      btn.addEventListener('click', () => {
+        u.verified = !u.verified;
+        saveAll();
+        renderAll();
+      });
+      row.appendChild(text);
+      row.appendChild(btn);
+      adminUsersEl.appendChild(row);
+    });
+}
+
+function renderTrades() {
+  const user = getCurrentUser();
+  if (!user) return;
+  tradeRequestsEl.innerHTML = '';
+  const incoming = trades.filter((t) => t.status === 'pending' && t.toUserId === user.id);
+  if (incoming.length === 0) {
+    tradeRequestsEl.textContent = 'No incoming trade requests.';
+    return;
+  }
+
+  incoming.forEach((trade) => {
+    const offered = byId.get(trade.offeredCardId);
+    const requested = byId.get(trade.requestedCardId);
+    const row = document.createElement('div');
+    row.className = 'trade-request';
+    const text = document.createElement('span');
+    text.textContent = `${userDisplayName(trade.fromUserId)} offers ${offered?.badge || trade.offeredCardId} for your ${requested?.badge || trade.requestedCardId}`;
+    const accept = document.createElement('button');
+    accept.className = 'btn primary';
+    accept.textContent = 'Accept';
+    accept.addEventListener('click', () => resolveTrade(trade.id, true));
+    const decline = document.createElement('button');
+    decline.className = 'btn';
+    decline.textContent = 'Decline';
+    decline.addEventListener('click', () => resolveTrade(trade.id, false));
+    row.appendChild(text);
+    row.appendChild(accept);
+    row.appendChild(decline);
+    tradeRequestsEl.appendChild(row);
+  });
+}
+
+function renderAll() {
+  renderAuth();
+  renderCards();
+  renderStats();
+}
+
+signupForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const username = document.getElementById('signupUsername').value.trim();
+  const password = document.getElementById('signupPassword').value.trim();
+  const paypalEmail = document.getElementById('signupPaypal').value.trim();
+  if (!username || !password || !paypalEmail) {
+    authMessageEl.textContent = 'Signup requires username, password, and PayPal email.';
+    return;
+  }
+  if (users.some((u) => u.username.toLowerCase() === username.toLowerCase())) {
+    authMessageEl.textContent = 'Username already exists.';
+    return;
+  }
+  users.push({
+    id: `u-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    username,
+    password,
+    paypalEmail,
+    verified: false,
+    isAdmin: false,
+    balanceCents: 0
+  });
+  saveAll();
+  authMessageEl.textContent = 'Account created. Wait for admin PayPal verification, then sign in.';
+  signupForm.reset();
+  renderAll();
+});
+
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const username = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  const user = users.find((u) => u.username === username && u.password === password);
+  if (!user) {
+    authMessageEl.textContent = 'Invalid username or password.';
+    return;
+  }
+  setCurrentUser(user);
+  authMessageEl.textContent = `Signed in as ${user.username}.`;
+  loginForm.reset();
+  renderAll();
+});
+
+logoutBtn.addEventListener('click', () => {
+  setCurrentUser(null);
+  authMessageEl.textContent = 'Signed out.';
+  renderAll();
+});
 
 filterEl.addEventListener('change', renderCards);
 
-loadClicks();
-renderCards();
-renderStats();
+ensureAdmin();
+ensureCardState();
+saveAll();
+renderAll();
