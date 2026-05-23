@@ -859,7 +859,7 @@ function inferCardDetailsFromFilename(filename) {
     .trim();
   return {
     title: cleaned || 'Uploaded Card',
-    description: `AI rendered details from uploaded image: ${cleaned || 'custom card image'}.`
+    description: `AI-rendered details from uploaded image: ${cleaned || 'custom card image'}.`
   };
 }
 
