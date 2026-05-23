@@ -778,7 +778,7 @@ function uniqueId(prefix) {
     const token = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
     return `${prefix}-${token}`;
   }
-  throw new Error('Secure random ID generation is required but unavailable in this browser.');
+  throw new Error('Secure random ID generation is unavailable. Please use a modern browser with Web Crypto API support.');
 }
 
 function normalizeUsername(username) {
@@ -827,7 +827,7 @@ async function createPasswordRecord(password, saltHex) {
     };
   }
 
-  throw new Error('PBKDF2 support is required for password storage.');
+  throw new Error('PBKDF2 support is required for secure password storage. Please upgrade to a modern browser.');
 }
 
 async function verifyPassword(user, password) {
@@ -912,6 +912,12 @@ function addWalletPurchase(userId, cardId) {
     amountCents: CARD_FEE_CENTS,
     at: new Date().toISOString()
   });
+}
+
+function matchesSportFilter(card, filterValue) {
+  if (filterValue === 'all') return true;
+  if (filterValue === 'Latest30') return LATEST_30_IMAGES.includes(card.image);
+  return card.sport === filterValue;
 }
 
 async function ensureUsers() {
@@ -1220,7 +1226,7 @@ function renderCards() {
   const viewScope = viewScopeEl.value;
   const showLocked = Boolean(showLockedToggleEl.checked);
   const hideNames = Boolean(hideNamesToggleEl.checked);
-  let visible = cards.filter((c) => filter === 'all' || c.sport === filter || (filter === 'latest30' && LATEST_30_IMAGES.includes(c.image)));
+  let visible = cards.filter((c) => matchesSportFilter(c, filter));
 
   if (viewScope === 'mine') {
     visible = visible.filter((c) => user && cardState[c.id]?.ownerId === user.id);
