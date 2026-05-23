@@ -647,36 +647,36 @@ const cards = [
 ];
 
 const LATEST_30_IMAGES = [
-  'ChatGPT Image May 21, 2026, 02_36_23 AM.png',
-  'ChatGPT Image May 21, 2026, 02_34_03 AM.png',
-  'ChatGPT Image May 21, 2026, 02_23_03 AM.png',
-  'ChatGPT Image May 21, 2026, 02_13_18 AM.png',
-  'ChatGPT Image May 21, 2026, 02_11_15 AM.png',
-  'ChatGPT Image May 21, 2026, 01_59_07 AM.png',
-  'ChatGPT Image May 21, 2026, 01_56_23 AM.png',
-  'ChatGPT Image May 21, 2026, 01_54_27 AM.png',
-  'ChatGPT Image May 21, 2026, 01_47_25 AM.png',
-  'ChatGPT Image May 21, 2026, 01_44_08 AM.png',
-  'ChatGPT Image May 21, 2026, 01_35_51 AM.png',
-  'ChatGPT Image May 21, 2026, 12_38_41 AM.png',
-  'ChatGPT Image May 21, 2026, 12_38_14 AM.png',
-  'ChatGPT Image May 21, 2026, 12_37_53 AM.png',
-  'ChatGPT Image May 20, 2026, 11_30_29 PM.png',
-  'ChatGPT Image May 20, 2026, 11_18_01 PM.png',
-  'ChatGPT Image May 20, 2026, 10_57_25 PM.png',
-  'ChatGPT Image May 20, 2026, 10_48_10 PM.png',
-  'ChatGPT Image May 20, 2026, 10_27_08 PM.png',
-  'ChatGPT Image May 20, 2026, 10_22_56 PM.png',
-  'ChatGPT Image May 20, 2026, 09_57_04 PM.png',
-  'ChatGPT Image May 20, 2026, 09_57_03 PM.png',
-  'ChatGPT Image May 20, 2026, 09_46_49 PM.png',
-  'ChatGPT Image May 20, 2026, 08_12_46 PM.png',
-  'ChatGPT Image May 20, 2026, 08_11_18 PM.png',
-  'ChatGPT Image May 20, 2026, 12_24_54 AM.png',
-  'ChatGPT Image May 20, 2026, 12_17_28 AM.png',
-  'ChatGPT Image May 19, 2026, 11_55_31 PM.png',
-  'ChatGPT Image May 19, 2026, 11_24_18 PM.png',
-  'ChatGPT Image May 19, 2026, 10_19_33 PM.png'
+  'ChatGPT Image May 23, 2026, 03_06_51 AM.png',
+  'ChatGPT Image May 23, 2026, 02_53_22 AM.png',
+  'ChatGPT Image May 23, 2026, 02_12_33 AM.png',
+  'ChatGPT Image May 23, 2026, 01_39_21 AM.png',
+  'ChatGPT Image May 23, 2026, 01_28_41 AM.png',
+  'ChatGPT Image May 23, 2026, 01_02_47 AM.png',
+  'ChatGPT Image May 23, 2026, 12_32_45 AM.png',
+  'ChatGPT Image May 22, 2026, 11_51_24 PM.png',
+  'ChatGPT Image May 22, 2026, 09_57_53 PM.png',
+  'ChatGPT Image May 22, 2026, 08_11_45 PM.png',
+  'ChatGPT Image May 22, 2026, 07_59_42 PM.png',
+  'ChatGPT Image May 22, 2026, 05_13_54 PM.png',
+  'ChatGPT Image May 22, 2026, 04_40_43 PM.png',
+  'ChatGPT Image May 22, 2026, 05_35_24 AM.png',
+  'ChatGPT Image May 22, 2026, 05_20_09 AM.png',
+  'ChatGPT Image May 22, 2026, 04_19_17 AM.png',
+  'ChatGPT Image May 22, 2026, 02_00_03 AM.png',
+  'ChatGPT Image May 22, 2026, 12_47_55 AM.png',
+  'ChatGPT Image May 21, 2026, 11_26_18 PM.png',
+  'ChatGPT Image May 21, 2026, 11_00_56 PM.png',
+  'ChatGPT Image May 21, 2026, 10_48_19 PM.png',
+  'ChatGPT Image May 21, 2026, 10_14_05 PM.png',
+  'ChatGPT Image May 21, 2026, 09_45_53 PM.png',
+  'ChatGPT Image May 21, 2026, 09_16_16 PM.png',
+  'ChatGPT Image May 21, 2026, 08_25_11 PM.png',
+  'ChatGPT Image May 21, 2026, 07_40_03 PM.png',
+  'ChatGPT Image May 21, 2026, 04_23_30 AM.png',
+  'ChatGPT Image May 21, 2026, 04_10_51 AM.png',
+  'ChatGPT Image May 21, 2026, 04_02_48 AM.png',
+  'ChatGPT Image May 21, 2026, 02_36_23 AM.png'
 ];
 
 const byId = new Map(cards.map((c) => [c.id, c]));
@@ -697,7 +697,8 @@ const STORAGE_KEYS = {
   uploads: 'tradeUploads',
   wallet: 'tradeWallet',
   preferences: 'tradePreferences',
-  cardMeta: 'tradeCardMeta'
+  cardMeta: 'tradeCardMeta',
+  openaiKey: 'tradeOpenAiApiKey'
 };
 
 function loadJson(key, fallback) {
@@ -750,6 +751,22 @@ const uploadDescriptionInputEl = document.getElementById('uploadDescriptionInput
 const uploadHideCardInputEl = document.getElementById('uploadHideCardInput');
 const uploadHideNameInputEl = document.getElementById('uploadHideNameInput');
 const aiDetailsBtnEl = document.getElementById('aiDetailsBtn');
+const uploadSportInputEl = document.getElementById('uploadSportInput');
+const uploadTemplateInputEl = document.getElementById('uploadTemplateInput');
+const showLoginPasswordEl = document.getElementById('showLoginPassword');
+const adminQuickSignInBtn = document.getElementById('adminQuickSignInBtn');
+const quickLinkButtons = Array.from(document.querySelectorAll('.quick-link-btn'));
+const bulkImportFormEl = document.getElementById('bulkImportForm');
+const bulkImportFilesInputEl = document.getElementById('bulkImportFilesInput');
+const bulkImportOwnerInputEl = document.getElementById('bulkImportOwnerInput');
+const bulkImportTemplateInputEl = document.getElementById('bulkImportTemplateInput');
+const aiStudioFormEl = document.getElementById('aiStudioForm');
+const aiPlayerInputEl = document.getElementById('aiPlayerInput');
+const aiSportInputEl = document.getElementById('aiSportInput');
+const aiTemplateInputEl = document.getElementById('aiTemplateInput');
+const aiPromptInputEl = document.getElementById('aiPromptInput');
+const aiGenerateBtnEl = document.getElementById('aiGenerateBtn');
+const openaiApiKeyInputEl = document.getElementById('openaiApiKeyInput');
 
 const users = loadJson(STORAGE_KEYS.users, []);
 const cardState = loadJson(STORAGE_KEYS.cardState, {});
@@ -861,6 +878,128 @@ function inferCardDetailsFromFilename(filename) {
     title: cleaned || 'Uploaded Card',
     description: `AI-rendered details from uploaded image: ${cleaned || 'custom card image'}.`
   };
+}
+
+const CARD_TEMPLATES = {
+  goudey: { label: 'Goudey Classic', badgePrefix: 'GD', titlePrefix: 'Goudey Tradition', tone: 'classic museum finish' },
+  topps: { label: 'Topps Heritage', badgePrefix: 'TP', titlePrefix: 'Topps Heritage', tone: 'clean flagship look' },
+  bowman: { label: 'Bowman Prospect', badgePrefix: 'BW', titlePrefix: 'Bowman Prospect', tone: 'prospect scouting style' },
+  chrome: { label: 'Chrome Refractor', badgePrefix: 'CR', titlePrefix: 'Chrome Refractor', tone: 'premium refractor foil style' },
+  vintage: { label: 'Vintage Throwback', badgePrefix: 'VT', titlePrefix: 'Vintage Throwback', tone: 'aged cardstock throwback style' }
+};
+
+function normalizeTemplateKey(templateKey) {
+  return CARD_TEMPLATES[templateKey] ? templateKey : 'goudey';
+}
+
+function applyTemplateToDetails(templateKey, details, player, sport) {
+  const key = normalizeTemplateKey(templateKey);
+  const tpl = CARD_TEMPLATES[key];
+  const cleanPlayer = (player || 'Featured Player').trim() || 'Featured Player';
+  const cleanSport = (sport || 'Other').trim() || 'Other';
+  const rawTitle = (details?.title || `${cleanPlayer} Card`).trim();
+  const rawDescription = (details?.description || `${cleanSport} collectible card.`).trim();
+  const title = `${tpl.titlePrefix} · ${rawTitle}`.slice(0, 120);
+  const description = `${rawDescription} Template: ${tpl.label} (${tpl.tone}).`;
+  return { title, description, badgePrefix: tpl.badgePrefix, templateKey: key };
+}
+
+function nextUploadBadge(prefix = 'UP') {
+  return `${prefix}-${String(uploads.length + 1).padStart(2, '0')}`;
+}
+
+async function callOpenAiForCardDraft(apiKey, prompt, player, sport, templateKey) {
+  const template = CARD_TEMPLATES[normalizeTemplateKey(templateKey)];
+  const payload = {
+    model: 'gpt-4.1-mini',
+    input: [
+      {
+        role: 'system',
+        content: `You generate trading card copy. Respond with exactly two lines: TITLE: ... and DESCRIPTION: ... Use ${template.label} style.`
+      },
+      {
+        role: 'user',
+        content: `Player: ${player || 'Featured Player'}\nSport: ${sport || 'Other'}\nPrompt: ${prompt || 'Create a high-end card copy.'}`
+      }
+    ]
+  };
+  const res = await fetch('https://api.openai.com/v1/responses', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    throw new Error(`OpenAI request failed (${res.status}).`);
+  }
+  const data = await res.json();
+  const raw = (data?.output_text || '').trim();
+  const titleMatch = raw.match(/TITLE:\s*(.+)/i);
+  const descriptionMatch = raw.match(/DESCRIPTION:\s*([\s\S]+)/i);
+  return {
+    title: titleMatch?.[1]?.trim() || `${player || 'Featured Player'} ${template.label}`,
+    description: descriptionMatch?.[1]?.trim() || `AI card copy for ${player || 'Featured Player'} in ${sport || 'Other'}.`
+  };
+}
+
+function createLocalAiDraft(prompt, player, sport, templateKey) {
+  const template = CARD_TEMPLATES[normalizeTemplateKey(templateKey)];
+  const cleanPlayer = (player || 'Featured Player').trim() || 'Featured Player';
+  const cleanSport = (sport || 'Other').trim() || 'Other';
+  const cleanPrompt = (prompt || 'high-upside collectible').trim();
+  return {
+    title: `${cleanPlayer} · ${template.label} Edition`,
+    description: `${cleanPlayer} ${cleanSport} card concept focused on ${cleanPrompt}. Built with ${template.label} styling for premium collector appeal.`
+  };
+}
+
+async function readFileAsDataUrl(file) {
+  return await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function upsertCard({
+  ownerId,
+  image,
+  sport = 'Other',
+  player,
+  templateKey = 'goudey',
+  title,
+  description,
+  uploadHidden = false,
+  hideNameFromOthers = false
+}) {
+  const safeTemplate = normalizeTemplateKey(templateKey);
+  const template = CARD_TEMPLATES[safeTemplate];
+  const cardId = uniqueId('upload');
+  const badge = nextUploadBadge(template.badgePrefix);
+  const card = {
+    id: cardId,
+    sport,
+    player,
+    baseValue: 150,
+    clicks: 0,
+    badge,
+    image,
+    isUpload: true
+  };
+  uploads.push(card);
+  cards.push(card);
+  byId.set(card.id, card);
+  cardState[card.id] = { ownerId, listedForSale: false, limit: '1/1', uploadHidden };
+  cardMeta[card.id] = {
+    title,
+    description,
+    hideNameFromOthers: Boolean(hideNameFromOthers)
+  };
+  if (!unlocks[ownerId]) unlocks[ownerId] = {};
+  unlocks[ownerId][card.id] = true;
 }
 
 function ensureCardMetadata() {
@@ -1296,6 +1435,8 @@ function renderAuth() {
     tradePanel.hidden = true;
     walletPanelEl.hidden = true;
     uploadPanelEl.hidden = true;
+    bulkImportFormEl.hidden = true;
+    aiStudioFormEl.hidden = true;
     return;
   }
   currentUserPanel.hidden = false;
@@ -1304,15 +1445,31 @@ function renderAuth() {
   tradePanel.hidden = false;
   walletPanelEl.hidden = false;
   uploadPanelEl.hidden = false;
+  bulkImportFormEl.hidden = false;
+  aiStudioFormEl.hidden = false;
   adminPanel.hidden = true;
+  renderBulkImportOwners(user);
   renderTrades();
   renderAdmin();
   renderWallet();
 }
 
+function renderBulkImportOwners(currentUser) {
+  bulkImportOwnerInputEl.innerHTML = '';
+  users.forEach((user) => {
+    if (!currentUser?.isAdmin && user.id !== currentUser?.id) return;
+    const option = document.createElement('option');
+    option.value = user.id;
+    option.textContent = user.isAdmin ? `${user.username} (Admin)` : user.username;
+    if (currentUser && user.id === currentUser.id) option.selected = true;
+    bulkImportOwnerInputEl.appendChild(option);
+  });
+}
+
 function renderAdmin() {
   const user = getCurrentUser();
   if (!user || !user.isAdmin) return;
+  adminPanel.hidden = false;
   adminTotalsEl.textContent = `Platform PayPal: ${ledger.platformPaypal || DEFAULT_PLATFORM_PAYPAL} · Earnings: ${centsToMoney(ledger.platformCents || 0)}`;
   adminPaypalInput.value = ledger.platformPaypal || DEFAULT_PLATFORM_PAYPAL;
   adminUsersEl.innerHTML = '';
@@ -1407,6 +1564,10 @@ signupForm.addEventListener('submit', async (e) => {
     authMessageEl.textContent = 'Signup requires username, password, and PayPal email.';
     return;
   }
+  if (password.length < 6) {
+    authMessageEl.textContent = 'Use a stronger password with at least 6 characters.';
+    return;
+  }
   if (users.some((u) => u.usernameKey === usernameKey)) {
     authMessageEl.textContent = 'Username already exists.';
     return;
@@ -1427,6 +1588,8 @@ signupForm.addEventListener('submit', async (e) => {
   saveAll();
   authMessageEl.textContent = 'Account created. You can sign in immediately.';
   signupForm.reset();
+  showLoginPasswordEl.checked = false;
+  document.getElementById('loginPassword').type = 'password';
   renderAll();
 });
 
@@ -1450,12 +1613,16 @@ loginForm.addEventListener('submit', async (e) => {
   setCurrentUser(user);
   authMessageEl.textContent = `Signed in as ${user.username}.`;
   loginForm.reset();
+  showLoginPasswordEl.checked = false;
+  document.getElementById('loginPassword').type = 'password';
+  closeMenu();
   renderAll();
 });
 
 logoutBtn.addEventListener('click', () => {
   setCurrentUser(null);
   authMessageEl.textContent = 'Signed out.';
+  closeMenu();
   renderAll();
 });
 
@@ -1489,13 +1656,55 @@ hideNamesToggleEl.addEventListener('change', () => {
   renderCards();
 });
 
+function closeMenu() {
+  sidePanelEl.classList.remove('menu-open');
+  menuToggleBtn.setAttribute('aria-expanded', 'false');
+}
+
 menuToggleBtn.addEventListener('click', () => {
-  sidePanelEl.classList.toggle('menu-open');
+  const opening = !sidePanelEl.classList.contains('menu-open');
+  sidePanelEl.classList.toggle('menu-open', opening);
+  menuToggleBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+});
+
+document.addEventListener('click', (event) => {
+  if (window.innerWidth > 980) return;
+  if (!sidePanelEl.classList.contains('menu-open')) return;
+  if (sidePanelEl.contains(event.target) || menuToggleBtn.contains(event.target)) return;
+  closeMenu();
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 980) closeMenu();
+});
+
+quickLinkButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const target = document.querySelector(btn.dataset.jump || '');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    closeMenu();
+  });
+});
+
+showLoginPasswordEl.addEventListener('change', () => {
+  document.getElementById('loginPassword').type = showLoginPasswordEl.checked ? 'text' : 'password';
+});
+
+adminQuickSignInBtn.addEventListener('click', () => {
+  document.getElementById('loginUsername').value = ADMIN_USERNAME;
+  document.getElementById('loginPassword').value = ADMIN_PASSWORD;
+  authMessageEl.textContent = 'Admin credentials filled. Click Sign In.';
 });
 
 aiDetailsBtnEl.addEventListener('click', () => {
   const file = uploadImageInputEl.files?.[0];
-  const details = inferCardDetailsFromFilename(file?.name || uploadTitleInputEl.value || 'Custom Upload');
+  const rawDetails = inferCardDetailsFromFilename(file?.name || uploadTitleInputEl.value || 'Custom Upload');
+  const details = applyTemplateToDetails(
+    uploadTemplateInputEl.value,
+    rawDetails,
+    uploadTitleInputEl.value || getCurrentUser()?.username || 'Featured Player',
+    uploadSportInputEl.value
+  );
   uploadTitleInputEl.value = details.title;
   uploadDescriptionInputEl.value = details.description;
 });
@@ -1515,40 +1724,91 @@ uploadFormEl.addEventListener('submit', async (e) => {
     authMessageEl.textContent = 'Upload requires a title and description.';
     return;
   }
-
-  const imageDataUrl = await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result || ''));
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-
-  const cardId = uniqueId('upload');
-  const card = {
-    id: cardId,
-    sport: 'Other',
-    player: user.username,
-    baseValue: 150,
-    clicks: 0,
-    badge: `UP-${String(uploads.length + 1).padStart(2, '0')}`,
+  const imageDataUrl = await readFileAsDataUrl(file);
+  const templated = applyTemplateToDetails(
+    uploadTemplateInputEl.value,
+    { title, description },
+    user.username,
+    uploadSportInputEl.value
+  );
+  upsertCard({
+    ownerId: user.id,
     image: imageDataUrl,
-    isUpload: true
-  };
-  uploads.push(card);
-  cards.push(card);
-  byId.set(card.id, card);
-  cardState[card.id] = { ownerId: user.id, listedForSale: false, limit: '1/1', uploadHidden: uploadHideCardInputEl.checked };
-  cardMeta[card.id] = {
-    title,
-    description,
+    sport: uploadSportInputEl.value || 'Other',
+    player: user.username,
+    templateKey: uploadTemplateInputEl.value,
+    title: templated.title,
+    description: templated.description,
+    uploadHidden: uploadHideCardInputEl.checked,
     hideNameFromOthers: uploadHideNameInputEl.checked
-  };
-  if (!unlocks[user.id]) unlocks[user.id] = {};
-  unlocks[user.id][card.id] = true;
+  });
   saveAll();
   uploadFormEl.reset();
   authMessageEl.textContent = 'Upload saved with editable AI-rendered details.';
   renderAll();
+});
+
+bulkImportFormEl.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const actor = requireVerifiedUser('bulk import cards');
+  if (!actor) return;
+  const files = Array.from(bulkImportFilesInputEl.files || []);
+  if (files.length === 0) {
+    authMessageEl.textContent = 'Select one or more images to bulk import.';
+    return;
+  }
+  const desiredOwnerId = bulkImportOwnerInputEl.value || actor.id;
+  const ownerId = actor.isAdmin ? desiredOwnerId : actor.id;
+  const owner = users.find((u) => u.id === ownerId) || actor;
+  const templateKey = bulkImportTemplateInputEl.value;
+  for (const file of files) {
+    const imageDataUrl = await readFileAsDataUrl(file);
+    const guessed = inferCardDetailsFromFilename(file.name);
+    const templated = applyTemplateToDetails(templateKey, guessed, owner.username, 'Other');
+    upsertCard({
+      ownerId: owner.id,
+      image: imageDataUrl,
+      sport: 'Other',
+      player: owner.username,
+      templateKey,
+      title: templated.title,
+      description: templated.description,
+      uploadHidden: false,
+      hideNameFromOthers: false
+    });
+  }
+  saveAll();
+  bulkImportFormEl.reset();
+  authMessageEl.textContent = `Imported ${files.length} card(s) for ${owner.username}.`;
+  renderAll();
+});
+
+aiGenerateBtnEl.addEventListener('click', async () => {
+  const user = requireVerifiedUser('generate AI card details');
+  if (!user) return;
+  const player = aiPlayerInputEl.value.trim() || user.username;
+  const sport = aiSportInputEl.value;
+  const templateKey = aiTemplateInputEl.value;
+  const prompt = aiPromptInputEl.value.trim();
+  const apiKey = openaiApiKeyInputEl.value.trim();
+  let raw;
+  try {
+    raw = apiKey
+      ? await callOpenAiForCardDraft(apiKey, prompt, player, sport, templateKey)
+      : createLocalAiDraft(prompt, player, sport, templateKey);
+  } catch (error) {
+    console.warn('OpenAI generation failed. Falling back to local generation.', error);
+    raw = createLocalAiDraft(prompt, player, sport, templateKey);
+  }
+  const templated = applyTemplateToDetails(templateKey, raw, player, sport);
+  uploadTitleInputEl.value = templated.title;
+  uploadDescriptionInputEl.value = templated.description;
+  uploadTemplateInputEl.value = templateKey;
+  uploadSportInputEl.value = sport;
+  authMessageEl.textContent = 'AI draft applied to the upload form.';
+  if (apiKey) {
+    localStorage.setItem(STORAGE_KEYS.openaiKey, apiKey);
+  }
 });
 
 async function bootstrap() {
@@ -1557,6 +1817,7 @@ async function bootstrap() {
   ensureCardState();
   ensureCardMetadata();
   if (!ledger.platformPaypal) ledger.platformPaypal = DEFAULT_PLATFORM_PAYPAL;
+  openaiApiKeyInputEl.value = localStorage.getItem(STORAGE_KEYS.openaiKey) || '';
   viewScopeEl.value = preferences.viewScope || 'all';
   showLockedToggleEl.checked = preferences.showLocked !== false;
   hideNamesToggleEl.checked = Boolean(preferences.hideNames);

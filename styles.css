@@ -34,6 +34,11 @@ body {
   color: #fff;
   padding: .35rem .55rem;
   cursor: pointer;
+  font-weight: 700;
+}
+.menu-btn[aria-expanded="true"] {
+  border-color: var(--gold-2);
+  box-shadow: 0 0 0 1px rgba(214,169,79,.25);
 }
 .topbar h1 { margin: 0; font-size: clamp(1.2rem, 3vw, 2rem); color: var(--gold); letter-spacing: .03em; }
 .topbar p { margin: .35rem 0 0; color: var(--muted); font-size: .95rem; }
@@ -295,6 +300,27 @@ body {
   font-size: .92rem;
   color: var(--gold);
 }
+.quick-links {
+  border: 1px solid #222a3b;
+  border-radius: 10px;
+  padding: .65rem;
+  margin: .1rem 0 .85rem;
+  background: rgba(5,8,14,.55);
+}
+.quick-links h3 {
+  margin: 0 0 .45rem;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.quick-links-grid {
+  display: grid;
+  gap: .35rem;
+  grid-template-columns: 1fr 1fr;
+}
+.quick-link-btn {
+  font-size: .76rem;
+  padding: .38rem .42rem;
+}
 .admin-user,
 .trade-request {
   display: grid;
@@ -332,6 +358,13 @@ body {
   border-radius: 8px;
   padding: .45rem .55rem;
 }
+.auth-form label {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  color: var(--muted);
+  font-size: .8rem;
+}
 .lock-banner {
   margin-bottom: .5rem;
   font-size: .78rem;
@@ -351,6 +384,15 @@ body {
   .menu-btn { display: inline-flex; }
   .side {
     display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 70px;
+    z-index: 20;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    margin: 0 .7rem;
+    box-shadow: 0 14px 34px rgba(0,0,0,.5);
   }
   .side.menu-open {
     display: block;

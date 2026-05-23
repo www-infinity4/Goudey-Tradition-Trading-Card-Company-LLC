@@ -12,6 +12,10 @@ A Beckett-style, high-end trading card display website is included in:
 ### Behavior
 
 - Professional museum-style metallic card visuals.
-- Click any card to increase its displayed value.
-- No uploads.
-- No saved backend state required.
+- Local account system with secure browser-side password hashing.
+- Built-in admin account (`Kris` / `Kris`) with admin panel controls.
+- Upload cards, bulk import multiple card images, and manage marketplace ownership.
+- Template-driven card creation (Goudey, Topps, Bowman, Chrome, Vintage styles).
+- AI card drafting in-app (free local generator + optional OpenAI API integration).
+- "Latest 30" image feed support to auto-include newest card uploads.
+- Fully client-side app using localStorage (no backend required).
