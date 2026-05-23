@@ -9,8 +9,9 @@
 </head>
 <body>
   <header class="topbar">
+    <button id="menuToggleBtn" class="menu-btn" type="button" aria-label="Toggle menu">☰</button>
     <h1>Goudey Tradition Card Museum</h1>
-    <p>Professional high-end showcase · Click cards to increase value</p>
+    <p>Trading platform · Pay-to-unlock cards · Buy or trade with other users</p>
   </header>
 
   <main class="layout">
@@ -21,43 +22,118 @@
           <label for="sportFilter">Sport</label>
           <select id="sportFilter">
             <option value="all">All</option>
+            <option value="Latest30">Latest 30 Images</option>
             <option value="Baseball">Baseball</option>
             <option value="Football">Football</option>
             <option value="Basketball">Basketball</option>
             <option value="Entertainment">Entertainment</option>
             <option value="Other">Other</option>
           </select>
+          <label for="viewScope">View</label>
+          <select id="viewScope">
+            <option value="all">All Cards</option>
+            <option value="mine">My Cards</option>
+            <option value="others">Others' Cards</option>
+          </select>
         </div>
+      </div>
+      <div class="panel-switches">
+        <label><input id="showLockedToggle" type="checkbox" checked /> Show hidden cards</label>
+        <label><input id="hideNamesToggle" type="checkbox" /> Hide card names</label>
       </div>
       <div id="cards" class="card-grid"></div>
     </section>
 
-    <aside class="panel side">
-      <h2>Market Summary</h2>
+    <aside id="sidePanel" class="panel side">
+      <h2>Account & Market</h2>
+      <div class="auth-wrap">
+        <form id="signupForm" class="auth-form">
+          <h3>Sign Up</h3>
+          <input id="signupUsername" type="text" placeholder="Username" autocomplete="username" required />
+          <input id="signupPassword" type="password" placeholder="Password" autocomplete="new-password" required />
+          <input id="signupPaypal" type="email" placeholder="PayPal Email" autocomplete="email" required />
+          <button class="btn primary" type="submit">Create Account</button>
+        </form>
+
+        <form id="loginForm" class="auth-form">
+          <h3>Sign In</h3>
+          <input id="loginUsername" type="text" placeholder="Username" autocomplete="username" required />
+          <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" required />
+          <button class="btn" type="submit">Sign In</button>
+        </form>
+        <p id="authMessage" class="note"></p>
+      </div>
+
+      <div id="currentUserPanel" class="current-user" hidden>
+        <p id="currentUserText"></p>
+        <p>Seller Payout Balance: <strong id="currentUserPayout">$0.00</strong></p>
+        <button id="logoutBtn" class="btn" type="button">Sign Out</button>
+      </div>
+
       <dl class="stats">
         <div><dt>Total Cards</dt><dd id="statCards">0</dd></div>
-        <div><dt>Total Clicks</dt><dd id="statClicks">0</dd></div>
-        <div><dt>Portfolio Value</dt><dd id="statValue">$0</dd></div>
+        <div><dt>Your Owned Cards</dt><dd id="statOwned">0</dd></div>
+        <div><dt>Your Unlocked Cards</dt><dd id="statUnlocked">0</dd></div>
+        <div><dt>Platform Earnings</dt><dd id="statPlatform">$0.00</dd></div>
       </dl>
-      <p class="note">
-        No uploads. No account needed. Click counts are saved in your browser and persist across page reloads.
-      </p>
+
+      <section id="tradePanel" class="admin-block" hidden>
+        <h3>Incoming Trade Requests (Free)</h3>
+        <div id="tradeRequests"></div>
+      </section>
+
+      <section id="walletPanel" class="admin-block" hidden>
+        <h3>Wallet</h3>
+        <p id="walletSummary" class="note"></p>
+        <div id="walletCards"></div>
+      </section>
+
+      <section id="uploadPanel" class="admin-block" hidden>
+        <h3>Upload Card</h3>
+        <form id="uploadForm" class="auth-form">
+          <input id="uploadImageInput" type="file" accept="image/*" required />
+          <input id="uploadTitleInput" type="text" placeholder="Card Title" required />
+          <textarea id="uploadDescriptionInput" placeholder="Card Description" rows="3" required></textarea>
+          <label><input id="uploadHideCardInput" type="checkbox" /> Hide this upload from other users</label>
+          <label><input id="uploadHideNameInput" type="checkbox" /> Hide this card name from other users</label>
+          <button id="aiDetailsBtn" class="btn" type="button">AI Render Details</button>
+          <button class="btn primary" type="submit">Save Upload</button>
+        </form>
+      </section>
+
+      <section id="adminPanel" class="admin-block" hidden>
+        <h3>Admin Panel</h3>
+        <p id="adminTotals" class="note"></p>
+        <div class="admin-paypal">
+          <input id="adminPaypalInput" type="email" placeholder="Platform PayPal email" />
+          <button id="saveAdminPaypalBtn" class="btn" type="button">Save PayPal Destination</button>
+        </div>
+        <div id="adminUsers"></div>
+      </section>
     </aside>
   </main>
 
   <template id="cardTemplate">
-    <article class="card" role="button" tabindex="0" aria-label="Trading card">
+    <article class="card" aria-label="Trading card">
       <div class="card-chrome">
+        <div class="lock-banner"></div>
         <img class="card-img" src="" alt="" />
         <div class="card-foot">
           <span class="badge"></span>
           <span class="player"></span>
         </div>
-        <div class="table">
-          <div><span>Base Value</span><strong class="base"></strong></div>
-          <div><span>Clicks</span><strong class="clicks"></strong></div>
-          <div><span>Current Value</span><strong class="value"></strong></div>
+        <div class="meta">
+          <h4 class="card-title"></h4>
+          <p class="card-description"></p>
         </div>
+        <div class="table">
+          <div><span>Sport</span><strong class="sport"></strong></div>
+          <div><span>Owner</span><strong class="owner"></strong></div>
+          <div><span>Status</span><strong class="status"></strong></div>
+          <div><span>Fee</span><strong class="price"></strong></div>
+          <div><span>Limit</span><strong class="limit"></strong></div>
+        </div>
+        <div class="actions"></div>
       </div>
     </article>
   </template>

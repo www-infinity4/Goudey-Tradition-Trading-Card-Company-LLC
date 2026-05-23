@@ -646,74 +646,633 @@ const cards = [
   }
 ];
 
-const byId = new Map(cards.map((c) => [c.id, c]));
-const PRICE_INCREMENT_PER_CLICK = 0.5;
+const LATEST_30_IMAGES = [
+  'ChatGPT Image May 21, 2026, 02_36_23 AM.png',
+  'ChatGPT Image May 21, 2026, 02_34_03 AM.png',
+  'ChatGPT Image May 21, 2026, 02_23_03 AM.png',
+  'ChatGPT Image May 21, 2026, 02_13_18 AM.png',
+  'ChatGPT Image May 21, 2026, 02_11_15 AM.png',
+  'ChatGPT Image May 21, 2026, 01_59_07 AM.png',
+  'ChatGPT Image May 21, 2026, 01_56_23 AM.png',
+  'ChatGPT Image May 21, 2026, 01_54_27 AM.png',
+  'ChatGPT Image May 21, 2026, 01_47_25 AM.png',
+  'ChatGPT Image May 21, 2026, 01_44_08 AM.png',
+  'ChatGPT Image May 21, 2026, 01_35_51 AM.png',
+  'ChatGPT Image May 21, 2026, 12_38_41 AM.png',
+  'ChatGPT Image May 21, 2026, 12_38_14 AM.png',
+  'ChatGPT Image May 21, 2026, 12_37_53 AM.png',
+  'ChatGPT Image May 20, 2026, 11_30_29 PM.png',
+  'ChatGPT Image May 20, 2026, 11_18_01 PM.png',
+  'ChatGPT Image May 20, 2026, 10_57_25 PM.png',
+  'ChatGPT Image May 20, 2026, 10_48_10 PM.png',
+  'ChatGPT Image May 20, 2026, 10_27_08 PM.png',
+  'ChatGPT Image May 20, 2026, 10_22_56 PM.png',
+  'ChatGPT Image May 20, 2026, 09_57_04 PM.png',
+  'ChatGPT Image May 20, 2026, 09_57_03 PM.png',
+  'ChatGPT Image May 20, 2026, 09_46_49 PM.png',
+  'ChatGPT Image May 20, 2026, 08_12_46 PM.png',
+  'ChatGPT Image May 20, 2026, 08_11_18 PM.png',
+  'ChatGPT Image May 20, 2026, 12_24_54 AM.png',
+  'ChatGPT Image May 20, 2026, 12_17_28 AM.png',
+  'ChatGPT Image May 19, 2026, 11_55_31 PM.png',
+  'ChatGPT Image May 19, 2026, 11_24_18 PM.png',
+  'ChatGPT Image May 19, 2026, 10_19_33 PM.png'
+];
 
-function loadClicks() {
+const byId = new Map(cards.map((c) => [c.id, c]));
+const CARD_FEE_CENTS = 50;
+const PLATFORM_FEE_CENTS = 10;
+const SELLER_PAYOUT_CENTS = 40;
+const ADMIN_USERNAME = 'Kris';
+const ADMIN_PASSWORD = 'Kris';
+const DEFAULT_PLATFORM_PAYPAL = 'watsonkris611@gmail.com';
+
+const STORAGE_KEYS = {
+  users: 'tradeUsers',
+  currentUserId: 'tradeCurrentUserId',
+  cardState: 'tradeCardState',
+  unlocks: 'tradeUnlocks',
+  trades: 'tradeTrades',
+  ledger: 'tradeLedger',
+  uploads: 'tradeUploads',
+  wallet: 'tradeWallet',
+  preferences: 'tradePreferences',
+  cardMeta: 'tradeCardMeta'
+};
+
+function loadJson(key, fallback) {
   try {
-    const saved = JSON.parse(localStorage.getItem('cardClicks') || '{}');
-    cards.forEach((card) => {
-      if (typeof saved[card.id] === 'number') {
-        card.clicks = saved[card.id];
-      }
-    });
-  } catch (e) { console.warn('cardClicks: failed to load from localStorage', e); }
+    const value = JSON.parse(localStorage.getItem(key) || 'null');
+    return value === null ? fallback : value;
+  } catch (e) {
+    console.warn(`Failed loading ${key}`, e);
+    return fallback;
+  }
 }
 
-function saveClicks() {
-  const data = {};
-  cards.forEach((card) => { data[card.id] = card.clicks; });
-  localStorage.setItem('cardClicks', JSON.stringify(data));
+function saveJson(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
 }
 
 const cardsEl = document.getElementById('cards');
 const filterEl = document.getElementById('sportFilter');
+const viewScopeEl = document.getElementById('viewScope');
+const showLockedToggleEl = document.getElementById('showLockedToggle');
+const hideNamesToggleEl = document.getElementById('hideNamesToggle');
 const statCardsEl = document.getElementById('statCards');
-const statClicksEl = document.getElementById('statClicks');
-const statValueEl = document.getElementById('statValue');
+const statOwnedEl = document.getElementById('statOwned');
+const statUnlockedEl = document.getElementById('statUnlocked');
+const statPlatformEl = document.getElementById('statPlatform');
+const signupForm = document.getElementById('signupForm');
+const loginForm = document.getElementById('loginForm');
+const authMessageEl = document.getElementById('authMessage');
+const currentUserPanel = document.getElementById('currentUserPanel');
+const currentUserTextEl = document.getElementById('currentUserText');
+const currentUserPayoutEl = document.getElementById('currentUserPayout');
+const logoutBtn = document.getElementById('logoutBtn');
+const adminPanel = document.getElementById('adminPanel');
+const adminUsersEl = document.getElementById('adminUsers');
+const adminTotalsEl = document.getElementById('adminTotals');
+const adminPaypalInput = document.getElementById('adminPaypalInput');
+const saveAdminPaypalBtn = document.getElementById('saveAdminPaypalBtn');
+const sidePanelEl = document.getElementById('sidePanel');
+const menuToggleBtn = document.getElementById('menuToggleBtn');
+const tradePanel = document.getElementById('tradePanel');
+const tradeRequestsEl = document.getElementById('tradeRequests');
+const walletPanelEl = document.getElementById('walletPanel');
+const walletSummaryEl = document.getElementById('walletSummary');
+const walletCardsEl = document.getElementById('walletCards');
+const uploadPanelEl = document.getElementById('uploadPanel');
+const uploadFormEl = document.getElementById('uploadForm');
+const uploadImageInputEl = document.getElementById('uploadImageInput');
+const uploadTitleInputEl = document.getElementById('uploadTitleInput');
+const uploadDescriptionInputEl = document.getElementById('uploadDescriptionInput');
+const uploadHideCardInputEl = document.getElementById('uploadHideCardInput');
+const uploadHideNameInputEl = document.getElementById('uploadHideNameInput');
+const aiDetailsBtnEl = document.getElementById('aiDetailsBtn');
 
-function money(n) {
-  return n.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
+const users = loadJson(STORAGE_KEYS.users, []);
+const cardState = loadJson(STORAGE_KEYS.cardState, {});
+const unlocks = loadJson(STORAGE_KEYS.unlocks, {});
+const trades = loadJson(STORAGE_KEYS.trades, []);
+const ledger = loadJson(STORAGE_KEYS.ledger, { platformCents: 0, platformPaypal: DEFAULT_PLATFORM_PAYPAL });
+const uploads = loadJson(STORAGE_KEYS.uploads, []);
+const wallet = loadJson(STORAGE_KEYS.wallet, {});
+const preferences = loadJson(STORAGE_KEYS.preferences, { viewScope: 'all', showLocked: true, hideNames: false });
+const cardMeta = loadJson(STORAGE_KEYS.cardMeta, {});
+
+uploads.forEach((uploadCard) => {
+  cards.push(uploadCard);
+  byId.set(uploadCard.id, uploadCard);
+});
+
+function centsToMoney(cents) {
+  return (cents / 100).toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
 }
 
-function currentValue(card) {
-  return card.baseValue + card.clicks * PRICE_INCREMENT_PER_CLICK;
+function uniqueId(prefix) {
+  if (globalThis.crypto?.randomUUID) return `${prefix}-${globalThis.crypto.randomUUID()}`;
+  if (globalThis.crypto?.getRandomValues) {
+    const bytes = new Uint8Array(16);
+    globalThis.crypto.getRandomValues(bytes);
+    const token = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+    return `${prefix}-${token}`;
+  }
+  throw new Error('Secure random ID generation is unavailable. Please use a modern browser with Web Crypto API support.');
+}
+
+function normalizeUsername(username) {
+  return username.normalize('NFKC').trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+async function hashPassword(password) {
+  if (!globalThis.crypto?.subtle) throw new Error('Secure password hashing is unavailable in this browser.');
+  const data = new TextEncoder().encode(password);
+  const digest = await globalThis.crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function bytesToHex(bytes) {
+  return Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function hexToBytes(hex) {
+  const clean = (hex || '').trim();
+  if (!clean || clean.length % 2 !== 0) return new Uint8Array();
+  const bytes = new Uint8Array(clean.length / 2);
+  for (let i = 0; i < clean.length; i += 2) bytes[i / 2] = parseInt(clean.slice(i, i + 2), 16);
+  return bytes;
+}
+
+async function createPasswordRecord(password, saltHex) {
+  const canUsePBKDF2 = Boolean(globalThis.crypto?.subtle && globalThis.crypto?.getRandomValues);
+  if (canUsePBKDF2) {
+    const saltBytes = saltHex ? hexToBytes(saltHex) : globalThis.crypto.getRandomValues(new Uint8Array(16));
+    const keyMaterial = await globalThis.crypto.subtle.importKey(
+      'raw',
+      new TextEncoder().encode(password),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveBits']
+    );
+    const bits = await globalThis.crypto.subtle.deriveBits(
+      { name: 'PBKDF2', salt: saltBytes, iterations: 100000, hash: 'SHA-256' },
+      keyMaterial,
+      256
+    );
+    return {
+      passwordHash: bytesToHex(new Uint8Array(bits)),
+      passwordSalt: bytesToHex(saltBytes),
+      passwordScheme: 'pbkdf2'
+    };
+  }
+
+  throw new Error('PBKDF2 support is required for secure password storage. Please upgrade to a modern browser.');
+}
+
+async function verifyPassword(user, password) {
+  if (user.passwordScheme === 'pbkdf2' && user.passwordSalt) {
+    const candidate = await createPasswordRecord(password, user.passwordSalt);
+    return candidate.passwordHash === user.passwordHash;
+  }
+  return user.passwordHash === await hashPassword(password);
+}
+
+function saveAll() {
+  saveJson(STORAGE_KEYS.users, users);
+  saveJson(STORAGE_KEYS.cardState, cardState);
+  saveJson(STORAGE_KEYS.unlocks, unlocks);
+  saveJson(STORAGE_KEYS.trades, trades);
+  saveJson(STORAGE_KEYS.ledger, ledger);
+  saveJson(STORAGE_KEYS.uploads, uploads);
+  saveJson(STORAGE_KEYS.wallet, wallet);
+  saveJson(STORAGE_KEYS.preferences, preferences);
+  saveJson(STORAGE_KEYS.cardMeta, cardMeta);
+}
+
+function inferCardDetailsFromFilename(filename) {
+  const cleaned = (filename || 'Uploaded Card')
+    .replace(/\.[a-z0-9]+$/i, '')
+    .replace(/^ChatGPT Image /i, '')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return {
+    title: cleaned || 'Uploaded Card',
+    description: `AI-rendered details from uploaded image: ${cleaned || 'custom card image'}.`
+  };
+}
+
+function ensureCardMetadata() {
+  cards.forEach((card) => {
+    if (!cardMeta[card.id]) {
+      cardMeta[card.id] = {
+        title: `${card.badge} · ${card.player}`,
+        description: `${card.sport} collectible card.`,
+        hideNameFromOthers: false
+      };
+    } else {
+      cardMeta[card.id].title = cardMeta[card.id].title || `${card.badge} · ${card.player}`;
+      cardMeta[card.id].description = cardMeta[card.id].description || `${card.sport} collectible card.`;
+      cardMeta[card.id].hideNameFromOthers = Boolean(cardMeta[card.id].hideNameFromOthers);
+    }
+  });
+}
+
+function ensureLatestThirtyPresent() {
+  LATEST_30_IMAGES.forEach((imageName, idx) => {
+    const exists = cards.some((c) => c.image === imageName);
+    if (exists) return;
+    const card = {
+      id: `latest-30-${idx + 1}`,
+      sport: 'Other',
+      player: 'Goudey Tradition',
+      baseValue: 150,
+      clicks: 0,
+      badge: `L30-${idx + 1}`,
+      image: imageName
+    };
+    cards.push(card);
+    byId.set(card.id, card);
+  });
+}
+
+function isUploadHiddenForViewer(cardId, user) {
+  const state = cardState[cardId];
+  if (!state?.uploadHidden) return false;
+  if (!user) return true;
+  return state.ownerId !== user.id && !user.isAdmin;
+}
+
+function addWalletPurchase(userId, cardId) {
+  if (!wallet[userId]) wallet[userId] = [];
+  wallet[userId].unshift({
+    id: uniqueId('w'),
+    cardId,
+    amountCents: CARD_FEE_CENTS,
+    at: new Date().toISOString()
+  });
+}
+
+function matchesSportFilter(card, filterValue) {
+  if (filterValue === 'all') return true;
+  if (filterValue === 'Latest30') return LATEST_30_IMAGES.includes(card.image);
+  return card.sport === filterValue;
+}
+
+async function ensureUsers() {
+  for (const user of users) {
+    user.usernameKey = normalizeUsername(user.username || '');
+    if (!user.passwordHash && typeof user.password === 'string') {
+      const passwordRecord = await createPasswordRecord(user.password);
+      user.passwordHash = passwordRecord.passwordHash;
+      user.passwordSalt = passwordRecord.passwordSalt;
+      user.passwordScheme = passwordRecord.passwordScheme;
+      delete user.password;
+    } else if (user.passwordHash && !user.passwordScheme) {
+      user.passwordScheme = user.passwordSalt ? 'pbkdf2' : 'sha256-legacy';
+    }
+    user.balanceCents = typeof user.balanceCents === 'number' ? user.balanceCents : 0;
+    user.paypalEmail = user.paypalEmail || '';
+    user.verified = true;
+    user.isAdmin = Boolean(user.isAdmin);
+  }
+
+  const admin = users.find((u) => u.usernameKey === normalizeUsername(ADMIN_USERNAME));
+  if (admin) {
+    if (!admin.passwordHash || !admin.passwordSalt || !admin.passwordScheme) {
+      const adminRecord = await createPasswordRecord(ADMIN_PASSWORD);
+      admin.passwordHash = adminRecord.passwordHash;
+      admin.passwordSalt = adminRecord.passwordSalt;
+      admin.passwordScheme = adminRecord.passwordScheme;
+    }
+    delete admin.password;
+    admin.isAdmin = true;
+    admin.verified = true;
+    admin.paypalEmail = admin.paypalEmail || DEFAULT_PLATFORM_PAYPAL;
+    admin.username = ADMIN_USERNAME;
+    admin.usernameKey = normalizeUsername(ADMIN_USERNAME);
+    return;
+  }
+  const adminRecord = await createPasswordRecord(ADMIN_PASSWORD);
+  users.push({
+    id: uniqueId('u'),
+    username: ADMIN_USERNAME,
+    usernameKey: normalizeUsername(ADMIN_USERNAME),
+    passwordHash: adminRecord.passwordHash,
+    passwordSalt: adminRecord.passwordSalt,
+    passwordScheme: adminRecord.passwordScheme,
+    paypalEmail: DEFAULT_PLATFORM_PAYPAL,
+    verified: true,
+    isAdmin: true,
+    balanceCents: 0
+  });
+}
+
+function ensureCardState() {
+  cards.forEach((card) => {
+    if (!cardState[card.id]) {
+      cardState[card.id] = { ownerId: null, listedForSale: false, limit: '1/1', uploadHidden: false };
+      return;
+    }
+    cardState[card.id].uploadHidden = Boolean(cardState[card.id].uploadHidden);
+  });
+}
+
+function getCurrentUser() {
+  const userId = localStorage.getItem(STORAGE_KEYS.currentUserId);
+  if (!userId) return null;
+  return users.find((u) => u.id === userId) || null;
+}
+
+function setCurrentUser(user) {
+  if (!user) {
+    localStorage.removeItem(STORAGE_KEYS.currentUserId);
+    return;
+  }
+  localStorage.setItem(STORAGE_KEYS.currentUserId, user.id);
+}
+
+function userDisplayName(userId) {
+  if (!userId) return 'Marketplace';
+  const user = users.find((u) => u.id === userId);
+  return user ? user.username : 'Unknown';
+}
+
+function isCardUnlockedFor(cardId, user) {
+  if (!user) return false;
+  const state = cardState[cardId];
+  if (state?.ownerId === user.id) return true;
+  return Boolean(unlocks[user.id]?.[cardId]);
+}
+
+function requireVerifiedUser(actionLabel) {
+  const user = getCurrentUser();
+  if (!user) {
+    authMessageEl.textContent = `Please sign in to ${actionLabel}.`;
+    return null;
+  }
+  return user;
+}
+
+function creditSale(ownerId, cents) {
+  if (!ownerId || cents <= 0) return;
+  const owner = users.find((u) => u.id === ownerId);
+  if (owner) owner.balanceCents += cents;
+}
+
+function processFee(ownerId) {
+  if (ownerId) {
+    ledger.platformCents += PLATFORM_FEE_CENTS;
+    creditSale(ownerId, SELLER_PAYOUT_CENTS);
+    return;
+  }
+  ledger.platformCents += CARD_FEE_CENTS;
+}
+
+function unlockCard(cardId) {
+  const user = requireVerifiedUser('unlock cards');
+  if (!user) return;
+  if (isCardUnlockedFor(cardId, user)) return;
+  if (!unlocks[user.id]) unlocks[user.id] = {};
+  processFee(cardState[cardId].ownerId);
+  unlocks[user.id][cardId] = true;
+  saveAll();
+  renderAll();
+}
+
+function buyCard(cardId) {
+  const buyer = requireVerifiedUser('buy cards');
+  if (!buyer) return;
+  const state = cardState[cardId];
+  if (!state.listedForSale || state.ownerId === buyer.id) return;
+
+  const sellerId = state.ownerId;
+  processFee(sellerId);
+  state.ownerId = buyer.id;
+  state.listedForSale = false;
+  if (!unlocks[buyer.id]) unlocks[buyer.id] = {};
+  unlocks[buyer.id][cardId] = true;
+  addWalletPurchase(buyer.id, cardId);
+  saveAll();
+  renderAll();
+}
+
+function toggleSale(cardId) {
+  const user = requireVerifiedUser('change listings');
+  if (!user) return;
+  const state = cardState[cardId];
+  if (state.ownerId !== user.id) return;
+  state.listedForSale = !state.listedForSale;
+  saveAll();
+  renderAll();
+}
+
+function requestTrade(requestedCardId, offeredCardId) {
+  const user = requireVerifiedUser('request trades');
+  if (!user || !offeredCardId) return;
+  const requestedState = cardState[requestedCardId];
+  const offeredState = cardState[offeredCardId];
+  if (!requestedState.ownerId || requestedState.ownerId === user.id) return;
+  if (offeredState.ownerId !== user.id) return;
+
+  const duplicate = trades.find((t) =>
+    t.status === 'pending' &&
+    t.fromUserId === user.id &&
+    t.toUserId === requestedState.ownerId &&
+    t.requestedCardId === requestedCardId &&
+    t.offeredCardId === offeredCardId
+  );
+  if (duplicate) return;
+
+  trades.push({
+    id: uniqueId('t'),
+    fromUserId: user.id,
+    toUserId: requestedState.ownerId,
+    requestedCardId,
+    offeredCardId,
+    status: 'pending'
+  });
+  saveAll();
+  renderAll();
+}
+
+function resolveTrade(tradeId, accept) {
+  const user = requireVerifiedUser('manage trades');
+  if (!user) return;
+  const trade = trades.find((t) => t.id === tradeId && t.status === 'pending');
+  if (!trade || trade.toUserId !== user.id) return;
+
+  if (accept) {
+    const requestedState = cardState[trade.requestedCardId];
+    const offeredState = cardState[trade.offeredCardId];
+    if (requestedState.ownerId === trade.toUserId && offeredState.ownerId === trade.fromUserId) {
+      requestedState.ownerId = trade.fromUserId;
+      offeredState.ownerId = trade.toUserId;
+      requestedState.listedForSale = false;
+      offeredState.listedForSale = false;
+    }
+  }
+  trade.status = accept ? 'accepted' : 'declined';
+  saveAll();
+  renderAll();
+}
+
+function renderCardActions(node, card, state, user) {
+  const actionsEl = node.querySelector('.actions');
+  actionsEl.innerHTML = '';
+  const feeLabel = centsToMoney(CARD_FEE_CENTS);
+  const meta = cardMeta[card.id] || { title: '', description: '', hideNameFromOthers: false };
+  const uploadHiddenForViewer = isUploadHiddenForViewer(card.id, user);
+
+  const unlocked = isCardUnlockedFor(card.id, user);
+  const isOwner = user && state.ownerId === user.id;
+  const isUploadCard = Boolean(card.isUpload);
+
+  if (uploadHiddenForViewer) {
+    return;
+  }
+
+  if (!unlocked) {
+    const btn = document.createElement('button');
+    btn.className = 'btn primary';
+    btn.textContent = `Unlock card (${feeLabel})`;
+    btn.addEventListener('click', () => unlockCard(card.id));
+    actionsEl.appendChild(btn);
+    return;
+  }
+
+  if (!user) return;
+
+  if (isOwner) {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'btn';
+    toggleBtn.textContent = state.listedForSale ? 'Remove from Sale' : `List for Sale (${feeLabel})`;
+    toggleBtn.addEventListener('click', () => toggleSale(card.id));
+    actionsEl.appendChild(toggleBtn);
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn';
+    editBtn.textContent = 'Edit Title / Description';
+    editBtn.addEventListener('click', () => {
+      const title = prompt('Edit card title', meta.title);
+      if (title === null) return;
+      const description = prompt('Edit card description', meta.description);
+      if (description === null) return;
+      cardMeta[card.id].title = title.trim() || meta.title;
+      cardMeta[card.id].description = description.trim() || meta.description;
+      saveAll();
+      renderAll();
+    });
+    actionsEl.appendChild(editBtn);
+
+    const hideNameBtn = document.createElement('button');
+    hideNameBtn.className = 'btn';
+    hideNameBtn.textContent = meta.hideNameFromOthers ? 'Show Name to Others' : 'Hide Name from Others';
+    hideNameBtn.addEventListener('click', () => {
+      cardMeta[card.id].hideNameFromOthers = !cardMeta[card.id].hideNameFromOthers;
+      saveAll();
+      renderAll();
+    });
+    actionsEl.appendChild(hideNameBtn);
+
+    if (isUploadCard) {
+      const hideUploadBtn = document.createElement('button');
+      hideUploadBtn.className = 'btn';
+      hideUploadBtn.textContent = state.uploadHidden ? 'Unhide Upload' : 'Hide Upload';
+      hideUploadBtn.addEventListener('click', () => {
+        state.uploadHidden = !state.uploadHidden;
+        saveAll();
+        renderAll();
+      });
+      actionsEl.appendChild(hideUploadBtn);
+    }
+    return;
+  }
+
+  if (state.listedForSale) {
+    const buyBtn = document.createElement('button');
+    buyBtn.className = 'btn primary';
+    buyBtn.textContent = `Buy for ${feeLabel}`;
+    buyBtn.addEventListener('click', () => buyCard(card.id));
+    actionsEl.appendChild(buyBtn);
+  }
+
+  const ownedCards = cards.filter((c) => cardState[c.id]?.ownerId === user.id);
+  if (ownedCards.length > 0 && state.ownerId && state.ownerId !== user.id) {
+    const wrap = document.createElement('div');
+    wrap.className = 'trade-form';
+    const select = document.createElement('select');
+    ownedCards.forEach((owned) => {
+      const option = document.createElement('option');
+      option.value = owned.id;
+      option.textContent = `${owned.badge} · ${owned.player}`;
+      select.appendChild(option);
+    });
+    const tradeBtn = document.createElement('button');
+    tradeBtn.className = 'btn';
+    tradeBtn.textContent = 'Request Trade (Free)';
+    tradeBtn.addEventListener('click', () => requestTrade(card.id, select.value));
+    wrap.appendChild(select);
+    wrap.appendChild(tradeBtn);
+    actionsEl.appendChild(wrap);
+  }
 }
 
 function renderCards() {
   const filter = filterEl.value;
   cardsEl.innerHTML = '';
+  const user = getCurrentUser();
+  const viewScope = viewScopeEl.value;
+  const showLocked = Boolean(showLockedToggleEl.checked);
+  const hideNames = Boolean(hideNamesToggleEl.checked);
+  let visible = cards.filter((c) => matchesSportFilter(c, filter));
 
-  const visible = cards.filter((c) => filter === 'all' || c.sport === filter);
+  if (viewScope === 'mine') {
+    visible = visible.filter((c) => user && cardState[c.id]?.ownerId === user.id);
+  } else if (viewScope === 'others') {
+    visible = visible.filter((c) => !user || cardState[c.id]?.ownerId !== user.id);
+  }
+
+  if (!showLocked) {
+    visible = visible.filter((c) => isCardUnlockedFor(c.id, user));
+  }
   const tpl = document.getElementById('cardTemplate');
 
   visible.forEach((card) => {
+    const state = cardState[card.id];
+    const meta = cardMeta[card.id] || { title: card.player, description: `${card.sport} collectible card.`, hideNameFromOthers: false };
+    const unlocked = isCardUnlockedFor(card.id, user);
+    const hiddenUpload = isUploadHiddenForViewer(card.id, user);
+    const hideNameForViewer = hideNames || (meta.hideNameFromOthers && (!user || state.ownerId !== user.id));
+    const displayName = hideNameForViewer ? 'Hidden Name' : card.player;
     const node = tpl.content.firstElementChild.cloneNode(true);
     node.dataset.id = card.id;
-    node.querySelector('.card-img').src = card.image;
-    node.querySelector('.card-img').alt = card.player;
+    node.querySelector('.card-img').src = hiddenUpload ? 'card-museum-screenshot.png' : card.image;
+    node.querySelector('.card-img').alt = displayName;
     node.querySelector('.badge').textContent = card.badge;
-    node.querySelector('.player').textContent = card.player;
-    node.querySelector('.base').textContent = money(card.baseValue);
-    node.querySelector('.clicks').textContent = String(card.clicks);
-    node.querySelector('.value').textContent = money(currentValue(card));
+    node.querySelector('.player').textContent = displayName;
+    node.querySelector('.card-title').textContent = hideNameForViewer ? 'Title Hidden' : meta.title;
+    node.querySelector('.card-description').textContent = meta.description;
+    node.querySelector('.sport').textContent = card.sport;
+    node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
+    node.querySelector('.status').textContent = state.listedForSale ? `For Sale (${centsToMoney(CARD_FEE_CENTS)})` : 'Not Listed';
+    node.querySelector('.limit').textContent = state.limit;
+    node.querySelector('.price').textContent = centsToMoney(CARD_FEE_CENTS);
 
-    const activate = () => {
-      const current = byId.get(card.id);
-      current.clicks += 1;
-      saveClicks();
-      renderCards();
-      renderStats();
-    };
+    const lockEl = node.querySelector('.lock-banner');
+    if (hiddenUpload) {
+      lockEl.textContent = 'Uploader requested hidden display';
+      node.classList.add('locked');
+    } else if (unlocked) {
+      lockEl.textContent = 'Visible';
+      node.classList.remove('locked');
+    } else {
+      lockEl.textContent = 'Hidden until fee is paid';
+      node.classList.add('locked');
+    }
 
-    node.addEventListener('click', activate);
-    node.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activate();
-      }
-    });
-
+    renderCardActions(node, card, state, user);
     cardsEl.appendChild(node);
   });
 
@@ -721,14 +1280,291 @@ function renderCards() {
 }
 
 function renderStats() {
-  const totalClicks = cards.reduce((sum, c) => sum + c.clicks, 0);
-  const totalValue = cards.reduce((sum, c) => sum + currentValue(c), 0);
-  statClicksEl.textContent = String(totalClicks);
-  statValueEl.textContent = money(totalValue);
+  const user = getCurrentUser();
+  const ownedCount = user ? cards.filter((c) => cardState[c.id]?.ownerId === user.id).length : 0;
+  const unlockedCount = user ? cards.filter((c) => isCardUnlockedFor(c.id, user)).length : 0;
+  statOwnedEl.textContent = String(ownedCount);
+  statUnlockedEl.textContent = String(unlockedCount);
+  statPlatformEl.textContent = centsToMoney(ledger.platformCents || 0);
 }
 
-filterEl.addEventListener('change', renderCards);
+function renderAuth() {
+  const user = getCurrentUser();
+  if (!user) {
+    currentUserPanel.hidden = true;
+    adminPanel.hidden = true;
+    tradePanel.hidden = true;
+    walletPanelEl.hidden = true;
+    uploadPanelEl.hidden = true;
+    return;
+  }
+  currentUserPanel.hidden = false;
+  currentUserTextEl.textContent = `${user.username} · Local self-verified profile · PayPal: ${user.paypalEmail || 'N/A'}`;
+  currentUserPayoutEl.textContent = centsToMoney(user.balanceCents || 0);
+  tradePanel.hidden = false;
+  walletPanelEl.hidden = false;
+  uploadPanelEl.hidden = false;
+  adminPanel.hidden = true;
+  renderTrades();
+  renderAdmin();
+  renderWallet();
+}
 
-loadClicks();
-renderCards();
-renderStats();
+function renderAdmin() {
+  const user = getCurrentUser();
+  if (!user || !user.isAdmin) return;
+  adminTotalsEl.textContent = `Platform PayPal: ${ledger.platformPaypal || DEFAULT_PLATFORM_PAYPAL} · Earnings: ${centsToMoney(ledger.platformCents || 0)}`;
+  adminPaypalInput.value = ledger.platformPaypal || DEFAULT_PLATFORM_PAYPAL;
+  adminUsersEl.innerHTML = '';
+
+  users
+    .filter((u) => !u.isAdmin)
+    .forEach((u) => {
+      const row = document.createElement('div');
+      row.className = 'admin-user';
+      const text = document.createElement('span');
+      text.textContent = `${u.username} · ${u.paypalEmail || 'No PayPal'} · ${u.verified ? 'Verified' : 'Unverified'}`;
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.textContent = u.verified ? 'Mark Unverified' : 'Mark Verified';
+      btn.addEventListener('click', () => {
+        u.verified = !u.verified;
+        saveAll();
+        renderAll();
+      });
+      row.appendChild(text);
+      row.appendChild(btn);
+      adminUsersEl.appendChild(row);
+    });
+}
+
+function renderTrades() {
+  const user = getCurrentUser();
+  if (!user) return;
+  tradeRequestsEl.innerHTML = '';
+  const incoming = trades.filter((t) => t.status === 'pending' && t.toUserId === user.id);
+  if (incoming.length === 0) {
+    tradeRequestsEl.textContent = 'No incoming trade requests.';
+    return;
+  }
+
+  incoming.forEach((trade) => {
+    const offered = byId.get(trade.offeredCardId);
+    const requested = byId.get(trade.requestedCardId);
+    const row = document.createElement('div');
+    row.className = 'trade-request';
+    const text = document.createElement('span');
+    text.textContent = `${userDisplayName(trade.fromUserId)} offers ${offered ? offered.badge : 'an unavailable card'} for your ${requested ? requested.badge : 'unavailable card'}`;
+    const accept = document.createElement('button');
+    accept.className = 'btn primary';
+    accept.textContent = 'Accept';
+    accept.addEventListener('click', () => resolveTrade(trade.id, true));
+    const decline = document.createElement('button');
+    decline.className = 'btn';
+    decline.textContent = 'Decline';
+    decline.addEventListener('click', () => resolveTrade(trade.id, false));
+    row.appendChild(text);
+    row.appendChild(accept);
+    row.appendChild(decline);
+    tradeRequestsEl.appendChild(row);
+  });
+}
+
+function renderWallet() {
+  const user = getCurrentUser();
+  if (!user) return;
+  const items = wallet[user.id] || [];
+  const owned = cards.filter((c) => cardState[c.id]?.ownerId === user.id);
+  walletSummaryEl.textContent = `Purchased cards: ${items.length} · Currently owned: ${owned.length}`;
+  walletCardsEl.innerHTML = '';
+  if (items.length === 0) {
+    walletCardsEl.textContent = 'No purchased cards yet.';
+    return;
+  }
+
+  items.slice(0, 15).forEach((entry) => {
+    const card = byId.get(entry.cardId);
+    const row = document.createElement('div');
+    row.className = 'wallet-card';
+    row.textContent = `${card ? card.badge : 'Card'} · ${card ? card.player : 'Unknown'} · ${centsToMoney(entry.amountCents)} · ${new Date(entry.at).toLocaleString()}`;
+    walletCardsEl.appendChild(row);
+  });
+}
+
+function renderAll() {
+  renderAuth();
+  renderCards();
+  renderStats();
+}
+
+signupForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('signupUsername').value.trim();
+  const password = document.getElementById('signupPassword').value.trim();
+  const paypalEmail = document.getElementById('signupPaypal').value.trim();
+  const usernameKey = normalizeUsername(username);
+  if (!username || !password || !paypalEmail) {
+    authMessageEl.textContent = 'Signup requires username, password, and PayPal email.';
+    return;
+  }
+  if (users.some((u) => u.usernameKey === usernameKey)) {
+    authMessageEl.textContent = 'Username already exists.';
+    return;
+  }
+  const passwordRecord = await createPasswordRecord(password);
+  users.push({
+    id: uniqueId('u'),
+    username,
+    usernameKey,
+    passwordHash: passwordRecord.passwordHash,
+    passwordSalt: passwordRecord.passwordSalt,
+    passwordScheme: passwordRecord.passwordScheme,
+    paypalEmail,
+    verified: true,
+    isAdmin: false,
+    balanceCents: 0
+  });
+  saveAll();
+  authMessageEl.textContent = 'Account created. You can sign in immediately.';
+  signupForm.reset();
+  renderAll();
+});
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  const usernameKey = normalizeUsername(username);
+  const candidateUsers = users.filter((u) => u.usernameKey === usernameKey);
+  let user = null;
+  for (const candidate of candidateUsers) {
+    if (await verifyPassword(candidate, password)) {
+      user = candidate;
+      break;
+    }
+  }
+  if (!user) {
+    authMessageEl.textContent = 'Invalid username or password.';
+    return;
+  }
+  setCurrentUser(user);
+  authMessageEl.textContent = `Signed in as ${user.username}.`;
+  loginForm.reset();
+  renderAll();
+});
+
+logoutBtn.addEventListener('click', () => {
+  setCurrentUser(null);
+  authMessageEl.textContent = 'Signed out.';
+  renderAll();
+});
+
+saveAdminPaypalBtn.addEventListener('click', () => {
+  const user = getCurrentUser();
+  if (!user || !user.isAdmin) return;
+  const paypalValue = adminPaypalInput.value.trim();
+  if (!paypalValue) {
+    authMessageEl.textContent = 'Platform PayPal email cannot be empty.';
+    return;
+  }
+  ledger.platformPaypal = paypalValue;
+  saveAll();
+  renderAll();
+});
+
+filterEl.addEventListener('change', renderCards);
+viewScopeEl.addEventListener('change', () => {
+  preferences.viewScope = viewScopeEl.value;
+  saveAll();
+  renderCards();
+});
+showLockedToggleEl.addEventListener('change', () => {
+  preferences.showLocked = showLockedToggleEl.checked;
+  saveAll();
+  renderCards();
+});
+hideNamesToggleEl.addEventListener('change', () => {
+  preferences.hideNames = hideNamesToggleEl.checked;
+  saveAll();
+  renderCards();
+});
+
+menuToggleBtn.addEventListener('click', () => {
+  sidePanelEl.classList.toggle('menu-open');
+});
+
+aiDetailsBtnEl.addEventListener('click', () => {
+  const file = uploadImageInputEl.files?.[0];
+  const details = inferCardDetailsFromFilename(file?.name || uploadTitleInputEl.value || 'Custom Upload');
+  uploadTitleInputEl.value = details.title;
+  uploadDescriptionInputEl.value = details.description;
+});
+
+uploadFormEl.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const user = requireVerifiedUser('upload cards');
+  if (!user) return;
+  const file = uploadImageInputEl.files?.[0];
+  if (!file) {
+    authMessageEl.textContent = 'Please choose an image to upload.';
+    return;
+  }
+  const title = uploadTitleInputEl.value.trim();
+  const description = uploadDescriptionInputEl.value.trim();
+  if (!title || !description) {
+    authMessageEl.textContent = 'Upload requires a title and description.';
+    return;
+  }
+
+  const imageDataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  const cardId = uniqueId('upload');
+  const card = {
+    id: cardId,
+    sport: 'Other',
+    player: user.username,
+    baseValue: 150,
+    clicks: 0,
+    badge: `UP-${String(uploads.length + 1).padStart(2, '0')}`,
+    image: imageDataUrl,
+    isUpload: true
+  };
+  uploads.push(card);
+  cards.push(card);
+  byId.set(card.id, card);
+  cardState[card.id] = { ownerId: user.id, listedForSale: false, limit: '1/1', uploadHidden: uploadHideCardInputEl.checked };
+  cardMeta[card.id] = {
+    title,
+    description,
+    hideNameFromOthers: uploadHideNameInputEl.checked
+  };
+  if (!unlocks[user.id]) unlocks[user.id] = {};
+  unlocks[user.id][card.id] = true;
+  saveAll();
+  uploadFormEl.reset();
+  authMessageEl.textContent = 'Upload saved with editable AI-rendered details.';
+  renderAll();
+});
+
+async function bootstrap() {
+  await ensureUsers();
+  ensureLatestThirtyPresent();
+  ensureCardState();
+  ensureCardMetadata();
+  if (!ledger.platformPaypal) ledger.platformPaypal = DEFAULT_PLATFORM_PAYPAL;
+  viewScopeEl.value = preferences.viewScope || 'all';
+  showLockedToggleEl.checked = preferences.showLocked !== false;
+  hideNamesToggleEl.checked = Boolean(preferences.hideNames);
+  saveAll();
+  renderAll();
+}
+
+bootstrap().catch((e) => {
+  console.error('Failed to initialize app', e);
+  authMessageEl.textContent = 'Failed to initialize application state.';
+});
