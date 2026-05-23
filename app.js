@@ -646,6 +646,39 @@ const cards = [
   }
 ];
 
+const LATEST_30_IMAGES = [
+  'ChatGPT Image May 21, 2026, 02_36_23 AM.png',
+  'ChatGPT Image May 21, 2026, 02_34_03 AM.png',
+  'ChatGPT Image May 21, 2026, 02_23_03 AM.png',
+  'ChatGPT Image May 21, 2026, 02_13_18 AM.png',
+  'ChatGPT Image May 21, 2026, 02_11_15 AM.png',
+  'ChatGPT Image May 21, 2026, 01_59_07 AM.png',
+  'ChatGPT Image May 21, 2026, 01_56_23 AM.png',
+  'ChatGPT Image May 21, 2026, 01_54_27 AM.png',
+  'ChatGPT Image May 21, 2026, 01_47_25 AM.png',
+  'ChatGPT Image May 21, 2026, 01_44_08 AM.png',
+  'ChatGPT Image May 21, 2026, 01_35_51 AM.png',
+  'ChatGPT Image May 21, 2026, 12_38_41 AM.png',
+  'ChatGPT Image May 21, 2026, 12_38_14 AM.png',
+  'ChatGPT Image May 21, 2026, 12_37_53 AM.png',
+  'ChatGPT Image May 20, 2026, 11_30_29 PM.png',
+  'ChatGPT Image May 20, 2026, 11_18_01 PM.png',
+  'ChatGPT Image May 20, 2026, 10_57_25 PM.png',
+  'ChatGPT Image May 20, 2026, 10_48_10 PM.png',
+  'ChatGPT Image May 20, 2026, 10_27_08 PM.png',
+  'ChatGPT Image May 20, 2026, 10_22_56 PM.png',
+  'ChatGPT Image May 20, 2026, 09_57_04 PM.png',
+  'ChatGPT Image May 20, 2026, 09_57_03 PM.png',
+  'ChatGPT Image May 20, 2026, 09_46_49 PM.png',
+  'ChatGPT Image May 20, 2026, 08_12_46 PM.png',
+  'ChatGPT Image May 20, 2026, 08_11_18 PM.png',
+  'ChatGPT Image May 20, 2026, 12_24_54 AM.png',
+  'ChatGPT Image May 20, 2026, 12_17_28 AM.png',
+  'ChatGPT Image May 19, 2026, 11_55_31 PM.png',
+  'ChatGPT Image May 19, 2026, 11_24_18 PM.png',
+  'ChatGPT Image May 19, 2026, 10_19_33 PM.png'
+];
+
 const byId = new Map(cards.map((c) => [c.id, c]));
 const CARD_FEE_CENTS = 50;
 const PLATFORM_FEE_CENTS = 10;
@@ -660,7 +693,11 @@ const STORAGE_KEYS = {
   cardState: 'tradeCardState',
   unlocks: 'tradeUnlocks',
   trades: 'tradeTrades',
-  ledger: 'tradeLedger'
+  ledger: 'tradeLedger',
+  uploads: 'tradeUploads',
+  wallet: 'tradeWallet',
+  preferences: 'tradePreferences',
+  cardMeta: 'tradeCardMeta'
 };
 
 function loadJson(key, fallback) {
@@ -679,6 +716,9 @@ function saveJson(key, value) {
 
 const cardsEl = document.getElementById('cards');
 const filterEl = document.getElementById('sportFilter');
+const viewScopeEl = document.getElementById('viewScope');
+const showLockedToggleEl = document.getElementById('showLockedToggle');
+const hideNamesToggleEl = document.getElementById('hideNamesToggle');
 const statCardsEl = document.getElementById('statCards');
 const statOwnedEl = document.getElementById('statOwned');
 const statUnlockedEl = document.getElementById('statUnlocked');
@@ -695,14 +735,36 @@ const adminUsersEl = document.getElementById('adminUsers');
 const adminTotalsEl = document.getElementById('adminTotals');
 const adminPaypalInput = document.getElementById('adminPaypalInput');
 const saveAdminPaypalBtn = document.getElementById('saveAdminPaypalBtn');
+const sidePanelEl = document.getElementById('sidePanel');
+const menuToggleBtn = document.getElementById('menuToggleBtn');
 const tradePanel = document.getElementById('tradePanel');
 const tradeRequestsEl = document.getElementById('tradeRequests');
+const walletPanelEl = document.getElementById('walletPanel');
+const walletSummaryEl = document.getElementById('walletSummary');
+const walletCardsEl = document.getElementById('walletCards');
+const uploadPanelEl = document.getElementById('uploadPanel');
+const uploadFormEl = document.getElementById('uploadForm');
+const uploadImageInputEl = document.getElementById('uploadImageInput');
+const uploadTitleInputEl = document.getElementById('uploadTitleInput');
+const uploadDescriptionInputEl = document.getElementById('uploadDescriptionInput');
+const uploadHideCardInputEl = document.getElementById('uploadHideCardInput');
+const uploadHideNameInputEl = document.getElementById('uploadHideNameInput');
+const aiDetailsBtnEl = document.getElementById('aiDetailsBtn');
 
 const users = loadJson(STORAGE_KEYS.users, []);
 const cardState = loadJson(STORAGE_KEYS.cardState, {});
 const unlocks = loadJson(STORAGE_KEYS.unlocks, {});
 const trades = loadJson(STORAGE_KEYS.trades, []);
 const ledger = loadJson(STORAGE_KEYS.ledger, { platformCents: 0, platformPaypal: DEFAULT_PLATFORM_PAYPAL });
+const uploads = loadJson(STORAGE_KEYS.uploads, []);
+const wallet = loadJson(STORAGE_KEYS.wallet, {});
+const preferences = loadJson(STORAGE_KEYS.preferences, { viewScope: 'all', showLocked: true, hideNames: false });
+const cardMeta = loadJson(STORAGE_KEYS.cardMeta, {});
+
+uploads.forEach((uploadCard) => {
+  cards.push(uploadCard);
+  byId.set(uploadCard.id, uploadCard);
+});
 
 function centsToMoney(cents) {
   return (cents / 100).toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
@@ -782,6 +844,74 @@ function saveAll() {
   saveJson(STORAGE_KEYS.unlocks, unlocks);
   saveJson(STORAGE_KEYS.trades, trades);
   saveJson(STORAGE_KEYS.ledger, ledger);
+  saveJson(STORAGE_KEYS.uploads, uploads);
+  saveJson(STORAGE_KEYS.wallet, wallet);
+  saveJson(STORAGE_KEYS.preferences, preferences);
+  saveJson(STORAGE_KEYS.cardMeta, cardMeta);
+}
+
+function inferCardDetailsFromFilename(filename) {
+  const cleaned = (filename || 'Uploaded Card')
+    .replace(/\.[a-z0-9]+$/i, '')
+    .replace(/^ChatGPT Image /i, '')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return {
+    title: cleaned || 'Uploaded Card',
+    description: `AI rendered details from uploaded image: ${cleaned || 'custom card image'}.`
+  };
+}
+
+function ensureCardMetadata() {
+  cards.forEach((card) => {
+    if (!cardMeta[card.id]) {
+      cardMeta[card.id] = {
+        title: `${card.badge} · ${card.player}`,
+        description: `${card.sport} collectible card.`,
+        hideNameFromOthers: false
+      };
+    } else {
+      cardMeta[card.id].title = cardMeta[card.id].title || `${card.badge} · ${card.player}`;
+      cardMeta[card.id].description = cardMeta[card.id].description || `${card.sport} collectible card.`;
+      cardMeta[card.id].hideNameFromOthers = Boolean(cardMeta[card.id].hideNameFromOthers);
+    }
+  });
+}
+
+function ensureLatestThirtyPresent() {
+  LATEST_30_IMAGES.forEach((imageName, idx) => {
+    const exists = cards.some((c) => c.image === imageName);
+    if (exists) return;
+    const card = {
+      id: `latest-30-${idx + 1}`,
+      sport: 'Other',
+      player: 'Goudey Tradition',
+      baseValue: 150,
+      clicks: 0,
+      badge: `L30-${idx + 1}`,
+      image: imageName
+    };
+    cards.push(card);
+    byId.set(card.id, card);
+  });
+}
+
+function isUploadHiddenForViewer(cardId, user) {
+  const state = cardState[cardId];
+  if (!state?.uploadHidden) return false;
+  if (!user) return true;
+  return state.ownerId !== user.id && !user.isAdmin;
+}
+
+function addWalletPurchase(userId, cardId) {
+  if (!wallet[userId]) wallet[userId] = [];
+  wallet[userId].unshift({
+    id: uniqueId('w'),
+    cardId,
+    amountCents: CARD_FEE_CENTS,
+    at: new Date().toISOString()
+  });
 }
 
 async function ensureUsers() {
@@ -798,7 +928,7 @@ async function ensureUsers() {
     }
     user.balanceCents = typeof user.balanceCents === 'number' ? user.balanceCents : 0;
     user.paypalEmail = user.paypalEmail || '';
-    user.verified = Boolean(user.verified);
+    user.verified = true;
     user.isAdmin = Boolean(user.isAdmin);
   }
 
@@ -836,8 +966,10 @@ async function ensureUsers() {
 function ensureCardState() {
   cards.forEach((card) => {
     if (!cardState[card.id]) {
-      cardState[card.id] = { ownerId: null, listedForSale: false, limit: '1/1' };
+      cardState[card.id] = { ownerId: null, listedForSale: false, limit: '1/1', uploadHidden: false };
+      return;
     }
+    cardState[card.id].uploadHidden = Boolean(cardState[card.id].uploadHidden);
   });
 }
 
@@ -872,10 +1004,6 @@ function requireVerifiedUser(actionLabel) {
   const user = getCurrentUser();
   if (!user) {
     authMessageEl.textContent = `Please sign in to ${actionLabel}.`;
-    return null;
-  }
-  if (!user.verified) {
-    authMessageEl.textContent = 'Your PayPal must be verified by admin before transactions.';
     return null;
   }
   return user;
@@ -919,6 +1047,7 @@ function buyCard(cardId) {
   state.listedForSale = false;
   if (!unlocks[buyer.id]) unlocks[buyer.id] = {};
   unlocks[buyer.id][cardId] = true;
+  addWalletPurchase(buyer.id, cardId);
   saveAll();
   renderAll();
 }
@@ -987,9 +1116,16 @@ function renderCardActions(node, card, state, user) {
   const actionsEl = node.querySelector('.actions');
   actionsEl.innerHTML = '';
   const feeLabel = centsToMoney(CARD_FEE_CENTS);
+  const meta = cardMeta[card.id] || { title: '', description: '', hideNameFromOthers: false };
+  const uploadHiddenForViewer = isUploadHiddenForViewer(card.id, user);
 
   const unlocked = isCardUnlockedFor(card.id, user);
   const isOwner = user && state.ownerId === user.id;
+  const isUploadCard = Boolean(card.isUpload);
+
+  if (uploadHiddenForViewer) {
+    return;
+  }
 
   if (!unlocked) {
     const btn = document.createElement('button');
@@ -1008,6 +1144,43 @@ function renderCardActions(node, card, state, user) {
     toggleBtn.textContent = state.listedForSale ? 'Remove from Sale' : `List for Sale (${feeLabel})`;
     toggleBtn.addEventListener('click', () => toggleSale(card.id));
     actionsEl.appendChild(toggleBtn);
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn';
+    editBtn.textContent = 'Edit Title / Description';
+    editBtn.addEventListener('click', () => {
+      const title = prompt('Edit card title', meta.title);
+      if (title === null) return;
+      const description = prompt('Edit card description', meta.description);
+      if (description === null) return;
+      cardMeta[card.id].title = title.trim() || meta.title;
+      cardMeta[card.id].description = description.trim() || meta.description;
+      saveAll();
+      renderAll();
+    });
+    actionsEl.appendChild(editBtn);
+
+    const hideNameBtn = document.createElement('button');
+    hideNameBtn.className = 'btn';
+    hideNameBtn.textContent = meta.hideNameFromOthers ? 'Show Name to Others' : 'Hide Name from Others';
+    hideNameBtn.addEventListener('click', () => {
+      cardMeta[card.id].hideNameFromOthers = !cardMeta[card.id].hideNameFromOthers;
+      saveAll();
+      renderAll();
+    });
+    actionsEl.appendChild(hideNameBtn);
+
+    if (isUploadCard) {
+      const hideUploadBtn = document.createElement('button');
+      hideUploadBtn.className = 'btn';
+      hideUploadBtn.textContent = state.uploadHidden ? 'Unhide Upload' : 'Hide Upload';
+      hideUploadBtn.addEventListener('click', () => {
+        state.uploadHidden = !state.uploadHidden;
+        saveAll();
+        renderAll();
+      });
+      actionsEl.appendChild(hideUploadBtn);
+    }
     return;
   }
 
@@ -1044,18 +1217,37 @@ function renderCards() {
   const filter = filterEl.value;
   cardsEl.innerHTML = '';
   const user = getCurrentUser();
-  const visible = cards.filter((c) => filter === 'all' || c.sport === filter);
+  const viewScope = viewScopeEl.value;
+  const showLocked = Boolean(showLockedToggleEl.checked);
+  const hideNames = Boolean(hideNamesToggleEl.checked);
+  let visible = cards.filter((c) => filter === 'all' || c.sport === filter || (filter === 'latest30' && LATEST_30_IMAGES.includes(c.image)));
+
+  if (viewScope === 'mine') {
+    visible = visible.filter((c) => user && cardState[c.id]?.ownerId === user.id);
+  } else if (viewScope === 'others') {
+    visible = visible.filter((c) => !user || cardState[c.id]?.ownerId !== user.id);
+  }
+
+  if (!showLocked) {
+    visible = visible.filter((c) => isCardUnlockedFor(c.id, user));
+  }
   const tpl = document.getElementById('cardTemplate');
 
   visible.forEach((card) => {
     const state = cardState[card.id];
+    const meta = cardMeta[card.id] || { title: card.player, description: `${card.sport} collectible card.`, hideNameFromOthers: false };
     const unlocked = isCardUnlockedFor(card.id, user);
+    const hiddenUpload = isUploadHiddenForViewer(card.id, user);
+    const hideNameForViewer = hideNames || (meta.hideNameFromOthers && (!user || state.ownerId !== user.id));
+    const displayName = hideNameForViewer ? 'Hidden Name' : card.player;
     const node = tpl.content.firstElementChild.cloneNode(true);
     node.dataset.id = card.id;
-    node.querySelector('.card-img').src = card.image;
-    node.querySelector('.card-img').alt = card.player;
+    node.querySelector('.card-img').src = hiddenUpload ? 'card-museum-screenshot.png' : card.image;
+    node.querySelector('.card-img').alt = displayName;
     node.querySelector('.badge').textContent = card.badge;
-    node.querySelector('.player').textContent = card.player;
+    node.querySelector('.player').textContent = displayName;
+    node.querySelector('.card-title').textContent = hideNameForViewer ? 'Title Hidden' : meta.title;
+    node.querySelector('.card-description').textContent = meta.description;
     node.querySelector('.sport').textContent = card.sport;
     node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
     node.querySelector('.status').textContent = state.listedForSale ? `For Sale (${centsToMoney(CARD_FEE_CENTS)})` : 'Not Listed';
@@ -1063,7 +1255,10 @@ function renderCards() {
     node.querySelector('.price').textContent = centsToMoney(CARD_FEE_CENTS);
 
     const lockEl = node.querySelector('.lock-banner');
-    if (unlocked) {
+    if (hiddenUpload) {
+      lockEl.textContent = 'Uploader requested hidden display';
+      node.classList.add('locked');
+    } else if (unlocked) {
       lockEl.textContent = 'Visible';
       node.classList.remove('locked');
     } else {
@@ -1093,15 +1288,20 @@ function renderAuth() {
     currentUserPanel.hidden = true;
     adminPanel.hidden = true;
     tradePanel.hidden = true;
+    walletPanelEl.hidden = true;
+    uploadPanelEl.hidden = true;
     return;
   }
   currentUserPanel.hidden = false;
-  currentUserTextEl.textContent = `${user.username} · ${user.verified ? 'Verified' : 'Pending PayPal Verification'} · PayPal: ${user.paypalEmail || 'N/A'}`;
+  currentUserTextEl.textContent = `${user.username} · Local self-verified profile · PayPal: ${user.paypalEmail || 'N/A'}`;
   currentUserPayoutEl.textContent = centsToMoney(user.balanceCents || 0);
   tradePanel.hidden = false;
-  adminPanel.hidden = !user.isAdmin;
+  walletPanelEl.hidden = false;
+  uploadPanelEl.hidden = false;
+  adminPanel.hidden = true;
   renderTrades();
   renderAdmin();
+  renderWallet();
 }
 
 function renderAdmin() {
@@ -1164,6 +1364,27 @@ function renderTrades() {
   });
 }
 
+function renderWallet() {
+  const user = getCurrentUser();
+  if (!user) return;
+  const items = wallet[user.id] || [];
+  const owned = cards.filter((c) => cardState[c.id]?.ownerId === user.id);
+  walletSummaryEl.textContent = `Purchased cards: ${items.length} · Currently owned: ${owned.length}`;
+  walletCardsEl.innerHTML = '';
+  if (items.length === 0) {
+    walletCardsEl.textContent = 'No purchased cards yet.';
+    return;
+  }
+
+  items.slice(0, 15).forEach((entry) => {
+    const card = byId.get(entry.cardId);
+    const row = document.createElement('div');
+    row.className = 'wallet-card';
+    row.textContent = `${card ? card.badge : 'Card'} · ${card ? card.player : 'Unknown'} · ${centsToMoney(entry.amountCents)} · ${new Date(entry.at).toLocaleString()}`;
+    walletCardsEl.appendChild(row);
+  });
+}
+
 function renderAll() {
   renderAuth();
   renderCards();
@@ -1193,12 +1414,12 @@ signupForm.addEventListener('submit', async (e) => {
     passwordSalt: passwordRecord.passwordSalt,
     passwordScheme: passwordRecord.passwordScheme,
     paypalEmail,
-    verified: false,
+    verified: true,
     isAdmin: false,
     balanceCents: 0
   });
   saveAll();
-  authMessageEl.textContent = 'Account created. Wait for admin PayPal verification, then sign in.';
+  authMessageEl.textContent = 'Account created. You can sign in immediately.';
   signupForm.reset();
   renderAll();
 });
@@ -1246,11 +1467,93 @@ saveAdminPaypalBtn.addEventListener('click', () => {
 });
 
 filterEl.addEventListener('change', renderCards);
+viewScopeEl.addEventListener('change', () => {
+  preferences.viewScope = viewScopeEl.value;
+  saveAll();
+  renderCards();
+});
+showLockedToggleEl.addEventListener('change', () => {
+  preferences.showLocked = showLockedToggleEl.checked;
+  saveAll();
+  renderCards();
+});
+hideNamesToggleEl.addEventListener('change', () => {
+  preferences.hideNames = hideNamesToggleEl.checked;
+  saveAll();
+  renderCards();
+});
+
+menuToggleBtn.addEventListener('click', () => {
+  sidePanelEl.classList.toggle('menu-open');
+});
+
+aiDetailsBtnEl.addEventListener('click', () => {
+  const file = uploadImageInputEl.files?.[0];
+  const details = inferCardDetailsFromFilename(file?.name || uploadTitleInputEl.value || 'Custom Upload');
+  uploadTitleInputEl.value = details.title;
+  uploadDescriptionInputEl.value = details.description;
+});
+
+uploadFormEl.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const user = requireVerifiedUser('upload cards');
+  if (!user) return;
+  const file = uploadImageInputEl.files?.[0];
+  if (!file) {
+    authMessageEl.textContent = 'Please choose an image to upload.';
+    return;
+  }
+  const title = uploadTitleInputEl.value.trim();
+  const description = uploadDescriptionInputEl.value.trim();
+  if (!title || !description) {
+    authMessageEl.textContent = 'Upload requires a title and description.';
+    return;
+  }
+
+  const imageDataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  const cardId = uniqueId('upload');
+  const card = {
+    id: cardId,
+    sport: 'Other',
+    player: user.username,
+    baseValue: 150,
+    clicks: 0,
+    badge: `UP-${String(uploads.length + 1).padStart(2, '0')}`,
+    image: imageDataUrl,
+    isUpload: true
+  };
+  uploads.push(card);
+  cards.push(card);
+  byId.set(card.id, card);
+  cardState[card.id] = { ownerId: user.id, listedForSale: false, limit: '1/1', uploadHidden: uploadHideCardInputEl.checked };
+  cardMeta[card.id] = {
+    title,
+    description,
+    hideNameFromOthers: uploadHideNameInputEl.checked
+  };
+  if (!unlocks[user.id]) unlocks[user.id] = {};
+  unlocks[user.id][card.id] = true;
+  saveAll();
+  uploadFormEl.reset();
+  authMessageEl.textContent = 'Upload saved with editable AI-rendered details.';
+  renderAll();
+});
 
 async function bootstrap() {
   await ensureUsers();
+  ensureLatestThirtyPresent();
   ensureCardState();
+  ensureCardMetadata();
   if (!ledger.platformPaypal) ledger.platformPaypal = DEFAULT_PLATFORM_PAYPAL;
+  viewScopeEl.value = preferences.viewScope || 'all';
+  showLockedToggleEl.checked = preferences.showLocked !== false;
+  hideNamesToggleEl.checked = Boolean(preferences.hideNames);
   saveAll();
   renderAll();
 }

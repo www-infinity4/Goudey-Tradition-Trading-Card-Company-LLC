@@ -9,6 +9,7 @@
 </head>
 <body>
   <header class="topbar">
+    <button id="menuToggleBtn" class="menu-btn" type="button" aria-label="Toggle menu">☰</button>
     <h1>Goudey Tradition Card Museum</h1>
     <p>Trading platform · Pay-to-unlock cards · Buy or trade with other users</p>
   </header>
@@ -21,18 +22,29 @@
           <label for="sportFilter">Sport</label>
           <select id="sportFilter">
             <option value="all">All</option>
+            <option value="latest30">Latest 30 Images</option>
             <option value="Baseball">Baseball</option>
             <option value="Football">Football</option>
             <option value="Basketball">Basketball</option>
             <option value="Entertainment">Entertainment</option>
             <option value="Other">Other</option>
           </select>
+          <label for="viewScope">View</label>
+          <select id="viewScope">
+            <option value="all">All Cards</option>
+            <option value="mine">My Cards</option>
+            <option value="others">Others' Cards</option>
+          </select>
         </div>
+      </div>
+      <div class="panel-switches">
+        <label><input id="showLockedToggle" type="checkbox" checked /> Show hidden cards</label>
+        <label><input id="hideNamesToggle" type="checkbox" /> Hide card names</label>
       </div>
       <div id="cards" class="card-grid"></div>
     </section>
 
-    <aside class="panel side">
+    <aside id="sidePanel" class="panel side">
       <h2>Account & Market</h2>
       <div class="auth-wrap">
         <form id="signupForm" class="auth-form">
@@ -70,6 +82,25 @@
         <div id="tradeRequests"></div>
       </section>
 
+      <section id="walletPanel" class="admin-block" hidden>
+        <h3>Wallet</h3>
+        <p id="walletSummary" class="note"></p>
+        <div id="walletCards"></div>
+      </section>
+
+      <section id="uploadPanel" class="admin-block" hidden>
+        <h3>Upload Card</h3>
+        <form id="uploadForm" class="auth-form">
+          <input id="uploadImageInput" type="file" accept="image/*" required />
+          <input id="uploadTitleInput" type="text" placeholder="Card Title" required />
+          <textarea id="uploadDescriptionInput" placeholder="Card Description" rows="3" required></textarea>
+          <label><input id="uploadHideCardInput" type="checkbox" /> Hide this upload from other users</label>
+          <label><input id="uploadHideNameInput" type="checkbox" /> Hide this card name from other users</label>
+          <button id="aiDetailsBtn" class="btn" type="button">AI Render Details</button>
+          <button class="btn primary" type="submit">Save Upload</button>
+        </form>
+      </section>
+
       <section id="adminPanel" class="admin-block" hidden>
         <h3>Admin Panel</h3>
         <p id="adminTotals" class="note"></p>
@@ -90,6 +121,10 @@
         <div class="card-foot">
           <span class="badge"></span>
           <span class="player"></span>
+        </div>
+        <div class="meta">
+          <h4 class="card-title"></h4>
+          <p class="card-description"></p>
         </div>
         <div class="table">
           <div><span>Sport</span><strong class="sport"></strong></div>
