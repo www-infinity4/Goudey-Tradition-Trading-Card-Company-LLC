@@ -9,13 +9,13 @@
 </head>
 <body>
   <header class="topbar">
-    <button id="menuToggleBtn" class="menu-btn" type="button" aria-label="Toggle menu">☰</button>
+    <button id="menuToggleBtn" class="menu-btn" type="button" aria-label="Toggle menu" aria-controls="sidePanel" aria-expanded="false">☰</button>
     <h1>Goudey Tradition Card Museum</h1>
     <p>Trading platform · Pay-to-unlock cards · Buy or trade with other users</p>
   </header>
 
   <main class="layout">
-    <section class="panel">
+    <section id="collectionSection" class="panel">
       <div class="panel-head">
         <h2>Collection</h2>
         <div class="controls">
@@ -46,6 +46,15 @@
 
     <aside id="sidePanel" class="panel side">
       <h2>Account & Market</h2>
+      <section class="quick-links">
+        <h3>Quick Menu</h3>
+        <div class="quick-links-grid">
+          <button class="btn quick-link-btn" type="button" data-jump="#collectionSection">Collection</button>
+          <button class="btn quick-link-btn" type="button" data-jump="#walletPanel">Wallet</button>
+          <button class="btn quick-link-btn" type="button" data-jump="#uploadPanel">Uploads</button>
+          <button class="btn quick-link-btn" type="button" data-jump="#adminPanel">Admin</button>
+        </div>
+      </section>
       <div class="auth-wrap">
         <form id="signupForm" class="auth-form">
           <h3>Sign Up</h3>
@@ -59,6 +68,7 @@
           <h3>Sign In</h3>
           <input id="loginUsername" type="text" placeholder="Username" autocomplete="username" required />
           <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" required />
+          <label><input id="showLoginPassword" type="checkbox" /> Show password</label>
           <button class="btn" type="submit">Sign In</button>
         </form>
         <p id="authMessage" class="note"></p>
@@ -94,10 +104,61 @@
           <input id="uploadImageInput" type="file" accept="image/*" required />
           <input id="uploadTitleInput" type="text" placeholder="Card Title" required />
           <textarea id="uploadDescriptionInput" placeholder="Card Description" rows="3" required></textarea>
+          <select id="uploadSportInput">
+            <option value="Other">Other</option>
+            <option value="Baseball">Baseball</option>
+            <option value="Football">Football</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Entertainment">Entertainment</option>
+          </select>
+          <select id="uploadTemplateInput">
+            <option value="goudey">Goudey Classic Template</option>
+            <option value="topps">Topps Heritage Template</option>
+            <option value="bowman">Bowman Prospect Template</option>
+            <option value="chrome">Chrome Refractor Template</option>
+            <option value="vintage">Vintage Throwback Template</option>
+          </select>
           <label><input id="uploadHideCardInput" type="checkbox" /> Hide this upload from other users</label>
           <label><input id="uploadHideNameInput" type="checkbox" /> Hide this card name from other users</label>
           <button id="aiDetailsBtn" class="btn" type="button">AI Render Details</button>
           <button class="btn primary" type="submit">Save Upload</button>
+        </form>
+
+        <h3>Bulk Import Cards</h3>
+        <form id="bulkImportForm" class="auth-form">
+          <input id="bulkImportFilesInput" type="file" accept="image/*" multiple required />
+          <select id="bulkImportOwnerInput"></select>
+          <select id="bulkImportTemplateInput">
+            <option value="goudey">Goudey Classic Template</option>
+            <option value="topps">Topps Heritage Template</option>
+            <option value="bowman">Bowman Prospect Template</option>
+            <option value="chrome">Chrome Refractor Template</option>
+            <option value="vintage">Vintage Throwback Template</option>
+          </select>
+          <button class="btn" type="submit">Import Selected Files</button>
+        </form>
+
+        <h3>AI Card Studio</h3>
+        <form id="aiStudioForm" class="auth-form">
+          <input id="aiPlayerInput" type="text" placeholder="Player / Subject" />
+          <select id="aiSportInput">
+            <option value="Baseball">Baseball</option>
+            <option value="Football">Football</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Other">Other</option>
+          </select>
+          <select id="aiTemplateInput">
+            <option value="goudey">Goudey Classic Template</option>
+            <option value="topps">Topps Heritage Template</option>
+            <option value="bowman">Bowman Prospect Template</option>
+            <option value="chrome">Chrome Refractor Template</option>
+            <option value="vintage">Vintage Throwback Template</option>
+          </select>
+          <textarea id="aiPromptInput" rows="3" placeholder="AI prompt for title and card description"></textarea>
+          <input id="openaiApiKeyInput" type="password" placeholder="Optional OpenAI API key (for live GPT generation)" />
+          <button id="aiGenerateBtn" class="btn" type="button">Generate AI Draft for Upload Form</button>
+          <p class="note">No key? The app uses free built-in AI drafting locally.</p>
         </form>
       </section>
 
