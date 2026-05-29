@@ -679,13 +679,110 @@ const LATEST_30_IMAGES = [
   'ChatGPT Image May 21, 2026, 02_36_23 AM.png'
 ];
 
+const RECENT_IMAGE_UPLOADS = [
+  '01d1bf30-fe4e-4451-b706-b88d846f1e61.png',
+  '0209cbfd-1c99-4dc8-badb-b74849f6ba50.png',
+  '11c230d0-3973-48cd-b112-4bb780a39559.png',
+  '1233485c-3234-4768-9e48-9c24e2dc90c7.png',
+  '1933e3ca-8909-470e-bc8f-25cabbd9f28d.png',
+  '1ad11e6e-c101-41f6-aa8e-05f852440e6a.png',
+  '1d72a26f-dd9d-4bf8-9a3c-2e638669c833.png',
+  '20d85941-3cc5-4fe7-901b-cf8cf72296d0.png',
+  '263fc4e7-0d54-44cc-ac31-3918b8898f58.png',
+  '2a017a79-7cb5-4f0e-947d-701a502cb103.png',
+  '3279dbca-f8ad-49d0-ad81-c60291449591.png',
+  '3296d5b5-21fa-428c-a59f-da79c42b60e6.png',
+  '3e113a83-9868-41c5-a4ff-d76362847c85.png',
+  '3e48b0fa-3f5b-4fdb-a2b6-0e021127ce1b.png',
+  '4423a3fa-bf4e-4e99-b744-abb5d581016f.png',
+  '4891898c-2674-4ce7-88c1-37aac7c53589.png',
+  '5201d7e8-f271-40c9-b801-d56883f73785.png',
+  '54b07964-e330-4f7c-9c4b-93006d513ca4.png',
+  '66cffe38-29a7-481e-831a-33094aaca1a4.png',
+  '693c4ee6-7e76-4d24-b3d2-eeba52a294bd.png',
+  '69c0575c-4553-4374-b121-090e11aa4548.png',
+  '6b32a99d-2d8b-416e-aacc-e6397be37d6f.png',
+  '744b4f56-70c4-44a0-a838-687ae89cb7a9.png',
+  '7ee64225-1775-4985-ad24-65db26dbddcc.png',
+  '81c867d0-c8e7-494c-8153-dca380757c68.png',
+  '82d87fb7-ff83-4d26-8d25-c2ca5e4ff9f4.png',
+  '91e9b4f4-9de4-4638-a81d-236794a95b66.png',
+  '92c7f900-a86d-411b-8cf2-3ede1d4a8607.png',
+  '952523fa-bf7b-43f6-8730-b3975bd39c28.png',
+  '9b3a88b9-c57d-4e51-beae-644a1d816e08.png',
+  '9bdb8a08-92ba-43bb-9c89-01f37f677d1b.png',
+  '9fc5394c-a14e-4c76-bc96-ed146accb591.png',
+  'ChatGPT Image May 25, 2026, 03_22_22 PM.png',
+  'ChatGPT Image May 25, 2026, 03_32_29 PM.png',
+  'ChatGPT Image May 25, 2026, 04_34_31 PM.png',
+  'ChatGPT Image May 25, 2026, 05_33_42 PM.png',
+  'ChatGPT Image May 25, 2026, 05_56_24 PM.png',
+  'ChatGPT Image May 25, 2026, 06_29_39 PM (2).png',
+  'ChatGPT Image May 25, 2026, 06_29_48 PM (1).png',
+  'ChatGPT Image May 25, 2026, 06_29_49 PM (2).png',
+  'ChatGPT Image May 25, 2026, 07_51_35 PM.png',
+  'ChatGPT Image May 25, 2026, 09_19_43 PM.png',
+  'ChatGPT Image May 25, 2026, 10_11_33 PM.png',
+  'ChatGPT Image May 25, 2026, 10_47_28 PM.png',
+  'ChatGPT Image May 25, 2026, 11_11_16 PM.png',
+  'ChatGPT Image May 26, 2026, 01_09_01 AM.png',
+  'ChatGPT Image May 26, 2026, 01_20_41 AM.png',
+  'ChatGPT Image May 26, 2026, 01_36_48 AM.png',
+  'ChatGPT Image May 26, 2026, 06_23_28 PM.png',
+  'ChatGPT Image May 26, 2026, 08_17_47 PM.png',
+  'ChatGPT Image May 26, 2026, 08_55_12 PM.png',
+  'ChatGPT Image May 26, 2026, 09_07_24 PM.png',
+  'ChatGPT Image May 26, 2026, 09_29_48 PM.png',
+  'ChatGPT Image May 26, 2026, 10_39_17 PM.png',
+  'ChatGPT Image May 26, 2026, 11_01_04 PM.png',
+  'ChatGPT Image May 26, 2026, 11_10_53 PM.png',
+  'ChatGPT Image May 26, 2026, 11_33_29 PM.png',
+  'ChatGPT Image May 26, 2026, 11_34_05 PM.png',
+  'ChatGPT Image May 26, 2026, 12_02_28 AM.png',
+  'ChatGPT Image May 26, 2026, 12_57_06 AM.png',
+  'ChatGPT Image May 27, 2026, 01_11_14 AM.png',
+  'ChatGPT Image May 27, 2026, 02_13_59 PM.png',
+  'ChatGPT Image May 27, 2026, 02_42_50 PM.png',
+  'ChatGPT Image May 27, 2026, 05_49_26 PM.png',
+  'ChatGPT Image May 27, 2026, 06_26_40 PM.png',
+  'ChatGPT Image May 27, 2026, 07_23_21 PM.png',
+  'ChatGPT Image May 27, 2026, 09_06_24 PM.png',
+  'ChatGPT Image May 27, 2026, 09_36_09 PM.png',
+  'ChatGPT Image May 27, 2026, 09_51_58 PM.png',
+  'ChatGPT Image May 27, 2026, 10_46_05 PM.png',
+  'ChatGPT Image May 27, 2026, 12_35_52 AM.png',
+  'ChatGPT Image May 27, 2026, 12_51_47 AM.png',
+  'ChatGPT Image May 28, 2026, 04_41_43 PM (1).png',
+  'ChatGPT Image May 28, 2026, 05_13_14 PM.png',
+  'ChatGPT Image May 28, 2026, 05_37_18 PM.png',
+  'ChatGPT Image May 28, 2026, 05_42_29 PM.png',
+  'ChatGPT Image May 28, 2026, 06_54_34 PM (1).png',
+  'ChatGPT Image May 28, 2026, 06_54_34 PM (2).png',
+  'ChatGPT Image May 28, 2026, 06_54_34 PM (3).png',
+  'ChatGPT Image May 28, 2026, 06_54_34 PM (4).png',
+  'ChatGPT Image May 28, 2026, 06_54_35 PM (5).png',
+  'ChatGPT Image May 28, 2026, 06_54_35 PM (6).png',
+  'ChatGPT Image May 28, 2026, 06_54_36 PM (7).png',
+  'ChatGPT Image May 28, 2026, 07_30_07 PM.png',
+  'ChatGPT Image May 28, 2026, 07_35_19 PM.png',
+  'PK1_39cent_key_actual_coin_composite.png',
+  'b2cb69a1-8b78-44f4-8c10-139d9e3b387c.png',
+  'bab7b137-f6ae-4526-9ea2-f7eb5d27ac41.png',
+  'bdeaa5e6-01d9-4acf-b235-934643703edb.png',
+  'bfa6cf45-432b-4555-94ec-82f22afaf9a3.png',
+  'c554b89a-14b9-4675-a6bf-6274e7a49764 (1).png',
+  'ca19f13b-a61f-4ccd-8264-79ee8939e304.png',
+  'cb3b6c1f-d537-4a38-9392-8a0e88a5d043.png',
+  'e282a51c-310f-4d3a-8fc6-f181d64b344b.png',
+  'f08c1ce3-f7fd-4e95-8339-493af9ba6b1a.png',
+  'fc2ad8d9-61d0-481d-b8d6-050d25221c1d (1).png',
+  'fc2ad8d9-61d0-481d-b8d6-050d25221c1d.png'
+];
+
 const byId = new Map(cards.map((c) => [c.id, c]));
-const CARD_FEE_CENTS = 50;
-const PLATFORM_FEE_CENTS = 10;
-const SELLER_PAYOUT_CENTS = 40;
 const ADMIN_USERNAME = 'Kris';
 const ADMIN_PASSWORD = 'Kris';
-const DEFAULT_PLATFORM_PAYPAL = 'watsonkris611@gmail.com';
+const COLLECTION_ENTRY_LIMIT = 30;
 
 const STORAGE_KEYS = {
   users: 'tradeUsers',
@@ -729,13 +826,10 @@ const loginPasswordEl = document.getElementById('loginPassword');
 const authMessageEl = document.getElementById('authMessage');
 const currentUserPanel = document.getElementById('currentUserPanel');
 const currentUserTextEl = document.getElementById('currentUserText');
-const currentUserPayoutEl = document.getElementById('currentUserPayout');
 const logoutBtn = document.getElementById('logoutBtn');
 const adminPanel = document.getElementById('adminPanel');
 const adminUsersEl = document.getElementById('adminUsers');
 const adminTotalsEl = document.getElementById('adminTotals');
-const adminPaypalInput = document.getElementById('adminPaypalInput');
-const saveAdminPaypalBtn = document.getElementById('saveAdminPaypalBtn');
 const sidePanelEl = document.getElementById('sidePanel');
 const menuToggleBtn = document.getElementById('menuToggleBtn');
 const tradePanel = document.getElementById('tradePanel');
@@ -743,6 +837,9 @@ const tradeRequestsEl = document.getElementById('tradeRequests');
 const walletPanelEl = document.getElementById('walletPanel');
 const walletSummaryEl = document.getElementById('walletSummary');
 const walletCardsEl = document.getElementById('walletCards');
+const myCollectionSectionEl = document.getElementById('myCollectionSection');
+const collectionSummaryEl = document.getElementById('collectionSummary');
+const collectionCardsEl = document.getElementById('collectionCards');
 const uploadPanelEl = document.getElementById('uploadPanel');
 const uploadFormEl = document.getElementById('uploadForm');
 const uploadImageInputEl = document.getElementById('uploadImageInput');
@@ -766,12 +863,14 @@ const aiTemplateInputEl = document.getElementById('aiTemplateInput');
 const aiPromptInputEl = document.getElementById('aiPromptInput');
 const aiGenerateBtnEl = document.getElementById('aiGenerateBtn');
 const openaiApiKeyInputEl = document.getElementById('openaiApiKeyInput');
+const menuBackdropEl = document.getElementById('menuBackdrop');
+const menuCloseBtn = document.getElementById('menuCloseBtn');
 
 const users = loadJson(STORAGE_KEYS.users, []);
 const cardState = loadJson(STORAGE_KEYS.cardState, {});
 const unlocks = loadJson(STORAGE_KEYS.unlocks, {});
 const trades = loadJson(STORAGE_KEYS.trades, []);
-const ledger = loadJson(STORAGE_KEYS.ledger, { platformCents: 0, platformPaypal: DEFAULT_PLATFORM_PAYPAL });
+const ledger = loadJson(STORAGE_KEYS.ledger, { collectionActions: 0 });
 const uploads = loadJson(STORAGE_KEYS.uploads, []);
 const wallet = loadJson(STORAGE_KEYS.wallet, {});
 const preferences = loadJson(STORAGE_KEYS.preferences, { viewScope: 'all', showLocked: true, hideNames: false });
@@ -1035,6 +1134,24 @@ function ensureLatestThirtyPresent() {
   });
 }
 
+function ensureRecentUploadsPresent() {
+  RECENT_IMAGE_UPLOADS.forEach((imageName, idx) => {
+    const exists = cards.some((c) => c.image === imageName);
+    if (exists) return;
+    const card = {
+      id: `recent-upload-${idx + 1}`,
+      sport: 'Other',
+      player: 'Goudey Tradition',
+      baseValue: 150,
+      clicks: 0,
+      badge: `NEW-${idx + 1}`,
+      image: imageName
+    };
+    cards.push(card);
+    byId.set(card.id, card);
+  });
+}
+
 function isUploadHiddenForViewer(cardId, user) {
   const state = cardState[cardId];
   if (!state?.uploadHidden) return false;
@@ -1042,14 +1159,17 @@ function isUploadHiddenForViewer(cardId, user) {
   return state.ownerId !== user.id && !user.isAdmin;
 }
 
-function addWalletPurchase(userId, cardId) {
+function addCollectionEntry(userId, cardId, mode) {
   if (!wallet[userId]) wallet[userId] = [];
+  const existing = wallet[userId].find((entry) => entry.cardId === cardId && entry.mode === mode);
+  if (existing) return;
   wallet[userId].unshift({
     id: uniqueId('w'),
     cardId,
-    amountCents: CARD_FEE_CENTS,
+    mode,
     at: new Date().toISOString()
   });
+  wallet[userId] = wallet[userId].slice(0, COLLECTION_ENTRY_LIMIT);
 }
 
 function matchesSportFilter(card, filterValue) {
@@ -1071,7 +1191,6 @@ async function ensureUsers() {
       user.passwordScheme = user.passwordSalt ? 'pbkdf2' : 'sha256-legacy';
     }
     user.balanceCents = typeof user.balanceCents === 'number' ? user.balanceCents : 0;
-    user.paypalEmail = user.paypalEmail || '';
     user.verified = true;
     user.isAdmin = Boolean(user.isAdmin);
   }
@@ -1087,7 +1206,6 @@ async function ensureUsers() {
     delete admin.password;
     admin.isAdmin = true;
     admin.verified = true;
-    admin.paypalEmail = admin.paypalEmail || DEFAULT_PLATFORM_PAYPAL;
     admin.username = ADMIN_USERNAME;
     admin.usernameKey = normalizeUsername(ADMIN_USERNAME);
     return;
@@ -1100,7 +1218,6 @@ async function ensureUsers() {
     passwordHash: adminRecord.passwordHash,
     passwordSalt: adminRecord.passwordSalt,
     passwordScheme: adminRecord.passwordScheme,
-    paypalEmail: DEFAULT_PLATFORM_PAYPAL,
     verified: true,
     isAdmin: true,
     balanceCents: 0
@@ -1138,6 +1255,8 @@ function userDisplayName(userId) {
 }
 
 function isCardUnlockedFor(cardId, user) {
+  const card = byId.get(cardId);
+  if (card && !card.isUpload) return true;
   if (!user) return false;
   const state = cardState[cardId];
   if (state?.ownerId === user.id) return true;
@@ -1153,28 +1272,14 @@ function requireVerifiedUser(actionLabel) {
   return user;
 }
 
-function creditSale(ownerId, cents) {
-  if (!ownerId || cents <= 0) return;
-  const owner = users.find((u) => u.id === ownerId);
-  if (owner) owner.balanceCents += cents;
-}
-
-function processFee(ownerId) {
-  if (ownerId) {
-    ledger.platformCents += PLATFORM_FEE_CENTS;
-    creditSale(ownerId, SELLER_PAYOUT_CENTS);
-    return;
-  }
-  ledger.platformCents += CARD_FEE_CENTS;
-}
-
 function unlockCard(cardId) {
-  const user = requireVerifiedUser('unlock cards');
+  const user = requireVerifiedUser('save cards');
   if (!user) return;
   if (isCardUnlockedFor(cardId, user)) return;
   if (!unlocks[user.id]) unlocks[user.id] = {};
-  processFee(cardState[cardId].ownerId);
   unlocks[user.id][cardId] = true;
+  addCollectionEntry(user.id, cardId, 'saved');
+  ledger.collectionActions = (ledger.collectionActions || 0) + 1;
   saveAll();
   renderAll();
 }
@@ -1186,12 +1291,13 @@ function buyCard(cardId) {
   if (!state.listedForSale || state.ownerId === buyer.id) return;
 
   const sellerId = state.ownerId;
-  processFee(sellerId);
   state.ownerId = buyer.id;
   state.listedForSale = false;
   if (!unlocks[buyer.id]) unlocks[buyer.id] = {};
   unlocks[buyer.id][cardId] = true;
-  addWalletPurchase(buyer.id, cardId);
+  if (sellerId && sellerId !== buyer.id && !unlocks[sellerId]) unlocks[sellerId] = {};
+  addCollectionEntry(buyer.id, cardId, 'traded');
+  ledger.collectionActions = (ledger.collectionActions || 0) + 1;
   saveAll();
   renderAll();
 }
@@ -1259,7 +1365,6 @@ function resolveTrade(tradeId, accept) {
 function renderCardActions(node, card, state, user) {
   const actionsEl = node.querySelector('.actions');
   actionsEl.innerHTML = '';
-  const feeLabel = centsToMoney(CARD_FEE_CENTS);
   const meta = cardMeta[card.id] || { title: '', description: '', hideNameFromOthers: false };
   const uploadHiddenForViewer = isUploadHiddenForViewer(card.id, user);
 
@@ -1274,7 +1379,7 @@ function renderCardActions(node, card, state, user) {
   if (!unlocked) {
     const btn = document.createElement('button');
     btn.className = 'btn primary';
-    btn.textContent = `Unlock card (${feeLabel})`;
+    btn.textContent = 'Save to My Collection';
     btn.addEventListener('click', () => unlockCard(card.id));
     actionsEl.appendChild(btn);
     return;
@@ -1285,7 +1390,7 @@ function renderCardActions(node, card, state, user) {
   if (isOwner) {
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'btn';
-    toggleBtn.textContent = state.listedForSale ? 'Remove from Sale' : `List for Sale (${feeLabel})`;
+    toggleBtn.textContent = state.listedForSale ? 'Remove from Trading Board' : 'List for Trade';
     toggleBtn.addEventListener('click', () => toggleSale(card.id));
     actionsEl.appendChild(toggleBtn);
 
@@ -1331,7 +1436,7 @@ function renderCardActions(node, card, state, user) {
   if (state.listedForSale) {
     const buyBtn = document.createElement('button');
     buyBtn.className = 'btn primary';
-    buyBtn.textContent = `Buy for ${feeLabel}`;
+    buyBtn.textContent = 'Collect via Trade';
     buyBtn.addEventListener('click', () => buyCard(card.id));
     actionsEl.appendChild(buyBtn);
   }
@@ -1373,7 +1478,7 @@ function renderCards() {
   }
 
   if (!showLocked) {
-    visible = visible.filter((c) => isCardUnlockedFor(c.id, user));
+    visible = visible.filter((c) => !isUploadHiddenForViewer(c.id, user));
   }
   const tpl = document.getElementById('cardTemplate');
 
@@ -1394,20 +1499,20 @@ function renderCards() {
     node.querySelector('.card-description').textContent = meta.description;
     node.querySelector('.sport').textContent = card.sport;
     node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
-    node.querySelector('.status').textContent = state.listedForSale ? `For Sale (${centsToMoney(CARD_FEE_CENTS)})` : 'Not Listed';
+    node.querySelector('.status').textContent = state.listedForSale ? 'Open for Trade' : 'Collection Only';
     node.querySelector('.limit').textContent = state.limit;
-    node.querySelector('.price').textContent = centsToMoney(CARD_FEE_CENTS);
+    node.querySelector('.price').textContent = 'Free';
 
     const lockEl = node.querySelector('.lock-banner');
     if (hiddenUpload) {
       lockEl.textContent = 'Uploader requested hidden display';
       node.classList.add('locked');
-    } else if (unlocked) {
-      lockEl.textContent = 'Visible';
+    } else if (unlocked || !card.isUpload) {
+      lockEl.textContent = 'Visible in your collection';
       node.classList.remove('locked');
     } else {
-      lockEl.textContent = 'Hidden until fee is paid';
-      node.classList.add('locked');
+      lockEl.textContent = 'Tap Save to add to your collection';
+      node.classList.remove('locked');
     }
 
     renderCardActions(node, card, state, user);
@@ -1423,7 +1528,7 @@ function renderStats() {
   const unlockedCount = user ? cards.filter((c) => isCardUnlockedFor(c.id, user)).length : 0;
   statOwnedEl.textContent = String(ownedCount);
   statUnlockedEl.textContent = String(unlockedCount);
-  statPlatformEl.textContent = centsToMoney(ledger.platformCents || 0);
+  statPlatformEl.textContent = String(ledger.collectionActions || 0);
 }
 
 function renderAuth() {
@@ -1439,8 +1544,7 @@ function renderAuth() {
     return;
   }
   currentUserPanel.hidden = false;
-  currentUserTextEl.textContent = `${user.username} · Local self-verified profile · PayPal: ${user.paypalEmail || 'N/A'}`;
-  currentUserPayoutEl.textContent = centsToMoney(user.balanceCents || 0);
+  currentUserTextEl.textContent = `${user.username} · Local collection profile`;
   tradePanel.hidden = false;
   walletPanelEl.hidden = false;
   uploadPanelEl.hidden = false;
@@ -1469,8 +1573,7 @@ function renderAdmin() {
   const user = getCurrentUser();
   if (!user || !user.isAdmin) return;
   adminPanel.hidden = false;
-  adminTotalsEl.textContent = `Platform PayPal: ${ledger.platformPaypal || DEFAULT_PLATFORM_PAYPAL} · Earnings: ${centsToMoney(ledger.platformCents || 0)}`;
-  adminPaypalInput.value = ledger.platformPaypal || DEFAULT_PLATFORM_PAYPAL;
+  adminTotalsEl.textContent = `Collection actions: ${ledger.collectionActions || 0}`;
   adminUsersEl.innerHTML = '';
 
   users
@@ -1479,7 +1582,7 @@ function renderAdmin() {
       const row = document.createElement('div');
       row.className = 'admin-user';
       const text = document.createElement('span');
-      text.textContent = `${u.username} · ${u.paypalEmail || 'No PayPal'} · ${u.verified ? 'Verified' : 'Unverified'}`;
+      text.textContent = `${u.username} · ${u.verified ? 'Verified' : 'Unverified'}`;
       const btn = document.createElement('button');
       btn.className = 'btn';
       btn.textContent = u.verified ? 'Mark Unverified' : 'Mark Verified';
@@ -1531,19 +1634,58 @@ function renderWallet() {
   if (!user) return;
   const items = wallet[user.id] || [];
   const owned = cards.filter((c) => cardState[c.id]?.ownerId === user.id);
-  walletSummaryEl.textContent = `Purchased cards: ${items.length} · Currently owned: ${owned.length}`;
+  const saved = items.filter((entry) => entry.mode === 'saved').length;
+  const traded = items.filter((entry) => entry.mode === 'traded').length;
+  walletSummaryEl.textContent = `Saved from home: ${saved} · Traded from users: ${traded} · Currently owned: ${owned.length}`;
   walletCardsEl.innerHTML = '';
   if (items.length === 0) {
-    walletCardsEl.textContent = 'No purchased cards yet.';
+    walletCardsEl.textContent = 'No collection activity yet.';
     return;
   }
 
-  items.slice(0, 15).forEach((entry) => {
+  items.slice(0, COLLECTION_ENTRY_LIMIT).forEach((entry) => {
     const card = byId.get(entry.cardId);
     const row = document.createElement('div');
     row.className = 'wallet-card';
-    row.textContent = `${card ? card.badge : 'Card'} · ${card ? card.player : 'Unknown'} · ${centsToMoney(entry.amountCents)} · ${new Date(entry.at).toLocaleString()}`;
+    const modeLabel = entry.mode === 'traded' ? 'Traded' : 'Saved';
+    row.textContent = `${modeLabel} · ${card ? card.badge : 'Card'} · ${card ? card.player : 'Unknown'} · ${new Date(entry.at).toLocaleString()}`;
     walletCardsEl.appendChild(row);
+  });
+}
+
+function renderCollectionSection() {
+  const user = getCurrentUser();
+  collectionCardsEl.innerHTML = '';
+  if (!user) {
+    collectionSummaryEl.textContent = 'Sign in to view cards you saved and traded.';
+    return;
+  }
+  const ownedCards = cards.filter((card) => cardState[card.id]?.ownerId === user.id);
+  const savedCards = cards.filter((card) => isCardUnlockedFor(card.id, user));
+  collectionSummaryEl.textContent = `Owned cards: ${ownedCards.length} · Saved cards: ${savedCards.length}`;
+  if (savedCards.length === 0) {
+    collectionCardsEl.textContent = 'No cards saved yet.';
+    return;
+  }
+  const tpl = document.getElementById('cardTemplate');
+  savedCards.forEach((card) => {
+    const state = cardState[card.id];
+    const meta = cardMeta[card.id] || { title: card.player, description: `${card.sport} collectible card.` };
+    const node = tpl.content.firstElementChild.cloneNode(true);
+    node.querySelector('.card-img').src = card.image;
+    node.querySelector('.card-img').alt = card.player;
+    node.querySelector('.badge').textContent = card.badge;
+    node.querySelector('.player').textContent = card.player;
+    node.querySelector('.card-title').textContent = meta.title;
+    node.querySelector('.card-description').textContent = meta.description;
+    node.querySelector('.sport').textContent = card.sport;
+    node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
+    node.querySelector('.status').textContent = state.ownerId === user.id ? 'Owned by you' : 'Saved in your collection';
+    node.querySelector('.price').textContent = 'Free';
+    node.querySelector('.limit').textContent = state.limit;
+    node.querySelector('.lock-banner').textContent = 'Collection View';
+    node.querySelector('.actions').innerHTML = '';
+    collectionCardsEl.appendChild(node);
   });
 }
 
@@ -1551,16 +1693,16 @@ function renderAll() {
   renderAuth();
   renderCards();
   renderStats();
+  renderCollectionSection();
 }
 
 signupForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const username = document.getElementById('signupUsername').value.trim();
   const password = document.getElementById('signupPassword').value.trim();
-  const paypalEmail = document.getElementById('signupPaypal').value.trim();
   const usernameKey = normalizeUsername(username);
-  if (!username || !password || !paypalEmail) {
-    authMessageEl.textContent = 'Signup requires username, password, and PayPal email.';
+  if (!username || !password) {
+    authMessageEl.textContent = 'Signup requires username and password.';
     return;
   }
   if (password.length < 8) {
@@ -1579,7 +1721,6 @@ signupForm.addEventListener('submit', async (e) => {
     passwordHash: passwordRecord.passwordHash,
     passwordSalt: passwordRecord.passwordSalt,
     passwordScheme: passwordRecord.passwordScheme,
-    paypalEmail,
     verified: true,
     isAdmin: false,
     balanceCents: 0
@@ -1625,19 +1766,6 @@ logoutBtn.addEventListener('click', () => {
   renderAll();
 });
 
-saveAdminPaypalBtn.addEventListener('click', () => {
-  const user = getCurrentUser();
-  if (!user || !user.isAdmin) return;
-  const paypalValue = adminPaypalInput.value.trim();
-  if (!paypalValue) {
-    authMessageEl.textContent = 'Platform PayPal email cannot be empty.';
-    return;
-  }
-  ledger.platformPaypal = paypalValue;
-  saveAll();
-  renderAll();
-});
-
 filterEl.addEventListener('change', renderCards);
 viewScopeEl.addEventListener('change', () => {
   preferences.viewScope = viewScopeEl.value;
@@ -1658,13 +1786,18 @@ hideNamesToggleEl.addEventListener('change', () => {
 function closeMenu() {
   sidePanelEl.classList.remove('menu-open');
   menuToggleBtn.setAttribute('aria-expanded', 'false');
+  menuBackdropEl.hidden = true;
 }
 
 menuToggleBtn.addEventListener('click', () => {
   const opening = !sidePanelEl.classList.contains('menu-open');
   sidePanelEl.classList.toggle('menu-open', opening);
   menuToggleBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+  menuBackdropEl.hidden = !opening;
 });
+
+menuCloseBtn.addEventListener('click', closeMenu);
+menuBackdropEl.addEventListener('click', closeMenu);
 
 document.addEventListener('click', (event) => {
   if (window.innerWidth > 980) return;
@@ -1804,9 +1937,10 @@ aiGenerateBtnEl.addEventListener('click', async () => {
 async function bootstrap() {
   await ensureUsers();
   ensureLatestThirtyPresent();
+  ensureRecentUploadsPresent();
   ensureCardState();
   ensureCardMetadata();
-  if (!ledger.platformPaypal) ledger.platformPaypal = DEFAULT_PLATFORM_PAYPAL;
+  ledger.collectionActions = Number(ledger.collectionActions || 0);
   viewScopeEl.value = preferences.viewScope || 'all';
   showLockedToggleEl.checked = preferences.showLocked !== false;
   hideNamesToggleEl.checked = Boolean(preferences.hideNames);
