@@ -1255,12 +1255,11 @@ async function ensureAutoSignedInUser() {
   const currentUser = getCurrentUser();
   if (currentUser && !currentUser.isAdmin) return currentUser;
   const autoProfileKey = normalizeUsername(AUTO_PROFILE_USERNAME);
-  let fallbackUser = users.find((u) => u.autoProfile === true)
-    || users.find((u) => !u.isAdmin && u.usernameKey === autoProfileKey)
-    || null;
+  let fallbackUser = users.find((u) => !u.isAdmin && (u.autoProfile === true || u.usernameKey === autoProfileKey)) || null;
   if (!fallbackUser) {
     const username = AUTO_PROFILE_USERNAME;
-    const passwordRecord = await createPasswordRecord(uniqueId('auto-user-secret'));
+    const randomSecret = globalThis.crypto?.randomUUID?.() || uniqueId('secret');
+    const passwordRecord = await createPasswordRecord(randomSecret);
     fallbackUser = {
       id: uniqueId('u'),
       username,
