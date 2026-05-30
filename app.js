@@ -1255,10 +1255,19 @@ async function ensureAutoSignedInUser() {
   const currentUser = getCurrentUser();
   if (currentUser && !currentUser.isAdmin) return currentUser;
   const autoProfileKey = normalizeUsername(AUTO_PROFILE_USERNAME);
-  let fallbackUser = users.find((u) => !u.isAdmin && (u.autoProfile === true || u.usernameKey === autoProfileKey)) || null;
+  let fallbackUser = users.find((u) => !u.isAdmin && u.autoProfile === true) || null;
+  if (!fallbackUser) {
+    fallbackUser = users.find((u) => !u.isAdmin && u.usernameKey === autoProfileKey) || null;
+    if (fallbackUser) {
+      fallbackUser.autoProfile = true;
+      saveAll();
+    }
+  }
   if (!fallbackUser) {
     const username = AUTO_PROFILE_USERNAME;
-    const randomSecret = globalThis.crypto?.randomUUID?.() || uniqueId('secret');
+    const randomSecret = globalThis.crypto?.getRandomValues
+      ? Array.from(globalThis.crypto.getRandomValues(new Uint8Array(32))).map((byte) => byte.toString(16).padStart(2, '0')).join('')
+      : uniqueId('secret');
     const passwordRecord = await createPasswordRecord(randomSecret);
     fallbackUser = {
       id: uniqueId('u'),
@@ -1564,8 +1573,8 @@ function renderStats() {
 
 function renderAuth() {
   const user = getCurrentUser();
+  logoutBtn.hidden = AUTO_SIGN_IN_ENABLED;
   if (!user) {
-    logoutBtn.hidden = AUTO_SIGN_IN_ENABLED;
     currentUserPanel.hidden = true;
     adminPanel.hidden = true;
     tradePanel.hidden = true;
@@ -1576,7 +1585,6 @@ function renderAuth() {
     return;
   }
   currentUserPanel.hidden = false;
-  logoutBtn.hidden = AUTO_SIGN_IN_ENABLED;
   currentUserTextEl.textContent = `${user.username} · Local collection profile`;
   tradePanel.hidden = false;
   walletPanelEl.hidden = false;
