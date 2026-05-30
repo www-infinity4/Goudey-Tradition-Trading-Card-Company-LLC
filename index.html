@@ -9,7 +9,7 @@
 </head>
 <body>
   <header class="topbar">
-    <button id="menuToggleBtn" class="menu-btn" type="button" aria-label="Toggle menu" aria-controls="sidePanel" aria-expanded="false">☰</button>
+    <button id="menuToggleBtn" class="menu-btn" type="button" aria-label="Toggle menu" hidden>☰</button>
     <div class="topbar-copy">
     <h1>Goudey Tradition Card Museum</h1>
     <p>Build collections · Trade cards · Showcase originals</p>
@@ -18,7 +18,7 @@
   <div id="menuBackdrop" class="menu-backdrop" hidden></div>
 
   <main class="layout">
-    <section id="collectionSection" class="panel">
+    <section id="collectionSection" class="panel" hidden>
       <div class="panel-head">
         <h2>Collection</h2>
         <div class="controls">
@@ -49,13 +49,13 @@
 
     <section id="myCollectionSection" class="panel">
       <div class="panel-head">
-        <h2>My Collection</h2>
+        <h2>My Cards</h2>
       </div>
-      <p id="collectionSummary" class="note">Sign in to view cards you saved and traded.</p>
+      <p id="collectionSummary" class="note">Your saved cards.</p>
       <div id="collectionCards" class="card-grid"></div>
     </section>
 
-    <aside id="sidePanel" class="panel side">
+    <aside id="sidePanel" class="panel side" hidden>
       <div class="side-head">
         <h2>Account & Community</h2>
         <button id="menuCloseBtn" class="btn menu-close-btn" type="button">Close</button>

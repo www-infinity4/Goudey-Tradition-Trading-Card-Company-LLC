@@ -783,6 +783,8 @@ const byId = new Map(cards.map((c) => [c.id, c]));
 const ADMIN_USERNAME = 'Kris';
 const ADMIN_PASSWORD = 'Kris';
 const COLLECTION_ENTRY_LIMIT = 30;
+const AUTO_SIGN_IN_ENABLED = true;
+const AUTO_PROFILE_USERNAME = 'Local Collector';
 
 const STORAGE_KEYS = {
   users: 'tradeUsers',
@@ -1248,6 +1250,44 @@ function setCurrentUser(user) {
   localStorage.setItem(STORAGE_KEYS.currentUserId, user.id);
 }
 
+async function ensureAutoSignedInUser() {
+  if (!AUTO_SIGN_IN_ENABLED) return getCurrentUser();
+  const currentUser = getCurrentUser();
+  if (currentUser && !currentUser.isAdmin) return currentUser;
+  const autoProfileKey = normalizeUsername(AUTO_PROFILE_USERNAME);
+  let fallbackUser = users.find((u) => !u.isAdmin && u.autoProfile === true) || null;
+  if (!fallbackUser) {
+    fallbackUser = users.find((u) => !u.isAdmin && u.usernameKey === autoProfileKey) || null;
+    if (fallbackUser) {
+      fallbackUser.autoProfile = true;
+      saveAll();
+    }
+  }
+  if (!fallbackUser) {
+    const username = AUTO_PROFILE_USERNAME;
+    const randomSecret = globalThis.crypto?.getRandomValues
+      ? Array.from(globalThis.crypto.getRandomValues(new Uint8Array(32))).map((byte) => byte.toString(16).padStart(2, '0')).join('')
+      : uniqueId('secret');
+    const passwordRecord = await createPasswordRecord(randomSecret);
+    fallbackUser = {
+      id: uniqueId('u'),
+      username,
+      usernameKey: normalizeUsername(username),
+      passwordHash: passwordRecord.passwordHash,
+      passwordSalt: passwordRecord.passwordSalt,
+      passwordScheme: passwordRecord.passwordScheme,
+      verified: true,
+      isAdmin: false,
+      autoProfile: true,
+      balanceCents: 0
+    };
+    users.push(fallbackUser);
+    saveAll();
+  }
+  setCurrentUser(fallbackUser);
+  return fallbackUser;
+}
+
 function userDisplayName(userId) {
   if (!userId) return 'Marketplace';
   const user = users.find((u) => u.id === userId);
@@ -1533,6 +1573,7 @@ function renderStats() {
 
 function renderAuth() {
   const user = getCurrentUser();
+  logoutBtn.hidden = AUTO_SIGN_IN_ENABLED;
   if (!user) {
     currentUserPanel.hidden = true;
     adminPanel.hidden = true;
@@ -1657,7 +1698,7 @@ function renderCollectionSection() {
   const user = getCurrentUser();
   collectionCardsEl.innerHTML = '';
   if (!user) {
-    collectionSummaryEl.textContent = 'Sign in to view cards you saved and traded.';
+    collectionSummaryEl.textContent = 'No local cards available yet.';
     return;
   }
   const ownedCards = cards.filter((card) => cardState[card.id]?.ownerId === user.id);
@@ -1759,9 +1800,14 @@ loginForm.addEventListener('submit', async (e) => {
   renderAll();
 });
 
-logoutBtn.addEventListener('click', () => {
+logoutBtn.addEventListener('click', async () => {
   setCurrentUser(null);
-  authMessageEl.textContent = 'Signed out.';
+  if (AUTO_SIGN_IN_ENABLED) {
+    await ensureAutoSignedInUser();
+    authMessageEl.textContent = 'You are automatically signed in to view your local cards.';
+  } else {
+    authMessageEl.textContent = 'Signed out.';
+  }
   closeMenu();
   renderAll();
 });
@@ -1936,6 +1982,7 @@ aiGenerateBtnEl.addEventListener('click', async () => {
 
 async function bootstrap() {
   await ensureUsers();
+  await ensureAutoSignedInUser();
   ensureLatestThirtyPresent();
   ensureRecentUploadsPresent();
   ensureCardState();
