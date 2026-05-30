@@ -784,6 +784,7 @@ const ADMIN_USERNAME = 'Kris';
 const ADMIN_PASSWORD = 'Kris';
 const COLLECTION_ENTRY_LIMIT = 30;
 const AUTO_SIGN_IN_ENABLED = true;
+const AUTO_PROFILE_USERNAME = 'Local Collector';
 
 const STORAGE_KEYS = {
   users: 'tradeUsers',
@@ -1253,9 +1254,12 @@ async function ensureAutoSignedInUser() {
   if (!AUTO_SIGN_IN_ENABLED) return getCurrentUser();
   const currentUser = getCurrentUser();
   if (currentUser && !currentUser.isAdmin) return currentUser;
-  let fallbackUser = users.find((u) => !u.isAdmin) || null;
+  const autoProfileKey = normalizeUsername(AUTO_PROFILE_USERNAME);
+  let fallbackUser = users.find((u) => u.autoProfile === true)
+    || users.find((u) => !u.isAdmin && u.usernameKey === autoProfileKey)
+    || null;
   if (!fallbackUser) {
-    const username = 'Local Collector';
+    const username = AUTO_PROFILE_USERNAME;
     const passwordRecord = await createPasswordRecord(uniqueId('auto-user-secret'));
     fallbackUser = {
       id: uniqueId('u'),
@@ -1266,6 +1270,7 @@ async function ensureAutoSignedInUser() {
       passwordScheme: passwordRecord.passwordScheme,
       verified: true,
       isAdmin: false,
+      autoProfile: true,
       balanceCents: 0
     };
     users.push(fallbackUser);
@@ -1786,13 +1791,14 @@ loginForm.addEventListener('submit', async (e) => {
   renderAll();
 });
 
-logoutBtn.addEventListener('click', () => {
-  if (AUTO_SIGN_IN_ENABLED) {
-    authMessageEl.textContent = 'You are automatically signed in to view your local cards.';
-    return;
-  }
+logoutBtn.addEventListener('click', async () => {
   setCurrentUser(null);
-  authMessageEl.textContent = 'Signed out.';
+  if (AUTO_SIGN_IN_ENABLED) {
+    await ensureAutoSignedInUser();
+    authMessageEl.textContent = 'You are automatically signed in to view your local cards.';
+  } else {
+    authMessageEl.textContent = 'Signed out.';
+  }
   closeMenu();
   renderAll();
 });
