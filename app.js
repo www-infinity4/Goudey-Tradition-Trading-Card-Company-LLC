@@ -1566,6 +1566,7 @@ function renderStats() {
 function renderAuth() {
   const user = getCurrentUser();
   if (!user) {
+    logoutBtn.hidden = AUTO_SIGN_IN_ENABLED;
     currentUserPanel.hidden = true;
     adminPanel.hidden = true;
     tradePanel.hidden = true;
@@ -1576,6 +1577,7 @@ function renderAuth() {
     return;
   }
   currentUserPanel.hidden = false;
+  logoutBtn.hidden = AUTO_SIGN_IN_ENABLED;
   currentUserTextEl.textContent = `${user.username} · Local collection profile`;
   tradePanel.hidden = false;
   walletPanelEl.hidden = false;
@@ -1689,7 +1691,7 @@ function renderCollectionSection() {
   const user = getCurrentUser();
   collectionCardsEl.innerHTML = '';
   if (!user) {
-    collectionSummaryEl.textContent = 'No local profile available.';
+    collectionSummaryEl.textContent = 'No local cards available yet.';
     return;
   }
   const ownedCards = cards.filter((card) => cardState[card.id]?.ownerId === user.id);
