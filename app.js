@@ -1102,12 +1102,51 @@ function upsertCard({
   unlocks[ownerId][card.id] = true;
 }
 
+function getCardSet(badge) {
+  if (!badge) return 'Goudey Tradition';
+  const b = badge.toUpperCase();
+  if (b.startsWith('GT-')) return 'Goudey Tradition';
+  if (b.startsWith('HS-')) return 'Heritage Series';
+  if (b.startsWith('LS-')) return 'Legacy Stars';
+  if (b.startsWith('AL-')) return 'Aluminum Edition';
+  if (b.startsWith('EL-')) return 'Elite Series';
+  if (b.startsWith('BP-')) return 'Bowman Prospects';
+  if (b.startsWith('PR-')) return 'Prospects Series';
+  if (b.startsWith('ST-')) return 'Stat Leaders';
+  if (b.startsWith('RH-')) return 'Run Hunters';
+  if (b.startsWith('CB-')) return 'Chicago Cubs';
+  if (b.startsWith('MEM-')) return 'Memorabilia Series';
+  if (b.startsWith('AS-')) return 'All-Star Series';
+  if (b.startsWith('GD-')) return 'Goudey Diamonds';
+  if (b.startsWith('HE-')) return 'Heritage Edition';
+  if (b.startsWith('DUO-')) return 'Dual Player Edition';
+  if (b.startsWith('SP-')) return 'Special Edition';
+  if (b.startsWith('AU-')) return 'Autograph Series';
+  if (b.startsWith('ENT-')) return 'Entertainment Series';
+  if (b.startsWith('OTH-')) return 'Other Collection';
+  if (b.startsWith('PIO-')) return 'Pioneer Series';
+  if (b.startsWith('PHC-')) return 'Premium Hall Chrome';
+  if (b.startsWith('RC-')) return 'Rookie Chrome';
+  if (b.startsWith('OA-')) return 'Ozzie Albies Collection';
+  if (b.startsWith('HP-')) return 'Heritage Premium';
+  if (b.startsWith('PS-')) return 'Paul Skenes Edition';
+  if (b.startsWith('AC-')) return 'Acuña Chrome';
+  if (b.startsWith('RI-')) return 'Royal Icons';
+  if (b.startsWith('GA-')) return 'GT Gallery Archive';
+  if (b.startsWith('GS1-')) return "GT Summer '26 Vol. 1";
+  if (b.startsWith('GS2-')) return "GT Summer '26 Vol. 2";
+  if (b.startsWith('GS3-')) return "GT Summer '26 Vol. 3";
+  if (b.startsWith('GS4-')) return "GT Summer '26 Vol. 4";
+  if (b.startsWith('PK-')) return 'Penny King Special';
+  return 'Goudey Tradition';
+}
+
 function ensureCardMetadata() {
   cards.forEach((card) => {
     if (!cardMeta[card.id]) {
       cardMeta[card.id] = {
         title: `${card.badge} · ${card.player}`,
-        description: `${card.sport} collectible card.`,
+        description: `${getCardSet(card.badge)} · ${card.sport} trading card.`,
         hideNameFromOthers: false
       };
     } else {
@@ -1117,7 +1156,7 @@ function ensureCardMetadata() {
       } else {
         cardMeta[card.id].title = cardMeta[card.id].title || `${card.badge} · ${card.player}`;
       }
-      cardMeta[card.id].description = cardMeta[card.id].description || `${card.sport} collectible card.`;
+      cardMeta[card.id].description = cardMeta[card.id].description || `${getCardSet(card.badge)} · ${card.sport} trading card.`;
       cardMeta[card.id].hideNameFromOthers = Boolean(cardMeta[card.id].hideNameFromOthers);
     }
   });
@@ -1129,11 +1168,11 @@ function ensureLatestThirtyPresent() {
     if (exists) return;
     const card = {
       id: `latest-30-${idx + 1}`,
-      sport: 'Other',
-      player: 'Goudey Tradition',
-      baseValue: 150,
+      sport: 'Baseball',
+      player: 'GT Museum Gallery',
+      baseValue: 200,
       clicks: 0,
-      badge: `L30-${idx + 1}`,
+      badge: `GT-${50 + idx}`,
       image: imageName
     };
     cards.push(card);
@@ -1142,16 +1181,50 @@ function ensureLatestThirtyPresent() {
 }
 
 function ensureRecentUploadsPresent() {
+  const gc = { ga: 0, gs1: 0, gs2: 0, gs3: 0, gs4: 0, pk: 0 };
   RECENT_IMAGE_UPLOADS.forEach((imageName, idx) => {
     const exists = cards.some((c) => c.image === imageName);
     if (exists) return;
+    let badge, player, sport, baseValue = 175;
+    if (imageName.startsWith('ChatGPT Image May 25')) {
+      gc.gs1 += 1;
+      badge = `GS1-${String(gc.gs1).padStart(2, '0')}`;
+      player = "GT Summer '26 Vol. 1";
+      sport = 'Baseball';
+    } else if (imageName.startsWith('ChatGPT Image May 26')) {
+      gc.gs2 += 1;
+      badge = `GS2-${String(gc.gs2).padStart(2, '0')}`;
+      player = "GT Summer '26 Vol. 2";
+      sport = 'Baseball';
+    } else if (imageName.startsWith('ChatGPT Image May 27')) {
+      gc.gs3 += 1;
+      badge = `GS3-${String(gc.gs3).padStart(2, '0')}`;
+      player = "GT Summer '26 Vol. 3";
+      sport = 'Baseball';
+    } else if (imageName.startsWith('ChatGPT Image May 28')) {
+      gc.gs4 += 1;
+      badge = `GS4-${String(gc.gs4).padStart(2, '0')}`;
+      player = "GT Summer '26 Vol. 4";
+      sport = 'Baseball';
+    } else if (imageName.startsWith('PK1_')) {
+      gc.pk += 1;
+      badge = `PK-${gc.pk}`;
+      player = 'Penny King';
+      sport = 'Other';
+      baseValue = 250;
+    } else {
+      gc.ga += 1;
+      badge = `GA-${String(gc.ga).padStart(2, '0')}`;
+      player = 'GT Gallery Archive';
+      sport = 'Other';
+    }
     const card = {
       id: `recent-upload-${idx + 1}`,
-      sport: 'Other',
-      player: 'Goudey Tradition',
-      baseValue: 150,
+      sport,
+      player,
+      baseValue,
       clicks: 0,
-      badge: `NEW-${idx + 1}`,
+      badge,
       image: imageName
     };
     cards.push(card);
@@ -1542,6 +1615,7 @@ function renderCards() {
     node.querySelector('.player').textContent = displayName;
     node.querySelector('.card-title').textContent = hideNameForViewer ? 'Title Hidden' : meta.title;
     node.querySelector('.card-description').textContent = meta.description;
+    node.querySelector('.card-set').textContent = getCardSet(card.badge);
     node.querySelector('.sport').textContent = card.sport;
     node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
     node.querySelector('.status').textContent = state.listedForSale ? 'Open for Trade' : 'Collection Only';
@@ -1724,6 +1798,7 @@ function renderCollectionSection() {
     node.querySelector('.player').textContent = card.player;
     node.querySelector('.card-title').textContent = meta.title;
     node.querySelector('.card-description').textContent = meta.description;
+    node.querySelector('.card-set').textContent = getCardSet(card.badge);
     node.querySelector('.sport').textContent = card.sport;
     node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
     node.querySelector('.status').textContent = state.ownerId === user.id ? 'Owned by you' : 'Saved in your collection';
@@ -1987,6 +2062,8 @@ aiGenerateBtnEl.addEventListener('click', async () => {
 async function bootstrap() {
   await ensureUsers();
   await ensureAutoSignedInUser();
+  ensureLatestThirtyPresent();
+  ensureRecentUploadsPresent();
   ensureCardState();
   ensureCardMetadata();
   ledger.collectionActions = Number(ledger.collectionActions || 0);
