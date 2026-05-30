@@ -10,9 +10,12 @@
 <body>
   <header class="topbar">
     <button id="menuToggleBtn" class="menu-btn" type="button" aria-label="Toggle menu" aria-controls="sidePanel" aria-expanded="false">☰</button>
+    <div class="topbar-copy">
     <h1>Goudey Tradition Card Museum</h1>
-    <p>Trading platform · Pay-to-unlock cards · Buy or trade with other users</p>
+    <p>Build collections · Trade cards · Showcase originals</p>
+    </div>
   </header>
+  <div id="menuBackdrop" class="menu-backdrop" hidden></div>
 
   <main class="layout">
     <section id="collectionSection" class="panel">
@@ -38,19 +41,30 @@
         </div>
       </div>
       <div class="panel-switches">
-        <label><input id="showLockedToggle" type="checkbox" checked /> Show hidden cards</label>
+        <label><input id="showLockedToggle" type="checkbox" checked /> Show other users' hidden uploads</label>
         <label><input id="hideNamesToggle" type="checkbox" /> Hide card names</label>
       </div>
       <div id="cards" class="card-grid"></div>
     </section>
 
+    <section id="myCollectionSection" class="panel">
+      <div class="panel-head">
+        <h2>My Collection</h2>
+      </div>
+      <p id="collectionSummary" class="note">Sign in to view cards you saved and traded.</p>
+      <div id="collectionCards" class="card-grid"></div>
+    </section>
+
     <aside id="sidePanel" class="panel side">
-      <h2>Account & Market</h2>
+      <div class="side-head">
+        <h2>Account & Community</h2>
+        <button id="menuCloseBtn" class="btn menu-close-btn" type="button">Close</button>
+      </div>
       <section class="quick-links">
         <h3>Quick Menu</h3>
         <div class="quick-links-grid">
           <button class="btn quick-link-btn" type="button" data-jump="#collectionSection">Collection</button>
-          <button class="btn quick-link-btn" type="button" data-jump="#walletPanel">Wallet</button>
+          <button class="btn quick-link-btn" type="button" data-jump="#myCollectionSection">My Collection</button>
           <button class="btn quick-link-btn" type="button" data-jump="#uploadPanel">Uploads</button>
           <button class="btn quick-link-btn" type="button" data-jump="#adminPanel">Admin</button>
         </div>
@@ -60,7 +74,6 @@
           <h3>Sign Up</h3>
           <input id="signupUsername" type="text" placeholder="Username" autocomplete="username" required />
           <input id="signupPassword" type="password" placeholder="Password" autocomplete="new-password" required />
-          <input id="signupPaypal" type="email" placeholder="PayPal Email" autocomplete="email" required />
           <button class="btn primary" type="submit">Create Account</button>
         </form>
 
@@ -76,7 +89,6 @@
 
       <div id="currentUserPanel" class="current-user" hidden>
         <p id="currentUserText"></p>
-        <p>Seller Payout Balance: <strong id="currentUserPayout">$0.00</strong></p>
         <button id="logoutBtn" class="btn" type="button">Sign Out</button>
       </div>
 
@@ -84,7 +96,7 @@
         <div><dt>Total Cards</dt><dd id="statCards">0</dd></div>
         <div><dt>Your Owned Cards</dt><dd id="statOwned">0</dd></div>
         <div><dt>Your Unlocked Cards</dt><dd id="statUnlocked">0</dd></div>
-        <div><dt>Platform Earnings</dt><dd id="statPlatform">$0.00</dd></div>
+        <div><dt>Collection Saves</dt><dd id="statPlatform">0</dd></div>
       </dl>
 
       <section id="tradePanel" class="admin-block" hidden>
@@ -93,8 +105,8 @@
       </section>
 
       <section id="walletPanel" class="admin-block" hidden>
-        <h3>Wallet</h3>
-        <p id="walletSummary" class="note"></p>
+        <h3>Recent Collection Activity</h3>
+        <p id="walletSummary" class="note">Saved and traded cards.</p>
         <div id="walletCards"></div>
       </section>
 
@@ -165,10 +177,6 @@
       <section id="adminPanel" class="admin-block" hidden>
         <h3>Admin Panel</h3>
         <p id="adminTotals" class="note"></p>
-        <div class="admin-paypal">
-          <input id="adminPaypalInput" type="email" placeholder="Platform PayPal email" />
-          <button id="saveAdminPaypalBtn" class="btn" type="button">Save PayPal Destination</button>
-        </div>
         <div id="adminUsers"></div>
       </section>
     </aside>
