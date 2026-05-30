@@ -783,6 +783,7 @@ const byId = new Map(cards.map((c) => [c.id, c]));
 const ADMIN_USERNAME = 'Kris';
 const ADMIN_PASSWORD = 'Kris';
 const COLLECTION_ENTRY_LIMIT = 30;
+const AUTO_SIGN_IN_ENABLED = true;
 
 const STORAGE_KEYS = {
   users: 'tradeUsers',
@@ -1248,6 +1249,16 @@ function setCurrentUser(user) {
   localStorage.setItem(STORAGE_KEYS.currentUserId, user.id);
 }
 
+function ensureAutoSignedInUser() {
+  if (!AUTO_SIGN_IN_ENABLED) return getCurrentUser();
+  const currentUser = getCurrentUser();
+  if (currentUser) return currentUser;
+  const fallbackUser = users.find((u) => !u.isAdmin) || users[0] || null;
+  if (!fallbackUser) return null;
+  setCurrentUser(fallbackUser);
+  return fallbackUser;
+}
+
 function userDisplayName(userId) {
   if (!userId) return 'Marketplace';
   const user = users.find((u) => u.id === userId);
@@ -1657,7 +1668,7 @@ function renderCollectionSection() {
   const user = getCurrentUser();
   collectionCardsEl.innerHTML = '';
   if (!user) {
-    collectionSummaryEl.textContent = 'Sign in to view cards you saved and traded.';
+    collectionSummaryEl.textContent = 'No local profile available.';
     return;
   }
   const ownedCards = cards.filter((card) => cardState[card.id]?.ownerId === user.id);
@@ -1760,6 +1771,10 @@ loginForm.addEventListener('submit', async (e) => {
 });
 
 logoutBtn.addEventListener('click', () => {
+  if (AUTO_SIGN_IN_ENABLED) {
+    authMessageEl.textContent = 'Sign in is disabled. Your local cards stay available.';
+    return;
+  }
   setCurrentUser(null);
   authMessageEl.textContent = 'Signed out.';
   closeMenu();
@@ -1936,6 +1951,7 @@ aiGenerateBtnEl.addEventListener('click', async () => {
 
 async function bootstrap() {
   await ensureUsers();
+  ensureAutoSignedInUser();
   ensureLatestThirtyPresent();
   ensureRecentUploadsPresent();
   ensureCardState();
