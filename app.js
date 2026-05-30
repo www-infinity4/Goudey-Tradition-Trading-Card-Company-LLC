@@ -1259,11 +1259,8 @@ function ensureRecentUploadsPresent() {
   });
 }
 
-function isUploadHiddenForViewer(cardId, user) {
-  const state = cardState[cardId];
-  if (!state?.uploadHidden) return false;
-  if (!user) return true;
-  return state.ownerId !== user.id && !user.isAdmin;
+function isUploadHiddenForViewer() {
+  return false;
 }
 
 function addCollectionEntry(userId, cardId, mode) {
