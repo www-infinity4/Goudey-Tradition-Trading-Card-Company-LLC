@@ -1249,12 +1249,28 @@ function setCurrentUser(user) {
   localStorage.setItem(STORAGE_KEYS.currentUserId, user.id);
 }
 
-function ensureAutoSignedInUser() {
+async function ensureAutoSignedInUser() {
   if (!AUTO_SIGN_IN_ENABLED) return getCurrentUser();
   const currentUser = getCurrentUser();
-  if (currentUser) return currentUser;
-  const fallbackUser = users.find((u) => !u.isAdmin) || users[0] || null;
-  if (!fallbackUser) return null;
+  if (currentUser && !currentUser.isAdmin) return currentUser;
+  let fallbackUser = users.find((u) => !u.isAdmin) || null;
+  if (!fallbackUser) {
+    const username = 'Local Collector';
+    const passwordRecord = await createPasswordRecord(uniqueId('auto-user-secret'));
+    fallbackUser = {
+      id: uniqueId('u'),
+      username,
+      usernameKey: normalizeUsername(username),
+      passwordHash: passwordRecord.passwordHash,
+      passwordSalt: passwordRecord.passwordSalt,
+      passwordScheme: passwordRecord.passwordScheme,
+      verified: true,
+      isAdmin: false,
+      balanceCents: 0
+    };
+    users.push(fallbackUser);
+    saveAll();
+  }
   setCurrentUser(fallbackUser);
   return fallbackUser;
 }
@@ -1772,7 +1788,7 @@ loginForm.addEventListener('submit', async (e) => {
 
 logoutBtn.addEventListener('click', () => {
   if (AUTO_SIGN_IN_ENABLED) {
-    authMessageEl.textContent = 'Sign in is disabled. Your local cards stay available.';
+    authMessageEl.textContent = 'You are automatically signed in to view your local cards.';
     return;
   }
   setCurrentUser(null);
@@ -1951,7 +1967,7 @@ aiGenerateBtnEl.addEventListener('click', async () => {
 
 async function bootstrap() {
   await ensureUsers();
-  ensureAutoSignedInUser();
+  await ensureAutoSignedInUser();
   ensureLatestThirtyPresent();
   ensureRecentUploadsPresent();
   ensureCardState();
