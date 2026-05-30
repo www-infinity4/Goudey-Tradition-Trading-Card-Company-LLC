@@ -1399,8 +1399,6 @@ function saveFavorite(cardId) {
   if (!favorites[user.id]) favorites[user.id] = {};
   if (favorites[user.id][cardId]) return;
   favorites[user.id][cardId] = true;
-  if (!unlocks[user.id]) unlocks[user.id] = {};
-  unlocks[user.id][cardId] = true;
   addCollectionEntry(user.id, cardId, 'saved');
   ledger.collectionActions = (ledger.collectionActions || 0) + 1;
   saveAll();
@@ -1775,14 +1773,14 @@ function renderCollectionSection() {
     return;
   }
   const ownedCards = cards.filter((card) => cardState[card.id]?.ownerId === user.id);
-  const savedCards = cards.filter((card) => isFavorite(card.id, user));
-  collectionSummaryEl.textContent = `Owned cards: ${ownedCards.length} · Saved favorites: ${savedCards.length}`;
-  if (savedCards.length === 0) {
+  const favoriteCards = cards.filter((card) => isFavorite(card.id, user));
+  collectionSummaryEl.textContent = `Owned cards: ${ownedCards.length} · Saved favorites: ${favoriteCards.length}`;
+  if (favoriteCards.length === 0) {
     collectionCardsEl.textContent = 'No cards saved yet.';
     return;
   }
   const tpl = document.getElementById('cardTemplate');
-  savedCards.forEach((card) => {
+  favoriteCards.forEach((card) => {
     const state = cardState[card.id];
     const meta = cardMeta[card.id] || { title: card.player, description: `${card.sport} collectible card.` };
     const node = tpl.content.firstElementChild.cloneNode(true);
