@@ -141,7 +141,7 @@ body {
 .card-grid {
   display: grid;
   gap: .75rem;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
 }
 
 /* ── Individual Card ─────────────────────────────────────────────────────── */
@@ -467,7 +467,7 @@ body {
 
 /* ── Large screens: 3-column card grid ───────────────────────────────────── */
 @media (min-width: 600px) {
-  .card-grid { grid-template-columns: repeat(3, 1fr); }
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
   .layout { padding-bottom: 2rem; }
   .side {
     position: fixed;
@@ -484,6 +484,5 @@ body {
   .side-head { top: 0; }
 }
 @media (min-width: 900px) {
-  .card-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
 }
-

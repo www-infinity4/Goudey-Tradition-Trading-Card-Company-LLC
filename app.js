@@ -1598,9 +1598,16 @@ function renderCards() {
   if (!showLocked) {
     visible = visible.filter((c) => !isUploadHiddenForViewer(c.id, user));
   }
+  const sortedVisible = visible
+    .slice()
+    .sort(
+      (a, b) =>
+        a.player.localeCompare(b.player, undefined, { sensitivity: 'base' }) ||
+        a.badge.localeCompare(b.badge, undefined, { sensitivity: 'base' })
+    );
   const tpl = document.getElementById('cardTemplate');
 
-  visible.forEach((card) => {
+  sortedVisible.forEach((card) => {
     const state = cardState[card.id];
     const meta = cardMeta[card.id] || { title: card.player, description: `${card.sport} collectible card.`, hideNameFromOthers: false };
     const unlocked = isCardUnlockedFor(card.id, user);
