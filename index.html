@@ -18,9 +18,7 @@
       <h1>Goudey Tradition Card Museum</h1>
       <p>Build collections · Trade cards · Showcase originals</p>
     </div>
-    <button id="menuToggleBtn" class="menu-btn" type="button" aria-label="Toggle menu">☰ Menu</button>
   </header>
-  <div id="menuBackdrop" class="menu-backdrop" hidden></div>
 
   <main class="layout">
     <section id="collectionSection" class="panel">
@@ -37,17 +35,12 @@
             <option value="Entertainment">Entertainment</option>
             <option value="Other">Other</option>
           </select>
-          <label for="viewScope">View</label>
-          <select id="viewScope">
+          <label for="favoritesView">View</label>
+          <select id="favoritesView">
             <option value="all">All Cards</option>
-            <option value="mine">My Cards</option>
-            <option value="others">Others' Cards</option>
+            <option value="favorites">Saved Favorites</option>
           </select>
         </div>
-      </div>
-      <div class="panel-switches">
-        <label><input id="showLockedToggle" type="checkbox" checked /> Show other users' hidden uploads</label>
-        <label><input id="hideNamesToggle" type="checkbox" /> Hide card names</label>
       </div>
       <div id="cards" class="card-grid"></div>
     </section>
@@ -63,7 +56,6 @@
     <aside id="sidePanel" class="panel side">
       <div class="side-head">
         <h2>Account & Community</h2>
-        <button id="menuCloseBtn" class="btn menu-close-btn" type="button">Close</button>
       </div>
       <section class="quick-links">
         <h3>Quick Menu</h3>
@@ -135,8 +127,6 @@
             <option value="chrome">Chrome Refractor Template</option>
             <option value="vintage">Vintage Throwback Template</option>
           </select>
-          <label><input id="uploadHideCardInput" type="checkbox" /> Hide this upload from other users</label>
-          <label><input id="uploadHideNameInput" type="checkbox" /> Hide this card name from other users</label>
           <button id="aiDetailsBtn" class="btn" type="button">AI Render Details</button>
           <button class="btn primary" type="submit">Save Upload</button>
         </form>
@@ -186,6 +176,11 @@
       </section>
     </aside>
   </main>
+
+  <div id="imageModal" class="image-modal" hidden>
+    <button id="imageModalClose" class="image-modal-close" type="button" aria-label="Close image viewer">×</button>
+    <img id="imageModalImg" src="" alt="Full card preview" />
+  </div>
 
   <template id="cardTemplate">
     <article class="card" aria-label="Trading card">

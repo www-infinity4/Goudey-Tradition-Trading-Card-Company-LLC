@@ -791,6 +791,7 @@ const STORAGE_KEYS = {
   currentUserId: 'tradeCurrentUserId',
   cardState: 'tradeCardState',
   unlocks: 'tradeUnlocks',
+  favorites: 'tradeFavorites',
   trades: 'tradeTrades',
   ledger: 'tradeLedger',
   uploads: 'tradeUploads',
@@ -815,9 +816,7 @@ function saveJson(key, value) {
 
 const cardsEl = document.getElementById('cards');
 const filterEl = document.getElementById('sportFilter');
-const viewScopeEl = document.getElementById('viewScope');
-const showLockedToggleEl = document.getElementById('showLockedToggle');
-const hideNamesToggleEl = document.getElementById('hideNamesToggle');
+const favoritesViewEl = document.getElementById('favoritesView');
 const statCardsEl = document.getElementById('statCards');
 const statOwnedEl = document.getElementById('statOwned');
 const statUnlockedEl = document.getElementById('statUnlocked');
@@ -832,8 +831,6 @@ const logoutBtn = document.getElementById('logoutBtn');
 const adminPanel = document.getElementById('adminPanel');
 const adminUsersEl = document.getElementById('adminUsers');
 const adminTotalsEl = document.getElementById('adminTotals');
-const sidePanelEl = document.getElementById('sidePanel');
-const menuToggleBtn = document.getElementById('menuToggleBtn');
 const tradePanel = document.getElementById('tradePanel');
 const tradeRequestsEl = document.getElementById('tradeRequests');
 const walletPanelEl = document.getElementById('walletPanel');
@@ -847,8 +844,6 @@ const uploadFormEl = document.getElementById('uploadForm');
 const uploadImageInputEl = document.getElementById('uploadImageInput');
 const uploadTitleInputEl = document.getElementById('uploadTitleInput');
 const uploadDescriptionInputEl = document.getElementById('uploadDescriptionInput');
-const uploadHideCardInputEl = document.getElementById('uploadHideCardInput');
-const uploadHideNameInputEl = document.getElementById('uploadHideNameInput');
 const aiDetailsBtnEl = document.getElementById('aiDetailsBtn');
 const uploadSportInputEl = document.getElementById('uploadSportInput');
 const uploadTemplateInputEl = document.getElementById('uploadTemplateInput');
@@ -865,17 +860,19 @@ const aiTemplateInputEl = document.getElementById('aiTemplateInput');
 const aiPromptInputEl = document.getElementById('aiPromptInput');
 const aiGenerateBtnEl = document.getElementById('aiGenerateBtn');
 const openaiApiKeyInputEl = document.getElementById('openaiApiKeyInput');
-const menuBackdropEl = document.getElementById('menuBackdrop');
-const menuCloseBtn = document.getElementById('menuCloseBtn');
+const imageModalEl = document.getElementById('imageModal');
+const imageModalImgEl = document.getElementById('imageModalImg');
+const imageModalCloseEl = document.getElementById('imageModalClose');
 
 const users = loadJson(STORAGE_KEYS.users, []);
 const cardState = loadJson(STORAGE_KEYS.cardState, {});
 const unlocks = loadJson(STORAGE_KEYS.unlocks, {});
+const favorites = loadJson(STORAGE_KEYS.favorites, {});
 const trades = loadJson(STORAGE_KEYS.trades, []);
 const ledger = loadJson(STORAGE_KEYS.ledger, { collectionActions: 0 });
 const uploads = loadJson(STORAGE_KEYS.uploads, []);
 const wallet = loadJson(STORAGE_KEYS.wallet, {});
-const preferences = loadJson(STORAGE_KEYS.preferences, { viewScope: 'all', showLocked: true, hideNames: false });
+const preferences = loadJson(STORAGE_KEYS.preferences, { favoritesView: 'all' });
 const cardMeta = loadJson(STORAGE_KEYS.cardMeta, {});
 
 uploads.forEach((uploadCard) => {
@@ -959,6 +956,7 @@ function saveAll() {
   saveJson(STORAGE_KEYS.users, users);
   saveJson(STORAGE_KEYS.cardState, cardState);
   saveJson(STORAGE_KEYS.unlocks, unlocks);
+  saveJson(STORAGE_KEYS.favorites, favorites);
   saveJson(STORAGE_KEYS.trades, trades);
   saveJson(STORAGE_KEYS.ledger, ledger);
   saveJson(STORAGE_KEYS.uploads, uploads);
@@ -1381,6 +1379,11 @@ function isCardUnlockedFor(cardId, user) {
   return Boolean(unlocks[user.id]?.[cardId]);
 }
 
+function isFavorite(cardId, user) {
+  if (!user) return false;
+  return Boolean(favorites[user.id]?.[cardId]);
+}
+
 function requireVerifiedUser(actionLabel) {
   const user = getCurrentUser();
   if (!user) {
@@ -1390,16 +1393,38 @@ function requireVerifiedUser(actionLabel) {
   return user;
 }
 
-function unlockCard(cardId) {
-  const user = requireVerifiedUser('save cards');
+function saveFavorite(cardId) {
+  const user = requireVerifiedUser('save favorites');
   if (!user) return;
-  if (isCardUnlockedFor(cardId, user)) return;
+  if (!favorites[user.id]) favorites[user.id] = {};
+  if (favorites[user.id][cardId]) return;
+  favorites[user.id][cardId] = true;
   if (!unlocks[user.id]) unlocks[user.id] = {};
   unlocks[user.id][cardId] = true;
   addCollectionEntry(user.id, cardId, 'saved');
   ledger.collectionActions = (ledger.collectionActions || 0) + 1;
   saveAll();
   renderAll();
+}
+
+function removeFavorite(cardId) {
+  const user = requireVerifiedUser('remove favorites');
+  if (!user || !favorites[user.id]) return;
+  if (!favorites[user.id][cardId]) return;
+  delete favorites[user.id][cardId];
+  saveAll();
+  renderAll();
+}
+
+function openImageModal(imageSrc, imageAlt) {
+  imageModalImgEl.src = imageSrc;
+  imageModalImgEl.alt = imageAlt || 'Full card preview';
+  imageModalEl.hidden = false;
+}
+
+function closeImageModal() {
+  imageModalEl.hidden = true;
+  imageModalImgEl.src = '';
 }
 
 function buyCard(cardId) {
@@ -1484,26 +1509,24 @@ function renderCardActions(node, card, state, user) {
   const actionsEl = node.querySelector('.actions');
   actionsEl.innerHTML = '';
   const meta = cardMeta[card.id] || { title: '', description: '', hideNameFromOthers: false };
-  const uploadHiddenForViewer = isUploadHiddenForViewer(card.id, user);
 
-  const unlocked = isCardUnlockedFor(card.id, user);
+  const favorited = isFavorite(card.id, user);
   const isOwner = user && state.ownerId === user.id;
-  const isUploadCard = Boolean(card.isUpload);
-
-  if (uploadHiddenForViewer) {
-    return;
-  }
-
-  if (!unlocked) {
-    const btn = document.createElement('button');
-    btn.className = 'btn primary';
-    btn.textContent = 'Save to My Collection';
-    btn.addEventListener('click', () => unlockCard(card.id));
-    actionsEl.appendChild(btn);
-    return;
-  }
 
   if (!user) return;
+  if (!favorited) {
+    const btn = document.createElement('button');
+    btn.className = 'btn primary';
+    btn.textContent = 'Save Favorite';
+    btn.addEventListener('click', () => saveFavorite(card.id));
+    actionsEl.appendChild(btn);
+  } else {
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'btn';
+    removeBtn.textContent = 'Remove Favorite';
+    removeBtn.addEventListener('click', () => removeFavorite(card.id));
+    actionsEl.appendChild(removeBtn);
+  }
 
   if (isOwner) {
     const toggleBtn = document.createElement('button');
@@ -1527,27 +1550,6 @@ function renderCardActions(node, card, state, user) {
     });
     actionsEl.appendChild(editBtn);
 
-    const hideNameBtn = document.createElement('button');
-    hideNameBtn.className = 'btn';
-    hideNameBtn.textContent = meta.hideNameFromOthers ? 'Show Name to Others' : 'Hide Name from Others';
-    hideNameBtn.addEventListener('click', () => {
-      cardMeta[card.id].hideNameFromOthers = !cardMeta[card.id].hideNameFromOthers;
-      saveAll();
-      renderAll();
-    });
-    actionsEl.appendChild(hideNameBtn);
-
-    if (isUploadCard) {
-      const hideUploadBtn = document.createElement('button');
-      hideUploadBtn.className = 'btn';
-      hideUploadBtn.textContent = state.uploadHidden ? 'Unhide Upload' : 'Hide Upload';
-      hideUploadBtn.addEventListener('click', () => {
-        state.uploadHidden = !state.uploadHidden;
-        saveAll();
-        renderAll();
-      });
-      actionsEl.appendChild(hideUploadBtn);
-    }
     return;
   }
 
@@ -1584,36 +1586,25 @@ function renderCards() {
   const filter = filterEl.value;
   cardsEl.innerHTML = '';
   const user = getCurrentUser();
-  const viewScope = viewScopeEl.value;
-  const showLocked = Boolean(showLockedToggleEl.checked);
-  const hideNames = Boolean(hideNamesToggleEl.checked);
+  const favoritesView = favoritesViewEl.value;
   let visible = cards.filter((c) => matchesSportFilter(c, filter));
 
-  if (viewScope === 'mine') {
-    visible = visible.filter((c) => user && cardState[c.id]?.ownerId === user.id);
-  } else if (viewScope === 'others') {
-    visible = visible.filter((c) => !user || cardState[c.id]?.ownerId !== user.id);
-  }
-
-  if (!showLocked) {
-    visible = visible.filter((c) => !isUploadHiddenForViewer(c.id, user));
+  if (favoritesView === 'favorites') {
+    visible = visible.filter((c) => isFavorite(c.id, user));
   }
   const tpl = document.getElementById('cardTemplate');
 
   visible.forEach((card) => {
     const state = cardState[card.id];
     const meta = cardMeta[card.id] || { title: card.player, description: `${card.sport} collectible card.`, hideNameFromOthers: false };
-    const unlocked = isCardUnlockedFor(card.id, user);
-    const hiddenUpload = isUploadHiddenForViewer(card.id, user);
-    const hideNameForViewer = hideNames || (meta.hideNameFromOthers && (!user || state.ownerId !== user.id));
-    const displayName = hideNameForViewer ? 'Hidden Name' : card.player;
+    const favorited = isFavorite(card.id, user);
     const node = tpl.content.firstElementChild.cloneNode(true);
     node.dataset.id = card.id;
-    node.querySelector('.card-img').src = hiddenUpload ? 'card-museum-screenshot.png' : card.image;
-    node.querySelector('.card-img').alt = displayName;
+    node.querySelector('.card-img').src = card.image;
+    node.querySelector('.card-img').alt = card.player;
     node.querySelector('.badge').textContent = card.badge;
-    node.querySelector('.player').textContent = displayName;
-    node.querySelector('.card-title').textContent = hideNameForViewer ? 'Title Hidden' : meta.title;
+    node.querySelector('.player').textContent = card.player;
+    node.querySelector('.card-title').textContent = meta.title;
     node.querySelector('.card-description').textContent = meta.description;
     node.querySelector('.card-set').textContent = getCardSet(card.badge);
     node.querySelector('.sport').textContent = card.sport;
@@ -1623,16 +1614,19 @@ function renderCards() {
     node.querySelector('.price').textContent = '$' + (card.baseValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     const lockEl = node.querySelector('.lock-banner');
-    if (hiddenUpload) {
-      lockEl.textContent = 'Uploader requested hidden display';
-      node.classList.add('locked');
-    } else if (unlocked || !card.isUpload) {
-      lockEl.textContent = 'Visible in your collection';
-      node.classList.remove('locked');
-    } else {
-      lockEl.textContent = 'Tap Save to add to your collection';
-      node.classList.remove('locked');
-    }
+    lockEl.textContent = favorited ? 'Saved to favorites' : 'Tap Save Favorite';
+    node.classList.remove('locked');
+
+    const cardImageEl = node.querySelector('.card-img');
+    cardImageEl.tabIndex = 0;
+    cardImageEl.setAttribute('role', 'button');
+    cardImageEl.setAttribute('aria-label', `Open full image for ${card.player}`);
+    cardImageEl.addEventListener('click', () => openImageModal(card.image, card.player));
+    cardImageEl.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openImageModal(card.image, card.player);
+    });
 
     renderCardActions(node, card, state, user);
     cardsEl.appendChild(node);
@@ -1781,8 +1775,8 @@ function renderCollectionSection() {
     return;
   }
   const ownedCards = cards.filter((card) => cardState[card.id]?.ownerId === user.id);
-  const savedCards = cards.filter((card) => isCardUnlockedFor(card.id, user));
-  collectionSummaryEl.textContent = `Owned cards: ${ownedCards.length} · Saved cards: ${savedCards.length}`;
+  const savedCards = cards.filter((card) => isFavorite(card.id, user));
+  collectionSummaryEl.textContent = `Owned cards: ${ownedCards.length} · Saved favorites: ${savedCards.length}`;
   if (savedCards.length === 0) {
     collectionCardsEl.textContent = 'No cards saved yet.';
     return;
@@ -1806,6 +1800,16 @@ function renderCollectionSection() {
     node.querySelector('.limit').textContent = state.limit;
     node.querySelector('.lock-banner').textContent = 'Collection View';
     node.querySelector('.actions').innerHTML = '';
+    const cardImageEl = node.querySelector('.card-img');
+    cardImageEl.tabIndex = 0;
+    cardImageEl.setAttribute('role', 'button');
+    cardImageEl.setAttribute('aria-label', `Open full image for ${card.player}`);
+    cardImageEl.addEventListener('click', () => openImageModal(card.image, card.player));
+    cardImageEl.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openImageModal(card.image, card.player);
+    });
     collectionCardsEl.appendChild(node);
   });
 }
@@ -1876,7 +1880,6 @@ loginForm.addEventListener('submit', async (e) => {
   loginForm.reset();
   showLoginPasswordEl.checked = false;
   loginPasswordEl.type = 'password';
-  closeMenu();
   renderAll();
 });
 
@@ -1888,59 +1891,29 @@ logoutBtn.addEventListener('click', async () => {
   } else {
     authMessageEl.textContent = 'Signed out.';
   }
-  closeMenu();
   renderAll();
 });
 
 filterEl.addEventListener('change', renderCards);
-viewScopeEl.addEventListener('change', () => {
-  preferences.viewScope = viewScopeEl.value;
+favoritesViewEl.addEventListener('change', () => {
+  preferences.favoritesView = favoritesViewEl.value;
   saveAll();
   renderCards();
-});
-showLockedToggleEl.addEventListener('change', () => {
-  preferences.showLocked = showLockedToggleEl.checked;
-  saveAll();
-  renderCards();
-});
-hideNamesToggleEl.addEventListener('change', () => {
-  preferences.hideNames = hideNamesToggleEl.checked;
-  saveAll();
-  renderCards();
-});
-
-function closeMenu() {
-  sidePanelEl.classList.remove('menu-open');
-  menuToggleBtn.setAttribute('aria-expanded', 'false');
-  menuBackdropEl.hidden = true;
-}
-
-menuToggleBtn.addEventListener('click', () => {
-  const opening = !sidePanelEl.classList.contains('menu-open');
-  sidePanelEl.classList.toggle('menu-open', opening);
-  menuToggleBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
-  menuBackdropEl.hidden = !opening;
-});
-
-menuCloseBtn.addEventListener('click', closeMenu);
-menuBackdropEl.addEventListener('click', closeMenu);
-
-document.addEventListener('click', (event) => {
-  if (!sidePanelEl.classList.contains('menu-open')) return;
-  if (sidePanelEl.contains(event.target) || menuToggleBtn.contains(event.target)) return;
-  closeMenu();
-});
-
-window.addEventListener('resize', () => {
-  closeMenu();
 });
 
 quickLinkButtons.forEach((btn) => {
   btn.addEventListener('click', () => {
     const target = document.querySelector(btn.dataset.jump || '');
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    closeMenu();
   });
+});
+
+imageModalCloseEl.addEventListener('click', closeImageModal);
+imageModalEl.addEventListener('click', (event) => {
+  if (event.target === imageModalEl) closeImageModal();
+});
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !imageModalEl.hidden) closeImageModal();
 });
 
 showLoginPasswordEl.addEventListener('change', () => {
@@ -1990,8 +1963,8 @@ uploadFormEl.addEventListener('submit', async (e) => {
     templateKey: uploadTemplateInputEl.value,
     title: templated.title,
     description: templated.description,
-    uploadHidden: uploadHideCardInputEl.checked,
-    hideNameFromOthers: uploadHideNameInputEl.checked
+    uploadHidden: false,
+    hideNameFromOthers: false
   });
   saveAll();
   uploadFormEl.reset();
@@ -2067,9 +2040,7 @@ async function bootstrap() {
   ensureCardState();
   ensureCardMetadata();
   ledger.collectionActions = Number(ledger.collectionActions || 0);
-  viewScopeEl.value = preferences.viewScope || 'all';
-  showLockedToggleEl.checked = preferences.showLocked !== false;
-  hideNamesToggleEl.checked = Boolean(preferences.hideNames);
+  favoritesViewEl.value = preferences.favoritesView || 'all';
   saveAll();
   renderAll();
 }
