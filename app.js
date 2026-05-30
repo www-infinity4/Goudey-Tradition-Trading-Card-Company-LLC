@@ -1111,7 +1111,12 @@ function ensureCardMetadata() {
         hideNameFromOthers: false
       };
     } else {
-      cardMeta[card.id].title = cardMeta[card.id].title || `${card.badge} · ${card.player}`;
+      // Always use the canonical badge+player title for built-in (non-upload) cards
+      if (!card.isUpload) {
+        cardMeta[card.id].title = `${card.badge} · ${card.player}`;
+      } else {
+        cardMeta[card.id].title = cardMeta[card.id].title || `${card.badge} · ${card.player}`;
+      }
       cardMeta[card.id].description = cardMeta[card.id].description || `${card.sport} collectible card.`;
       cardMeta[card.id].hideNameFromOthers = Boolean(cardMeta[card.id].hideNameFromOthers);
     }
@@ -1541,7 +1546,7 @@ function renderCards() {
     node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
     node.querySelector('.status').textContent = state.listedForSale ? 'Open for Trade' : 'Collection Only';
     node.querySelector('.limit').textContent = state.limit;
-    node.querySelector('.price').textContent = 'Free';
+    node.querySelector('.price').textContent = '$' + (card.baseValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     const lockEl = node.querySelector('.lock-banner');
     if (hiddenUpload) {
@@ -1722,7 +1727,7 @@ function renderCollectionSection() {
     node.querySelector('.sport').textContent = card.sport;
     node.querySelector('.owner').textContent = userDisplayName(state.ownerId);
     node.querySelector('.status').textContent = state.ownerId === user.id ? 'Owned by you' : 'Saved in your collection';
-    node.querySelector('.price').textContent = 'Free';
+    node.querySelector('.price').textContent = '$' + (card.baseValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     node.querySelector('.limit').textContent = state.limit;
     node.querySelector('.lock-banner').textContent = 'Collection View';
     node.querySelector('.actions').innerHTML = '';
@@ -1846,14 +1851,13 @@ menuCloseBtn.addEventListener('click', closeMenu);
 menuBackdropEl.addEventListener('click', closeMenu);
 
 document.addEventListener('click', (event) => {
-  if (window.innerWidth > 980) return;
   if (!sidePanelEl.classList.contains('menu-open')) return;
   if (sidePanelEl.contains(event.target) || menuToggleBtn.contains(event.target)) return;
   closeMenu();
 });
 
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 980) closeMenu();
+  closeMenu();
 });
 
 quickLinkButtons.forEach((btn) => {
@@ -1983,8 +1987,6 @@ aiGenerateBtnEl.addEventListener('click', async () => {
 async function bootstrap() {
   await ensureUsers();
   await ensureAutoSignedInUser();
-  ensureLatestThirtyPresent();
-  ensureRecentUploadsPresent();
   ensureCardState();
   ensureCardMetadata();
   ledger.collectionActions = Number(ledger.collectionActions || 0);
@@ -1995,7 +1997,7 @@ async function bootstrap() {
   renderAll();
 }
 
-bootstrap().catch((e) => {
+  bootstrap().catch((e) => {
   console.error('Failed to initialize app', e);
   authMessageEl.textContent = 'Failed to initialize application state.';
 });
