@@ -19,3 +19,13 @@ A Beckett-style, high-end trading card display website is included in:
 - AI card drafting in-app (free local generator + optional OpenAI API integration).
 - "Latest 30" image feed support to auto-include newest card uploads.
 - Fully client-side app using localStorage (no backend required).
+
+
+
+A Goudey Tradition™ LLC Licensed & Copyrighted Product Line 
+
+Star ⭐ Craft™ Productions
+
+Fantasy Craft™ Engineers
+
+eBay™ a subsidiary  of Infinity™ has rendered the digital coin Image. All rights reserved by Infinity
