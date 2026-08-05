@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://infinity.local/schemas/goudey-card-platform.schema.json",
+  "title": "Goudey Card Platform Record",
+  "oneOf": [
+    { "$ref": "#/$defs/asset" },
+    { "$ref": "#/$defs/cardDesign" },
+    { "$ref": "#/$defs/edition" },
+    { "$ref": "#/$defs/serial" },
+    { "$ref": "#/$defs/like" },
+    { "$ref": "#/$defs/cardCoinLedger" },
+    { "$ref": "#/$defs/sale" }
+  ],
+  "$defs": {
+    "id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "asset": {
+      "type": "object",
+      "required": ["recordType", "assetId", "ownerId", "storageKey", "contentHash", "mimeType", "createdAt"],
+      "properties": {
+        "recordType": { "const": "asset" },
+        "assetId": { "$ref": "#/$defs/id" },
+        "ownerId": { "$ref": "#/$defs/id" },
+        "storageKey": { "type": "string", "minLength": 1 },
+        "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "mimeType": { "enum": ["image/png", "image/jpeg", "image/webp", "image/avif"] },
+        "originalFilename": { "type": "string", "maxLength": 255 },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "privacy": { "enum": ["private", "unlisted", "published"] },
+        "createdAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "additionalProperties": false
+    },
+    "cardDesign": {
+      "type": "object",
+      "required": ["recordType", "designId", "creatorId", "frontAssetId", "title", "status", "createdAt"],
+      "properties": {
+        "recordType": { "const": "cardDesign" },
+        "designId": { "$ref": "#/$defs/id" },
+        "creatorId": { "$ref": "#/$defs/id" },
+        "frontAssetId": { "$ref": "#/$defs/id" },
+        "backAssetId": { "$ref": "#/$defs/id" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 4000 },
+        "category": { "type": "string", "maxLength": 80 },
+        "templateKey": { "type": "string", "maxLength": 80 },
+        "speculativeValue": { "type": "number", "minimum": 0 },
+        "valueUnit": { "type": "string", "maxLength": 24 },
+        "status": { "enum": ["draft", "review", "published", "archived"] },
+        "createdAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "additionalProperties": false
+    },
+    "edition": {
+      "type": "object",
+      "required": ["recordType", "editionId", "designId", "limit", "allocationMode", "issuedCount", "closed"],
+      "properties": {
+        "recordType": { "const": "edition" },
+        "editionId": { "$ref": "#/$defs/id" },
+        "designId": { "$ref": "#/$defs/id" },
+        "limit": { "type": "integer", "minimum": 1, "maximum": 1000000 },
+        "allocationMode": { "enum": ["chosen", "random", "auction"] },
+        "issuedCount": { "type": "integer", "minimum": 0 },
+        "closed": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "serial": {
+      "type": "object",
+      "required": ["recordType", "serialId", "editionId", "serialNumber", "status"],
+      "properties": {
+        "recordType": { "const": "serial" },
+        "serialId": { "$ref": "#/$defs/id" },
+        "editionId": { "$ref": "#/$defs/id" },
+        "serialNumber": { "type": "integer", "minimum": 1 },
+        "ownerId": { "$ref": "#/$defs/id" },
+        "status": { "enum": ["available", "reserved", "sold", "held", "listed"] }
+      },
+      "additionalProperties": false
+    },
+    "like": {
+      "type": "object",
+      "required": ["recordType", "userId", "designId", "createdAt"],
+      "properties": {
+        "recordType": { "const": "like" },
+        "userId": { "$ref": "#/$defs/id" },
+        "designId": { "$ref": "#/$defs/id" },
+        "createdAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "additionalProperties": false
+    },
+    "cardCoinLedger": {
+      "type": "object",
+      "required": ["recordType", "ledgerId", "userId", "reason", "amount", "createdAt"],
+      "properties": {
+        "recordType": { "const": "cardCoinLedger" },
+        "ledgerId": { "$ref": "#/$defs/id" },
+        "userId": { "$ref": "#/$defs/id" },
+        "reason": { "type": "string", "maxLength": 240 },
+        "qualifyingLikeStart": { "type": "integer", "minimum": 1 },
+        "qualifyingLikeEnd": { "type": "integer", "minimum": 1 },
+        "amount": { "type": "integer" },
+        "createdAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "additionalProperties": false
+    },
+    "sale": {
+      "type": "object",
+      "required": ["recordType", "saleId", "serialId", "sellerId", "amount", "unit", "status", "createdAt"],
+      "properties": {
+        "recordType": { "const": "sale" },
+        "saleId": { "$ref": "#/$defs/id" },
+        "serialId": { "$ref": "#/$defs/id" },
+        "sellerId": { "$ref": "#/$defs/id" },
+        "buyerId": { "$ref": "#/$defs/id" },
+        "amount": { "type": "number", "minimum": 0 },
+        "unit": { "type": "string", "maxLength": 24 },
+        "status": { "enum": ["draft", "listed", "reserved", "completed", "cancelled", "refunded"] },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "completedAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
