@@ -1,4 +1,12 @@
 const cards = [
+  // ChatGPT Library import — originals preserved under assets/library-cards.
+  { id: 'library-barber-dime-photo-front', sport: 'Other', player: 'Barber Dime — Photo Front', baseValue: 0, clicks: 0, badge: 'LIB-001', image: 'assets/library-cards/numismatic_quest_barber_dime_exact_photo_front.png' },
+  { id: 'library-barber-dime-photo-back', sport: 'Other', player: 'Barber Dime — Photo Back', baseValue: 0, clicks: 0, badge: 'LIB-002', image: 'assets/library-cards/numismatic_quest_barber_dime_exact_photo_back.png' },
+  { id: 'library-barber-dime-xf-au-front', sport: 'Other', player: 'Barber Dime XF/AU — Front', baseValue: 0, clicks: 0, badge: 'LIB-003', image: 'assets/library-cards/numismatic_quest_barber_dime_exact_xf_au_front.png' },
+  { id: 'library-barber-dime-xf-au-back', sport: 'Other', player: 'Barber Dime XF/AU — Back', baseValue: 0, clicks: 0, badge: 'LIB-004', image: 'assets/library-cards/numismatic_quest_barber_dime_exact_xf_au_back.png' },
+  { id: 'library-pk1-39-cent-key', sport: 'Other', player: 'PK1 39 Cent Key Coin Composite', baseValue: 0, clicks: 0, badge: 'LIB-005', image: 'assets/library-cards/PK1_39cent_key_actual_coin_composite.png' },
+  { id: 'library-bmh-young-guns', sport: 'Other', player: 'BMH Young Guns — Photo Front', baseValue: 0, clicks: 0, badge: 'LIB-006', image: 'assets/library-cards/BMH_YG_corrected_real_photo_front.png' },
+
   // ── Baseball – Current Players ──────────────────────────────────────────
   {
     id: 'mitch-keller',
