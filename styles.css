@@ -454,8 +454,8 @@ body {
   color: #cbd3e6;
 }
 .trade-form { display: grid; gap: .35rem; }
-.admin-paypal { display: grid; gap: .4rem; margin-bottom: .6rem; }
-.admin-paypal input {
+.admin-infinity-ledger { display: grid; gap: .4rem; margin-bottom: .6rem; }
+.admin-infinity-ledger input {
   width: 100%;
   background: #0a0d14;
   color: var(--text);
