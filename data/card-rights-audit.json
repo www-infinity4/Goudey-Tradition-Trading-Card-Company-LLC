@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "brandMark": "Infinity ®",
+  "museumName": "Goudey Tradition Card Museum",
+  "defaultStatus": "needs_review",
+  "statuses": {
+    "cleared": "Documented for commercial sale",
+    "needs_review": "Not sellable until rights review is complete",
+    "replacement_queued": "Protected elements must be replaced and the result reviewed",
+    "blocked": "Do not mint or list"
+  },
+  "automaticFlags": [
+    {
+      "id": "third_party_card_brand",
+      "terms": ["topps", "bowman", "fleer", "upper deck", "panini", "donruss"],
+      "replacement": "Remove the third-party card-brand name, logo, trade dress and template reference. Replace with an original Infinity ® layout."
+    },
+    {
+      "id": "entertainment_brand",
+      "terms": ["disney", "marvel", "star wars", "pixar", "apprentice"],
+      "replacement": "Remove protected franchise names, characters, logos and recognizable franchise styling. Replace them with an original setting and original characters."
+    },
+    {
+      "id": "public_figure_or_athlete",
+      "terms": ["musk", "trump", "mike trout", "nolan ryan", "alex rodriguez", "ryne sandberg", "bob gibson"],
+      "replacement": "Do not imply endorsement. Queue identity, publicity-rights, team-mark and source-image review; replace the person with an original fictional subject if permission cannot be documented."
+    },
+    {
+      "id": "unsupported_authenticity_claim",
+      "terms": ["game-used", "autograph", "signed", "licensed", "official"],
+      "replacement": "Remove the claim unless provenance documentation is attached and verified."
+    }
+  ],
+  "manualOverrides": {},
+  "openSea": {
+    "enabled": false,
+    "network": "base",
+    "collectionUrl": "",
+    "contractAddress": "",
+    "sellerWallet": ""
+  }
+}
