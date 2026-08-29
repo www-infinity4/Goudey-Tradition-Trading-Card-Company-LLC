@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "program": "Infinity ® Bidirectional Media Cards",
+  "prototype": "Herman's Head Cartoon Cards",
+  "policy": {
+    "append_only": true,
+    "media_to_card": true,
+    "card_to_media": true
+  },
+  "episode": {
+    "id": "hermans-head-episode-01",
+    "title": "The Five O'Clock Fact",
+    "cards": [
+      "00-opening.jpg",
+      "01-five-oclock-fact.jpg",
+      "02-deadline-of-the-mind.jpg",
+      "03-facts-fibs-footnotes.jpg",
+      "04-homework-for-herman.jpg",
+      "05-two-minutes-to-print.jpg",
+      "06-facts-checked-head-intact.jpg"
+    ]
+  },
+  "soundtrack": {
+    "title": "No Time",
+    "artist": "The Guess Who",
+    "relationship": "creative-sync-reference",
+    "start_cue": "deadline race sequence",
+    "dialogue_mix": "muted beneath movement and conversation",
+    "fade_out": "under closing punchline",
+    "rights_status": "verification-required",
+    "audio_in_repository": false
+  }
+}
