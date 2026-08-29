@@ -1,12 +1,15 @@
 # ACT Generator
 
-ACT is a short audiovisual trading-card format: a maximum 15-second moving clip with an attached soundtrack.
+ACT is a short audiovisual trading-card format: a moving art-video card lasting 5 to 15 seconds with an attached soundtrack.
 
 ## Prototype behavior
 
 - Upload a local video, or search Internet Archive and choose a playable video file.
 - Upload a local song, or search Internet Archive and choose a playable audio file.
 - Default trim is the first 15 seconds of video.
+- Every ACT must last at least 5 seconds and no more than 15 seconds.
+- Moving card art can use animated layers, camera motion, character motion, effects, or an imported art-video clip.
+- A completed ACT manifest is a reusable game asset for the next stage.
 - Start and end handles behave like a social-video trimming control.
 - The selected range can be shortened but never exceed 15 seconds.
 - Preview synchronizes video and music and ducks music under dialogue.
