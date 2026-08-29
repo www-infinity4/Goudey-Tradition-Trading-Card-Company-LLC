@@ -44,3 +44,7 @@ Star ⭐ Craft™ Productions
 Fantasy Craft™ Engineers
 
 eBay™ a subsidiary of Infinity™ has rendered the digital coin Image. All rights reserved by Infinity
+
+## ACT Generator
+
+ACT creates a 15-second audiovisual card clip: select or upload video, trim a window up to 15 seconds, attach a song, preview synchronized playback, and preserve source/rights metadata. See [ACT Generator](./act-generator/README.md).
