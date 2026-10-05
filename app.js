@@ -1042,6 +1042,34 @@ function nextUploadBadge(prefix = 'UP') {
   return `${prefix}-${String(uploads.length + 1).padStart(2, '0')}`;
 }
 
+const ROGERS_AI_URL = 'https://infinity-rogers.marvaseater.workers.dev/v1/chat';
+
+async function callRogersForCardDraft(prompt, player, sport, templateKey) {
+  const template = CARD_TEMPLATES[normalizeTemplateKey(templateKey)];
+  const response = await fetch(ROGERS_AI_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      input: `Create trading card copy. Return exactly two lines: TITLE: ... and DESCRIPTION: ... Player/subject: ${player || 'Featured Player'}. Category: ${sport || 'Other'}. Template: ${template.label}. Direction: ${prompt || 'high-upside collectible'}.`,
+      context: {
+        application: 'Goudey Tradition Card Museum',
+        task: 'trading-card-copy',
+        requireCloudflare: false
+      }
+    })
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || !data.ok) throw new Error(data.error || 'Rogers AI unavailable');
+  const raw = String(data.output || data.output_text || data.answer || '').trim();
+  const titleMatch = raw.match(/TITLE:\s*(.+)/i);
+  const descriptionMatch = raw.match(/DESCRIPTION:\s*([\s\S]+)/i);
+  if (!titleMatch && !descriptionMatch) throw new Error('Rogers AI returned an unexpected format');
+  return {
+    title: titleMatch?.[1]?.trim() || `${player || 'Featured Player'} ${template.label}`,
+    description: descriptionMatch?.[1]?.trim() || `Card copy for ${player || 'Featured Player'} in ${sport || 'Other'}.`
+  };
+}
+
 function createLocalAiDraft(prompt, player, sport, templateKey) {
   const template = CARD_TEMPLATES[normalizeTemplateKey(templateKey)];
   const cleanPlayer = (player || 'Featured Player').trim() || 'Featured Player';
@@ -2036,7 +2064,13 @@ aiGenerateBtnEl.addEventListener('click', async () => {
   const sport = aiSportInputEl.value;
   const templateKey = aiTemplateInputEl.value;
   const prompt = aiPromptInputEl.value.trim();
-  const raw = createLocalAiDraft(prompt, player, sport, templateKey);
+  let raw;
+  try {
+    raw = await callRogersForCardDraft(prompt, player, sport, templateKey);
+  } catch (error) {
+    console.warn('Rogers AI card drafting unavailable; using local fallback.', error);
+    raw = createLocalAiDraft(prompt, player, sport, templateKey);
+  }
   const templated = applyTemplateToDetails(templateKey, raw, player, sport);
   uploadTitleInputEl.value = templated.title;
   uploadDescriptionInputEl.value = templated.description;
