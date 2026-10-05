@@ -899,7 +899,6 @@ const aiSportInputEl = document.getElementById('aiSportInput');
 const aiTemplateInputEl = document.getElementById('aiTemplateInput');
 const aiPromptInputEl = document.getElementById('aiPromptInput');
 const aiGenerateBtnEl = document.getElementById('aiGenerateBtn');
-const openaiApiKeyInputEl = document.getElementById('openaiApiKeyInput');
 const menuBackdropEl = document.getElementById('menuBackdrop');
 const menuCloseBtn = document.getElementById('menuCloseBtn');
 
@@ -1041,42 +1040,6 @@ function applyTemplateToDetails(templateKey, details, player, sport) {
 
 function nextUploadBadge(prefix = 'UP') {
   return `${prefix}-${String(uploads.length + 1).padStart(2, '0')}`;
-}
-
-async function callOpenAiForCardDraft(apiKey, prompt, player, sport, templateKey) {
-  const template = CARD_TEMPLATES[normalizeTemplateKey(templateKey)];
-  const payload = {
-    model: 'gpt-4.1-mini',
-    messages: [
-      {
-        role: 'system',
-        content: `You generate trading card copy. Respond with exactly two lines: TITLE: ... and DESCRIPTION: ... Use ${template.label} style.`
-      },
-      {
-        role: 'user',
-        content: `Player: ${player || 'Featured Player'}\nSport: ${sport || 'Other'}\nPrompt: ${prompt || 'Create a high-end card copy.'}`
-      }
-    ]
-  };
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`
-    },
-    body: JSON.stringify(payload)
-  });
-  if (!res.ok) {
-    throw new Error(`OpenAI request failed (${res.status}).`);
-  }
-  const data = await res.json();
-  const raw = String(data?.choices?.[0]?.message?.content || '').trim();
-  const titleMatch = raw.match(/TITLE:\s*(.+)/i);
-  const descriptionMatch = raw.match(/DESCRIPTION:\s*([\s\S]+)/i);
-  return {
-    title: titleMatch?.[1]?.trim() || `${player || 'Featured Player'} ${template.label}`,
-    description: descriptionMatch?.[1]?.trim() || `AI card copy for ${player || 'Featured Player'} in ${sport || 'Other'}.`
-  };
 }
 
 function createLocalAiDraft(prompt, player, sport, templateKey) {
@@ -2073,16 +2036,7 @@ aiGenerateBtnEl.addEventListener('click', async () => {
   const sport = aiSportInputEl.value;
   const templateKey = aiTemplateInputEl.value;
   const prompt = aiPromptInputEl.value.trim();
-  const apiKey = openaiApiKeyInputEl.value.trim();
-  let raw;
-  try {
-    raw = apiKey
-      ? await callOpenAiForCardDraft(apiKey, prompt, player, sport, templateKey)
-      : createLocalAiDraft(prompt, player, sport, templateKey);
-  } catch (error) {
-    console.warn('OpenAI generation failed. Falling back to local generation.', error);
-    raw = createLocalAiDraft(prompt, player, sport, templateKey);
-  }
+  const raw = createLocalAiDraft(prompt, player, sport, templateKey);
   const templated = applyTemplateToDetails(templateKey, raw, player, sport);
   uploadTitleInputEl.value = templated.title;
   uploadDescriptionInputEl.value = templated.description;
