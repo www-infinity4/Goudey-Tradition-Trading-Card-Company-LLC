@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://goudey.example/schemas/infinity-card-token-registry-v1.json",
+  "title": "Infinity Card Token Registry",
+  "type": "object",
+  "required": ["design", "edition", "serials"],
+  "properties": {
+    "design": {
+      "type": "object",
+      "required": ["designId", "title", "brand", "assetSha256", "rightsStatus", "license"],
+      "properties": {
+        "designId": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "brand": {"const": "Infinity 2026®"},
+        "creativeDescription": {"type": "string"},
+        "creatorId": {"type": "string"},
+        "assetSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "rightsStatus": {"enum": ["needs_review", "replacement_queued", "cleared", "blocked"]},
+        "license": {"enum": ["personal-display", "commercial-nonexclusive", "commercial-exclusive", "copyright-assignment"]}
+      },
+      "additionalProperties": true
+    },
+    "edition": {
+      "type": "object",
+      "required": ["editionId", "kind", "supply", "capLocked"],
+      "properties": {
+        "editionId": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["original", "limited", "physical", "open-print"]},
+        "supply": {"type": ["integer", "null"], "minimum": 1},
+        "capLocked": {"type": "boolean"},
+        "lockedAt": {"type": ["string", "null"], "format": "date-time"},
+        "creationFeeCents": {"const": 0},
+        "listingFeeCents": {"const": 0}
+      },
+      "allOf": [
+        {"if":{"properties":{"kind":{"const":"original"}}},"then":{"properties":{"supply":{"const":1}}}},
+        {"if":{"properties":{"kind":{"const":"open-print"}}},"then":{"properties":{"supply":{"type":"null"}}}}
+      ],
+      "additionalProperties": true
+    },
+    "serials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["serialId", "number", "label", "status"],
+        "properties": {
+          "serialId": {"type": "string"},
+          "number": {"type": "integer", "minimum": 1},
+          "label": {"type": "string"},
+          "status": {"enum": ["available", "reserved", "sold", "transferred", "retired"]},
+          "ownerId": {"type": ["string", "null"]},
+          "physicalBinding": {"type": ["object", "null"]}
+        }
+      }
+    }
+  }
+}
