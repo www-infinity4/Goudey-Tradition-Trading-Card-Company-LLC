@@ -20,6 +20,18 @@ A Beckett-style, high-end trading card display website is included in:
 - "Latest 30" image feed support to auto-include newest card uploads.
 - Fully client-side app using localStorage (no backend required).
 
+## Infinity Card Token Registry
+
+The first authoritative registry layer is now included:
+
+- `data/card-catalog.json` inventories the current museum cards and their audit/listing state.
+- `data/schema/infinity-card-token-registry.schema.json` defines permanent designs, editions, numbered serials, rights, and buyer licenses.
+- `token-registry.js` enforces 1/1 originals, fixed edition limits, serial labels such as `1/100`, and sell-out limits.
+- Creation and listing cost nothing; the configured platform fee is deducted only from a completed sale.
+- Once the first serial is issued, the edition limit is permanently locked and cannot be increased.
+
+See [the registry specification](./docs/INFINITY_CARD_TOKEN_REGISTRY.md). This is the museum's authoritative record layer; public-blockchain publication remains optional rather than a prerequisite for creating a card.
+
 ## Infinity ® Bidirectional Media Cards
 
 The card program now treats media and cards as a permanent two-way creative system:
@@ -33,7 +45,7 @@ See [the implementation specification](./docs/infinity-media-card-loop.md) and t
 
 ## Current public-facing mark
 
-New prototype cards use **Infinity ® 2026**. Historical repository and company references remain intact for provenance.
+New cards use **Infinity 2026®**. Historical repository and company references remain intact for provenance but are not the card-face mark.
 
 ---
 

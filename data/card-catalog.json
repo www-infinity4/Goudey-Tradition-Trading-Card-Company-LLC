@@ -1,0 +1,1720 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "goudey-tradition-card-museum",
+  "brand": "Infinity 2026®",
+  "generatedFrom": "app.js",
+  "generatedAt": "2026-10-12T00:00:00Z",
+  "rules": {
+    "listingFee": "none",
+    "feeTiming": "deduct-after-completed-sale",
+    "editionCap": "immutable-after-first-serial-issued",
+    "defaultRightsStatus": "needs_review"
+  },
+  "count": 71,
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "designId": "design:library-barber-dime-photo-front",
+      "cardId": "library-barber-dime-photo-front",
+      "title": "Barber Dime — Photo Front",
+      "category": "Other",
+      "legacyBadge": "LIB-001",
+      "assetPath": "assets/library-cards/numismatic_quest_barber_dime_exact_photo_front.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:chase-burns-goudey",
+      "cardId": "chase-burns-goudey",
+      "title": "Chase Burns",
+      "category": "Baseball",
+      "legacyBadge": "HS-5",
+      "assetPath": "ChatGPT Image May 18, 2026, 10_39_09 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:chase-burns-leather",
+      "cardId": "chase-burns-leather",
+      "title": "Chase Burns",
+      "category": "Baseball",
+      "legacyBadge": "HS-5A",
+      "assetPath": "May 18, 2026, 10_21_14 PM (1).png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:chase-burns-game-used",
+      "cardId": "chase-burns-game-used",
+      "title": "Chase Burns",
+      "category": "Baseball",
+      "legacyBadge": "HS-5B",
+      "assetPath": "May 18, 2026, 10_21_26 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:byron-buxton",
+      "cardId": "byron-buxton",
+      "title": "Byron Buxton",
+      "category": "Baseball",
+      "legacyBadge": "LS-1",
+      "assetPath": "ChatGPT Image May 18, 2026, 11_53_31 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:michael-busch",
+      "cardId": "michael-busch",
+      "title": "Michael Busch",
+      "category": "Baseball",
+      "legacyBadge": "BP-1",
+      "assetPath": "1ce9ec59-9fb5-4f48-a953-c9b42b3c7313.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:daylen-lile",
+      "cardId": "daylen-lile",
+      "title": "Daylen Lile",
+      "category": "Baseball",
+      "legacyBadge": "PR-1",
+      "assetPath": "ChatGPT Image May 18, 2026, 05_23_10 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:mike-trout",
+      "cardId": "mike-trout",
+      "title": "Mike Trout",
+      "category": "Baseball",
+      "legacyBadge": "RI-27",
+      "assetPath": "ChatGPT Image May 18, 2026, 08_10_30 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:mike-trout-aluminum",
+      "cardId": "mike-trout-aluminum",
+      "title": "Mike Trout",
+      "category": "Baseball",
+      "legacyBadge": "AL-90",
+      "assetPath": "ChatGPT Image May 19, 2026, 09_38_08 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:nolan-arenado",
+      "cardId": "nolan-arenado",
+      "title": "Nolan Arenado",
+      "category": "Baseball",
+      "legacyBadge": "EL-3",
+      "assetPath": "ChatGPT Image May 18, 2026, 08_34_29 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:alex-rodriguez",
+      "cardId": "alex-rodriguez",
+      "title": "Alex Rodriguez",
+      "category": "Baseball",
+      "legacyBadge": "AL-44",
+      "assetPath": "ChatGPT Image May 19, 2026, 09_53_46 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:justin-steele",
+      "cardId": "justin-steele",
+      "title": "Justin Steele",
+      "category": "Baseball",
+      "legacyBadge": "CB-35",
+      "assetPath": "ChatGPT Image May 19, 2026, 11_24_18 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ben-brown-hybrid",
+      "cardId": "ben-brown-hybrid",
+      "title": "Ben Brown",
+      "category": "Baseball",
+      "legacyBadge": "CB-52",
+      "assetPath": "ChatGPT Image May 19, 2026, 12_37_17 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ben-brown-fleer",
+      "cardId": "ben-brown-fleer",
+      "title": "Ben Brown",
+      "category": "Baseball",
+      "legacyBadge": "CB-52F",
+      "assetPath": "ChatGPT Image May 19, 2026, 12_43_32 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:pete-crow-armstrong-rbi",
+      "cardId": "pete-crow-armstrong-rbi",
+      "title": "Pete Crow-Armstrong",
+      "category": "Baseball",
+      "legacyBadge": "RH-1",
+      "assetPath": "ChatGPT Image May 20, 2026, 12_17_28 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:pete-crow-armstrong",
+      "cardId": "pete-crow-armstrong",
+      "title": "Pete Crow-Armstrong",
+      "category": "Baseball",
+      "legacyBadge": "RH-1B",
+      "assetPath": "ChatGPT Image May 20, 2026, 12_24_54 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:mitch-keller-stat-a",
+      "cardId": "mitch-keller-stat-a",
+      "title": "Mitch Keller",
+      "category": "Baseball",
+      "legacyBadge": "ST-1",
+      "assetPath": "ChatGPT Image May 19, 2026, 07_52_09 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:mitch-keller-stat-b",
+      "cardId": "mitch-keller-stat-b",
+      "title": "Mitch Keller",
+      "category": "Baseball",
+      "legacyBadge": "ST-1L",
+      "assetPath": "ChatGPT Image May 19, 2026, 07_53_35 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ryne-sandberg-studio",
+      "cardId": "ryne-sandberg-studio",
+      "title": "Ryne Sandberg",
+      "category": "Baseball",
+      "legacyBadge": "GT-23",
+      "assetPath": "ChatGPT Image May 18, 2026, 01_57_19 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ryne-sandberg-stats",
+      "cardId": "ryne-sandberg-stats",
+      "title": "Ryne Sandberg",
+      "category": "Baseball",
+      "legacyBadge": "GT-23B",
+      "assetPath": "ChatGPT Image May 18, 2026, 02_02_26 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:bob-gibson-game-used",
+      "cardId": "bob-gibson-game-used",
+      "title": "Bob Gibson",
+      "category": "Baseball",
+      "legacyBadge": "MEM-45",
+      "assetPath": "ChatGPT Image May 18, 2026, 02_18_42 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:bob-gibson-game-used-2",
+      "cardId": "bob-gibson-game-used-2",
+      "title": "Bob Gibson",
+      "category": "Baseball",
+      "legacyBadge": "MEM-45B",
+      "assetPath": "ChatGPT Image May 18, 2026, 02_18_44 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:bob-gibson-topps",
+      "cardId": "bob-gibson-topps",
+      "title": "Bob Gibson",
+      "category": "Baseball",
+      "legacyBadge": "GT-45",
+      "assetPath": "ChatGPT Image May 18, 2026, 03_50_11 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:bob-gibson-stars",
+      "cardId": "bob-gibson-stars",
+      "title": "Bob Gibson",
+      "category": "Baseball",
+      "legacyBadge": "GT-45S",
+      "assetPath": "ChatGPT Image May 18, 2026, 03_51_08 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:bob-gibson-detailed",
+      "cardId": "bob-gibson-detailed",
+      "title": "Bob Gibson",
+      "category": "Baseball",
+      "legacyBadge": "GT-45C",
+      "assetPath": "ChatGPT Image May 18, 2026, 03_54_17 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:rollie-fingers-allstar",
+      "cardId": "rollie-fingers-allstar",
+      "title": "Rollie Fingers",
+      "category": "Baseball",
+      "legacyBadge": "AS-34",
+      "assetPath": "ChatGPT Image May 18, 2026, 02_45_58 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:rollie-fingers-goudey",
+      "cardId": "rollie-fingers-goudey",
+      "title": "Rollie Fingers",
+      "category": "Baseball",
+      "legacyBadge": "GD-34",
+      "assetPath": "ChatGPT Image May 18, 2026, 02_49_06 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:nolan-ryan-heritage",
+      "cardId": "nolan-ryan-heritage",
+      "title": "Nolan Ryan",
+      "category": "Baseball",
+      "legacyBadge": "HE-30",
+      "assetPath": "ChatGPT Image May 18, 2026, 04_35_39 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:randy-johnson-nolan-ryan",
+      "cardId": "randy-johnson-nolan-ryan",
+      "title": "Randy Johnson / Nolan Ryan",
+      "category": "Baseball",
+      "legacyBadge": "DUO-1",
+      "assetPath": "ChatGPT Image May 18, 2026, 04_25_49 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:michael-jordan-whitesox",
+      "cardId": "michael-jordan-whitesox",
+      "title": "Michael Jordan",
+      "category": "Baseball",
+      "legacyBadge": "HE-45",
+      "assetPath": "ChatGPT Image May 18, 2026, 03_10_09 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:michael-jordan-whitesox-2",
+      "cardId": "michael-jordan-whitesox-2",
+      "title": "Michael Jordan",
+      "category": "Baseball",
+      "legacyBadge": "HE-45B",
+      "assetPath": "ChatGPT Image May 18, 2026, 03_15_44 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:michael-jordan-whitesox-stats",
+      "cardId": "michael-jordan-whitesox-stats",
+      "title": "Michael Jordan",
+      "category": "Baseball",
+      "legacyBadge": "HE-45C",
+      "assetPath": "ChatGPT Image May 18, 2026, 03_23_05 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may18-0238",
+      "cardId": "design-may18-0238",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-1",
+      "assetPath": "ChatGPT Image May 18, 2026, 02_38_23 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may18-0408",
+      "cardId": "design-may18-0408",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-2",
+      "assetPath": "ChatGPT Image May 18, 2026, 04_08_15 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may18-0509",
+      "cardId": "design-may18-0509",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-3",
+      "assetPath": "ChatGPT Image May 18, 2026, 05_09_38 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may18-0803",
+      "cardId": "design-may18-0803",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-4",
+      "assetPath": "ChatGPT Image May 18, 2026, 08_03_48 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may18-0806",
+      "cardId": "design-may18-0806",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-5",
+      "assetPath": "ChatGPT Image May 18, 2026, 08_06_17 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may18-1140",
+      "cardId": "design-may18-1140",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-6",
+      "assetPath": "ChatGPT Image May 18, 2026, 11_40_08 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:topps-autograph",
+      "cardId": "topps-autograph",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "AU-1",
+      "assetPath": "ChatGPT Image May 19, 2026, 11_55_31 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:vince-neil-tommy-lee",
+      "cardId": "vince-neil-tommy-lee",
+      "title": "Vince Neil & Tommy Lee",
+      "category": "Entertainment",
+      "legacyBadge": "ENT-1",
+      "assetPath": "ChatGPT Image May 18, 2026, 06_00_14 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:pete-hegseth",
+      "cardId": "pete-hegseth",
+      "title": "Pete Hegseth",
+      "category": "Entertainment",
+      "legacyBadge": "ENT-2",
+      "assetPath": "ChatGPT Image May 18, 2026, 06_25_24 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:lionel-richie",
+      "cardId": "lionel-richie",
+      "title": "Lionel Richie",
+      "category": "Entertainment",
+      "legacyBadge": "ENT-3",
+      "assetPath": "ChatGPT Image May 18, 2026, 07_05_04 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:walt-disney",
+      "cardId": "walt-disney",
+      "title": "Walt Disney Classics",
+      "category": "Entertainment",
+      "legacyBadge": "ENT-4",
+      "assetPath": "ChatGPT Image May 19, 2026, 10_19_33 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:pepsi-infinity",
+      "cardId": "pepsi-infinity",
+      "title": "Pepsi Infinity",
+      "category": "Other",
+      "legacyBadge": "OTH-1",
+      "assetPath": "ChatGPT Image May 18, 2026, 07_29_44 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:gpu-cuda",
+      "cardId": "gpu-cuda",
+      "title": "GPU / CUDA",
+      "category": "Other",
+      "legacyBadge": "AL-GPU",
+      "assetPath": "2b48e174-b96b-4c78-8cc0-b2e34f1dfbaf.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:gpu-fleer-vectors",
+      "cardId": "gpu-fleer-vectors",
+      "title": "GPU Architecture",
+      "category": "Other",
+      "legacyBadge": "AL-GPU2",
+      "assetPath": "ChatGPT Image May 19, 2026, 09_12_34 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ken-griffey-pioneer",
+      "cardId": "ken-griffey-pioneer",
+      "title": "Ken Griffey Jr. / Hank Aaron",
+      "category": "Baseball",
+      "legacyBadge": "PIO-1",
+      "assetPath": "ChatGPT Image May 20, 2026, 08_11_18 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ken-griffey-pioneer-b",
+      "cardId": "ken-griffey-pioneer-b",
+      "title": "Ken Griffey Jr. / Hank Aaron",
+      "category": "Baseball",
+      "legacyBadge": "PIO-1B",
+      "assetPath": "ChatGPT Image May 20, 2026, 08_12_46 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ken-griffey-photographer",
+      "cardId": "ken-griffey-photographer",
+      "title": "Ken Griffey Jr.",
+      "category": "Baseball",
+      "legacyBadge": "RC-89",
+      "assetPath": "ChatGPT Image May 20, 2026, 09_46_49 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may20-0957a",
+      "cardId": "design-may20-0957a",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-7",
+      "assetPath": "ChatGPT Image May 20, 2026, 09_57_03 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may20-0957b",
+      "cardId": "design-may20-0957b",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-7B",
+      "assetPath": "ChatGPT Image May 20, 2026, 09_57_04 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:design-may20-1022",
+      "cardId": "design-may20-1022",
+      "title": "Goudey Tradition",
+      "category": "Baseball",
+      "legacyBadge": "SP-8",
+      "assetPath": "ChatGPT Image May 20, 2026, 10_22_56 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:chris-sale-donruss",
+      "cardId": "chris-sale-donruss",
+      "title": "Chris Sale",
+      "category": "Baseball",
+      "legacyBadge": "HP-6",
+      "assetPath": "ChatGPT Image May 20, 2026, 10_27_08 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ozzie-albies",
+      "cardId": "ozzie-albies",
+      "title": "Ozzie Albies",
+      "category": "Baseball",
+      "legacyBadge": "OA-1",
+      "assetPath": "ChatGPT Image May 20, 2026, 10_48_10 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ozzie-albies-phc4",
+      "cardId": "ozzie-albies-phc4",
+      "title": "Ozzie Albies",
+      "category": "Baseball",
+      "legacyBadge": "PHC-4",
+      "assetPath": "ChatGPT Image May 20, 2026, 10_57_25 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ozzie-albies-phc3",
+      "cardId": "ozzie-albies-phc3",
+      "title": "Ozzie Albies",
+      "category": "Baseball",
+      "legacyBadge": "PHC-3",
+      "assetPath": "ChatGPT Image May 20, 2026, 11_18_01 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ozzie-albies-phc1",
+      "cardId": "ozzie-albies-phc1",
+      "title": "Ozzie Albies",
+      "category": "Baseball",
+      "legacyBadge": "PHC-1",
+      "assetPath": "ChatGPT Image May 20, 2026, 11_30_29 PM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ronald-acuna-goudey",
+      "cardId": "ronald-acuna-goudey",
+      "title": "Ronald Acuña Jr.",
+      "category": "Baseball",
+      "legacyBadge": "PHC-2",
+      "assetPath": "ChatGPT Image May 21, 2026, 12_37_53 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ronald-acuna-phc2b",
+      "cardId": "ronald-acuna-phc2b",
+      "title": "Ronald Acuña Jr.",
+      "category": "Baseball",
+      "legacyBadge": "PHC-2B",
+      "assetPath": "ChatGPT Image May 21, 2026, 12_38_14 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ronald-acuna-phc2c",
+      "cardId": "ronald-acuna-phc2c",
+      "title": "Ronald Acuña Jr.",
+      "category": "Baseball",
+      "legacyBadge": "PHC-2C",
+      "assetPath": "ChatGPT Image May 21, 2026, 12_38_41 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ronald-acuna-landscape",
+      "cardId": "ronald-acuna-landscape",
+      "title": "Ronald Acuña Jr.",
+      "category": "Baseball",
+      "legacyBadge": "PHC-2D",
+      "assetPath": "ChatGPT Image May 21, 2026, 01_35_51 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:acuna-ramirez-duo",
+      "cardId": "acuna-ramirez-duo",
+      "title": "Ronald Acuña Jr. / Agustín Ramírez",
+      "category": "Baseball",
+      "legacyBadge": "DUO-2",
+      "assetPath": "ChatGPT Image May 21, 2026, 01_44_08 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ronald-acuna-phc2e",
+      "cardId": "ronald-acuna-phc2e",
+      "title": "Ronald Acuña Jr.",
+      "category": "Baseball",
+      "legacyBadge": "PHC-2E",
+      "assetPath": "ChatGPT Image May 21, 2026, 01_47_25 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ronald-acuna-stats",
+      "cardId": "ronald-acuna-stats",
+      "title": "Ronald Acuña Jr.",
+      "category": "Baseball",
+      "legacyBadge": "RC-AC",
+      "assetPath": "ChatGPT Image May 21, 2026, 01_54_27 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ronald-acuna-classic",
+      "cardId": "ronald-acuna-classic",
+      "title": "Ronald Acuña Jr.",
+      "category": "Baseball",
+      "legacyBadge": "AC-1",
+      "assetPath": "ChatGPT Image May 21, 2026, 01_56_23 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:ronald-acuna-basic",
+      "cardId": "ronald-acuna-basic",
+      "title": "Ronald Acuña Jr.",
+      "category": "Baseball",
+      "legacyBadge": "AC-1B",
+      "assetPath": "ChatGPT Image May 21, 2026, 01_59_07 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:paul-skenes",
+      "cardId": "paul-skenes",
+      "title": "Paul Skenes",
+      "category": "Baseball",
+      "legacyBadge": "PS-1",
+      "assetPath": "ChatGPT Image May 21, 2026, 02_11_15 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:paul-skenes-b",
+      "cardId": "paul-skenes-b",
+      "title": "Paul Skenes",
+      "category": "Baseball",
+      "legacyBadge": "PS-1B",
+      "assetPath": "ChatGPT Image May 21, 2026, 02_13_18 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:paul-skenes-c",
+      "cardId": "paul-skenes-c",
+      "title": "Paul Skenes",
+      "category": "Baseball",
+      "legacyBadge": "PS-1C",
+      "assetPath": "ChatGPT Image May 21, 2026, 02_23_03 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:paul-skenes-d",
+      "cardId": "paul-skenes-d",
+      "title": "Paul Skenes",
+      "category": "Baseball",
+      "legacyBadge": "PS-1D",
+      "assetPath": "ChatGPT Image May 21, 2026, 02_34_03 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "designId": "design:paul-skenes-e",
+      "cardId": "paul-skenes-e",
+      "title": "Paul Skenes",
+      "category": "Baseball",
+      "legacyBadge": "PS-1E",
+      "assetPath": "ChatGPT Image May 21, 2026, 02_36_23 AM.png",
+      "brand": "Infinity 2026®",
+      "setId": "legacy-museum",
+      "editionStatus": "not_declared",
+      "rightsStatus": "needs_review",
+      "marketplaceStatus": "not_listed",
+      "provenance": {
+        "source": "legacy-app-js",
+        "sourceCommit": "3043fd2096c339d2c353ea6be9b2f8e991f8cd98",
+        "assetSha256": null,
+        "approvedAt": null
+      },
+      "license": {
+        "type": "unspecified",
+        "copyrightTransferred": false
+      }
+    }
+  ]
+}
