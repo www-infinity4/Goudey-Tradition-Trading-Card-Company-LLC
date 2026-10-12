@@ -53,7 +53,6 @@
     const receipts = input.receipts || new Map();
     if (!sale || sale.status !== 'payment_confirmed') throw new Error('Payment confirmation is required');
     if (!serial || serial.serialId !== sale.serialId) throw new Error('Sale and serial do not match');
-    if (serial.ownerId !== sale.sellerId) throw new Error('Seller is not the recorded owner');
     const authorization = input.authorization || {};
     if (authorization.actorId !== sale.sellerId || authorization.verified !== true) {
       throw new Error('Verified seller authorization is required');
@@ -61,11 +60,19 @@
 
     const existing = receipts.get(sale.saleId);
     if (existing) {
-      if (existing.paymentReference !== sale.paymentReference || existing.serialId !== sale.serialId) {
+      if (existing.paymentReference !== sale.paymentReference ||
+          existing.paymentProvider !== sale.paymentProvider ||
+          existing.serialId !== sale.serialId ||
+          existing.sellerId !== sale.sellerId ||
+          existing.buyerId !== sale.buyerId ||
+          existing.grossCents !== sale.grossCents ||
+          existing.currency !== sale.currency) {
         throw new Error('Sale ID has already been used for different settlement data');
       }
       return Object.freeze({ receipt: existing, serial, duplicate: true });
     }
+
+    if (serial.ownerId !== sale.sellerId) throw new Error('Seller is not the recorded owner');
 
     for (const receipt of receipts.values()) {
       if (receipt.paymentProvider === sale.paymentProvider &&
