@@ -1,0 +1,12 @@
+name = "infinity-card-registry"
+main = "workers/museum-registry/index.mjs"
+compatibility_date = "2026-10-01"
+
+# Copy this example to wrangler.toml only after creating or selecting the
+# intended Cloudflare D1 database. Do not commit secrets.
+#
+# [[d1_databases]]
+# binding = "REGISTRY_DB"
+# database_name = "YOUR_D1_DATABASE_NAME"
+# database_id = "YOUR_D1_DATABASE_ID"
+# migrations_dir = "migrations"
